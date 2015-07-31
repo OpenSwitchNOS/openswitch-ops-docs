@@ -11,9 +11,9 @@ layout: document
   * OpenSwitch is developed on Ubuntu, but Debian, Fedora, SuSe should work fine as well.
 * At least 30GB of disk available for each OpenSwitch build directory (usually takes way less, but this is the worst-case scenario).
 
-If you are developing on your own GNU/Linux machine/VM, follow the instructions about how to [setup a GNU/Linux machine for OpenSwitch development](linux-setup).
+If you are developing on your own GNU/Linux machine/VM, follow the instructions about how to [setup a GNU/Linux machine for OpenSwitch development](../linux-setup).
 
-As an alternative, you can follow this guide on how to [use a Vagrant box for OpenSwitch development](vagrant-setup).
+As an alternative, you can follow this guide on how to [use a Vagrant box for OpenSwitch development](../vagrant-setup).
 
 ## Accessing the OpenSwitch Source Code
 
