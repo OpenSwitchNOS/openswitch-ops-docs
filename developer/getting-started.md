@@ -15,6 +15,7 @@ If you are developing on your own GNU/Linux machine/VM, follow the instructions 
 
 As an alternative, you can follow this guide on how to [use a Vagrant box for OpenSwitch development](../vagrant-setup).
 
+
 ## Accessing the OpenSwitch Source Code
 
 The OpenSwitch source code is accessible at the [OpenSwitch git repository](https://git.openhalon.io/) website, where the source is organized into several projects.  To build OpenSwitch, only the over-arching [openhalon/openhalon](https://git.openhalon.io/cgit/openhalon/openhalon) project needs to be cloned, and the URLs used for cloning are listed at the bottom of the page.
