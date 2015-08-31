@@ -58,17 +58,35 @@ devenv_patch_recipe   devenv_rm             devenv_status         devenv_update_
 * Follow the [OpenSwitch Coding Style](./contrib-code.md#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
 
 #### devenv_init
-The `src/` directory and substructure is created with
+Initiates the development environment.
 ```bash
 $ make devenv_init
 ```
 If git-review has been installed, `make`-ing the `devenv_init` target will configure the workspace for possible future change submissions.
 
+#### devenv_list_all
+This command is in charge of show the user the list of projects to use with the platform that has been configured.
+```bash
+$ make devenv_list_all
+Build System for openswitch
+
+Platform: as5712
+
+List of available devenv packages for as5712 platform:
+  * ops-aaa-utils
+  * ops-arpmgrd
+  * ops-bufmond
+  * ops-cfgd
+  * ops-cli
+  * ops-config-yaml
+  * ops-dhcp-tftp
+```
+
 #### devenv_status
-The `devenv_status` target may be used to show the status of the development environment, and will work even before the development environment has been initialized.  Typically, the result is
+The `devenv_status` target may be used to show the status of the development environment.
 ```bash
 $ make devenv_status
-openvswitch-halon: <path>/src/openvswitch-halon
+ops-vland: <path>/src/ops-vland
 ```
 
 #### devenv_add
@@ -76,22 +94,21 @@ Packages to be developed may be added to the collection, one or more at a time, 
 ```bash
 $ make devenv_init
 ...
-$ make devenv_add openvswitch-halon quilt
+$ make devenv_add ops-vland ops-pmd
 ...
 $ make devenv_status
-openvswitch-halon: <path>/src/openvswitch-halon
-quilt: <path>/src/quilt
+ops-pmd: <path>/ops-build/src/ops-pmd
+ops-vland: <path>/ops-build/src/ops-vland
 ```
 
 #### devenv_rm
 Complementary to the `devenv_add` target, the `devenv_rm` target can be used to remove packages from the collection.  Continuing from the previous example:
 ```bash
-$ make devenv_rm openvswitch-halon
+$ make devenv_rm ops-vland
 ...
 $ make devenv_status
-quilt: <path>/src/quilt
+ops-pmd: <path>/ops-build/src/ops-pmd
 ```
-
 **Note**: Unsaved changes to the source in the removed package will be irretrievably lost.
 
 #### devenv_update_recipe
@@ -99,37 +116,22 @@ quilt: <path>/src/quilt
 ```bash
 $ make devenv_init
 ...
-$ make devenv_add openvswitch-halon
-... # make changes to src/openvswitch-halon/...
-$ make openvswitch-halon-build
+$ make devenv_add ops-vland
+... # make changes to src/ops-vland/...
+$ make ops-vland-build
 ...
-$ make openvswitch-halon-deploy TARGET="root@xx.xx.xx.xx"
+$ make ops-vland-deploy TARGET="root@xx.xx.xx.xx"
 ... # test your changes ... they work!
-$ git -C src/openvswitch-halon add <the files you changed>
-$ git -C src/openvswitch-halon commit -sm "Fix something"
+$ git -C src/ops-vland add <the files you changed>
+$ git -C src/ops-vland commit -sm "Fix something"
 ...
-$ make devenv_update_recipe openvswitch-halon
-... # openvswitch-halon recipe is updated with the changes committed to "Fix something"
+$ make devenv_update_recipe ops-vland
+... # ops-vland recipe is updated with the changes committed to "Fix something"
 ```
 
 #### devenv_clean
 The complementary target to `devenv_init`, this target will remove any/all package source as well as the `src/` directory.
 **Note**: Unsaved changes to the source in any/all packages will be irretrievably lost.
-
-#### devenv_list_all
-This command is in charge of show the user the list of projects to use with the platform that has been configured.
-```
-$  make devenv_list_all
-Build System for halon
-
-Platform: as5712
-  * cfgd
-  * config-yaml
-  * fand
-  * halonutils
-  * intfd
-  * lacpd
-```
 
 #### devenv_cscope
 A tool for browsing in development enviroment, it has the same features as `cscope` for Linux, and it is necessary to install the `cscope` tool for Linux before using `devenv_cscope`.
@@ -144,7 +146,7 @@ $  make devenv_import <package_name>
 ```
 
 #### devenv_patch_recipe
-If the user is working with a recipe and this recipe is not from our source code; after the user made the commit it will run this command in order to create the necessary patch for our environment.
+If the user is working with a recipe and this recipe is not from OpenSwitch; after the user made the commit it will run this command in order to create the necessary patch for the OpenSwitch environment.
 ```bash
 $  make devenv_patch_recipe
 ```
@@ -167,10 +169,10 @@ All packages in the workspace will have targets to build, clean, deploy or undep
 ```bash
 $ make devenv_init
 ...
-$ make devenv_add openvswitch-halon
+$ make devenv_add ops-vland
 ...
-$ make openvswitch-<TAB><TAB>
-openvswitch-build     openvswitch-clean     openvswitch-deploy    openvswitch-undeploy
+$ make ops-vland-<TAB><TAB>
+ops-vland-build     ops-vland-clean     ops-vland-deploy    ops-vland-undeploy
 ```
 
 #### Building and Cleaning
@@ -181,36 +183,31 @@ After (or even before) modifying the source for a package, the package can be bu
 #### Building Documentation
 The OpenSwitch project uses the Markdown markup language to generate its documentation. To build the OpenSwitch documentation you will need to install `markdown`.
 
-Example below for Ubuntu/Debian:
-```bash
-sudo apt-get install markdown
-```
-
 After `markdown` is installed, the documentation can be built by `make`-ing `dist-docs` as seen below.
 ```bash
 make devenv_init
-make devenv_add openvswitch-halon
-cd src/openvswitch-halon/build
+make devenv_add ops-vland
+cd src/ops-vland/build
 make dist-docs
 ```
 
 #### Deploying and Undeploying
-By specifying a running target, accessible via SSH, the results of the built package can be installed using the `-deploy` target. The example below will use SSH as user root to install the results of build openvswitch on the device at address 10.0.2.5:
+By specifying a running target, accessible via SSH, the results of the built package can be installed using the `-deploy` target. The example below will use SSH as user root to install the results of build vland on the device at address 10.0.2.5:
 
 
 ```bash
-$ make openvswitch-deploy TARGET="root@10.0.2.5"
+$ make vland-deploy TARGET="root@10.0.2.5"
 ```
 
 
-Sometimes it is valuable to display the deployment progress; this can be done by adding the `-s` option to the TARGET, e.g. `TARGET="-s root@10.0.2.5"`.
-Another option available with deploy which is less-often useful is `-n` to do a dry-run of the deployment without actually deploying the content.
+To display the deployment progress add the `-s` option to the TARGET, e.g. `TARGET="-s root@10.0.2.5"`.
+To do a dry-run of the deployment without actually deploying the content use `-n`, e.g. `TARGET="-n root@10.0.2.5"`.
 
 **Note:** Deployment of files will fail if they are "busy" on the target.
 
 Undeploying a package will remove the content from the target device.  It does not replace or restore the original content.  The syntax is similar to that used for deploying.
 
-After you're satisfied with your modifications, see how to [contribute them to the OpenSwitch project](./contrib-code.html).
+After you're satisfied with your modifications, see the [Contribute Code](./contribute-code.html) guide.
 
 #### Troubleshooting
 While building the project you may encounter disk space error messages, such as the  following:
@@ -234,52 +231,48 @@ If enough disk space is available, modify the file `/etc/sysctl.d/30-tracker.con
 
 #### Understanding the Building System Infrastructure
 
-In this section we are going to review some aspects around our building system.
-One important aspect before we start is that our building system is base in [Yocto Project](https://www.yoctoproject.org/about), so we are not going to explain how Yocto works but we are going to include some important aspects that are related with our project.
+The building system is based in the [Yocto Project](https://www.yoctoproject.org/about). We will not cover how Yocto works but will include some important aspects that are related with OpenSwitch.
 
-After you download or clone OpenSwitch in you machine you can see the followings folders and files
+After you download or clone OpenSwitch in your machine, you can see the followings folders and files:
 
 ```bash
 $ ls
-COPYING  Makefile  README.md  build/  images/  tools/  yocto/
+build/  COPYING  images/  Makefile  README.md  src/  tools/  yocto/
 ```
-
-**COPYING**: Within this file you will find information about our license, it is Apache License, you can check any detail about it in [Apache License](http://www.apache.org/licenses/LICENSE-2)
-
-**Makefile**: It is our Makefile
-
 **build/**: This directory contains user configuration files and the output generated by Open Embedded; it is standard configuration.
 
-**images/**: With in this directory you will find symbolic links to all the images that the builder builds. The most important file is `openhalon-disk-image-platform.tar.gz`
+**COPYING**: Licensing information. Check more details at the [Apache License](http://www.apache.org/licenses/LICENSE-2)
 
-**tools/**: This directory contains tools that are primary used by the build system. In this folder we can find the `Rules.make` file, it is the core of our `Makefile`
+**images/**: Symbolic links to all the images that have been built. The most important file is `openswitch-disk-image-<platform>.tar.gz`
 
-**yocto/**: This directory contain the core of the build system so inside this directory we can find
+**Makefile**: The OpenSwitch Makefile.
 
-```bash
-$ cd openhalon/yocto
-$ ls
-openhalon/  poky/
-```
+**tools/**: This directory contains tools that are primarily used by the build system. In this folder we can find the `Rules.make` file, it is the core of our `Makefile`.
 
-**poky/**: This folder is the core of Yocto project you can read about it in the following link [YoctoProject Documentation](http://www.yoctoproject.org/docs/1.6/dev-manual/dev-manual.html)
-
-**openhalon/**: This folder is our core and you can find the following information there:
+**yocto/**: The core of the build system. Inside this directory :
 
 ```bash
-$ cd openhalon
 $ ls
-Rules.make  meta-distro-openhalon/  meta-platform-openhalon-as5712/
-certs/       meta-foss-openhalon/    meta-platform-openhalon-genericx86-64/
+openswitch/  poky/
 ```
 
-**meta-foss-openhalon/**: This folder contains all the recipes and patch for **Free and Open Source Software**
+**poky/**: This folder is the core of the Yocto project. Read more about it [YoctoProject Documentation](http://www.yoctoproject.org/docs/1.6/dev-manual/dev-manual.html)
 
-**meta-distro-openhalon/**: This folder contains all the recipes and patch related to the distribution. It means that you can find all the recipes related with the core and the kernel of OpenSwitch
+**openswitch/**: This folder is our core and you can find the following information there:
 
-**meta-platform-openhalon-XXX/**: This folder contains all the recipes and patch related to specific platform, for example: `meta-platform-openhalon-genericx86-64` contains all the things that Yocto needs in oder to build a new image for x86 platform.
+```bash
+$ ls
+Rules.make  meta-distro-openswitch/  meta-platform-openswitch-as5712/
+meta-foss-openswitch/    meta-platform-openswitch-genericx86-64/
+```
 
-Inside of every folder we have some structure in order to keep everything in order, for example inside  `meta-platform-openhalon-genericx86-64` we have folder for core `recipes`,` kernel recipes`  and some others. It means if you have to change something in the kernel and the change is just for x86 you have to go inside `openhalon/yocto/openhalon/meta-platform-openhalon-genericx86-64/recipes-kernel` and add you recipe or just add the `bbapend` file.
+**meta-foss-openswitch/**: This folder contains all the recipes and patch for FOSS (**Free and Open Source Software**)
+
+**meta-distro-openswitch/**: This folder contains all the recipes and patch related to the distribution. It means that you can find all the recipes related with the core and the kernel of OpenSwitch
+
+**meta-platform-openhalon-XXX/**: This folder contains all the recipes and patch related to specific platform, for example: `meta-platform-openswitch-genericx86-64` contains all the things that Yocto needs in oder to build a new image for x86 platform.
+
+Inside of every folder we have some structure in order to keep everything in order, for example inside  `meta-platform-openswitch-genericx86-64` we have folder for core `recipes`,`kernel recipes`  and some others. It means if you have to change something in the kernel and the change is just for x86 you have to go inside `yocto/openswitch/meta-platform-openswitch-genericx86-64/recipes-kernel` and add your recipe or the `bbapend` file.
 
 ### Working with branches
 If you need to work with development branches there are a couple of changes that will be required in the workflow. Usually only owners of the respective git repo (project owners) or the members of certain privileged user groups can create new feature branches, and these branches are restricted to have the prefix `feature/` on it.
@@ -290,7 +283,7 @@ For example assume that you are starting to work on the branch `foo` on the proj
 make devenv_add sysd
 cd src/sysd
 git review -s # Setup the Gerrit remote
-git checkout -b feature/foo # The -b fla  creates the new branch
+git checkout -b feature/foo # The -b flag creates the new branch
 git push gerrit feature/foo # Publishes the new branch
 # Do changes needed
 git commit -s # This step is needed for branch creation even if you do not have any code changes
@@ -318,7 +311,7 @@ git checkout [target]
 git pull # update the local repo to find any new remote branches
 git merge --no-ff [source] # merge the source branch changes to the target
 git commit -s --amend # this will modify the commit message to include a ChangeId. Without the ChangeID, commits will not go through
-git review  [target] # send the review for target branch. The review for merge will not have any code as this is only a merge
+git review [target] # send the review for target branch. The review for merge will not have any code as this is only a merge
 ```
 
 ## How to add new code to OpenSwitch
@@ -329,27 +322,27 @@ The following are the steps to follow in order to add a new repo to the OpenSwit
 
 1) Git clone project:
 ```bash
-git clone https://review./infra/project-config
+git clone https://review.openswitch.net/infra/project-config
 ```
 
-2) Create a new file `gerrit/acls/openhalon/<repo-name>.config` with following contents. **Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example:
+2) Create a new file `./gerrit/acls/openswitch/<repo-name>.config` with the the following contents. **Note:** The code review and abandon group name should be `<repo-name>-maintainers` (e.g if the repo name is `ops-vland`, then the group name would be `ops-vland-maintainers`).
 ```html4strict
 [access "refs/heads/*"]
 abandon = group Change Owner
 abandon = group <repo-name>-maintainers
-label-Code-Review = -2..+2 group openhalon-core
+label-Code-Review = -2..+2 group <repo-name>-maintainers
 label-Workflow = -1..+1 group Change Owner
 ```
 
-3) The `<repo-name>`-maintainers group for your repo will get created by the `project-config-maintainers` when they approve the code review.
+3) The `<repo-name>-maintainers` group for your repo will get created by the `project-config-maintainers` when they approve the code review.
 
 4) Modify `gerrit/projects.yaml` to add the repository.
 ```html4strict
-- project: openhalon/<repo-name>
+- project: openswitch/<repo-name>
   description: <Repo Description>
 ```
 
-5) Git commit the changes. In the commit message please specify the `Ubuntu One` full name of two users that you wish to add as maintainers of this repo.
+5) Git commit the changes. In the commit message please specify the `GitHub` full name of two users that you wish to add as maintainers of this repo.
 ```bash
 git commit --signoff
 ```
@@ -363,7 +356,7 @@ git review
 #### Writing a new daemon with CMake
 The following is an example code
 ```
- # Copyright (C) 2015 Hewlett Packard Enterprise Development LP
+# Copyright (C) 2015 Hewlett Packard Enterprise Development LP
 # All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -447,13 +440,10 @@ The recipes have some important parts:
 The OpenSwitch build environment supports working with an NFS Root Setup that speeds up development workflows. This section provides the instructions to set it up.
 
 ### Introduction
-NFS Root environment is a setup where your target hardware boots his root file system from a directory on the developer's machine shared over NFS (Network File System). This setup is very convenient since it requires almost no effort to update the code/configuration on the target when developers are making changes.
+NFS root environment is a setup where your target hardware boots his root file system from a directory on the developer's machine shared over NFS (Network File System). This setup is very convenient since it requires almost no effort to update the code/configuration on the target when developers are making changes.
 
-### Setup the NFS server
-You need to have a Linux host machine that has an NFS server installed. Example to install NFS on Debian/Ubuntu:
-```bash
-sudo -E apt-get install nfs-kernel-server
-```
+### Requirements
+* A Linux host machine that has an NFS server installed.
 
 ### Using NFS root
 The OpenSwitch build system includes logic that simplifies working with NFS root configuration. In order to use it you will require to perform some steps detailed below.
@@ -482,7 +472,7 @@ Important notes:
 * If you have previously deployed the NFS root directory, it will give an error message warning that the previous directory will be wipe-out. You will be able to`CTRL+C` a that point or proceed. Any change that you did to that directory will be lost.
 * If you build the image again, the changes are not automatically deployed to the NFS root, you need to run the deploy target again after changing the image (see next section about how to use it with the `devenv` environment).
 
-##### Working with devenv on NFS
+#### Working with devenv on NFS
 If you are using the developer environment (`devenv`), you will find a make target for every package named `<package>-nfs-deploy` that will deploy your modified code to the NFS root directory in a similar way that the `deploy-target` works.
 
 This may keep asking for the local user password, to avoid this, you can install your ssh-key in your own authorized keys:
