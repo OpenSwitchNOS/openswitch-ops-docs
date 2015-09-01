@@ -1,3 +1,8 @@
+---
+title: Getting Started with OpenSwitch
+layout: document
+---
+
 # Getting Started with OpenSwitch
 OpenSwitch requires a Linux based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows box can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup.html) guide for instructions).
 
@@ -11,17 +16,13 @@ OpenSwitch requires a Linux based OS in order to build an image or contribute to
 - [Deploying an image](#deploying-an-image)
 
 ## Build System Requirements
-* A GNU/Linux machine running a recent Linux distribution.
-  * Unless you have powerful VMs, prefer real hardware.
-  * OpenSwitch is developed in Ubuntu but Debian, Fedora, SuSe should work fine as well.
-* At least 30GB of free disk space available for each OpenSwitch build directory.
+* A GNU/Linux machine running a recent Linux distribution. OpenSwitch is developed in Ubuntu but Debian, Fedora or SuSe should work fine as well.
+* At least 30GB of free disk space.
 
 Two options exist to work with OpenSwitch:
 
-* Bring Your Own Linux (BYOL). Develop using your own GNU/Linux machine.
- * Follow the instructions to [Setup a GNU/Linux machine for OpenSwitch development](./linux-setup.html).
-* Use a Vagrant image.
- * Follow this guide to [Use a Vagrant box for OpenSwitch development](./vagrant-setup.html).
+* Bring Your Own Linux (BYOL): To develop using your own GNU/Linux machine, follow the instructions to [Setup a GNU/Linux machine for OpenSwitch development](./linux-setup.html).
+* Use a Vagrant image: Follow this guide to [Use a Vagrant box for OpenSwitch development](./vagrant-setup.html).
 
 **Proceed to the following sections once you have setup your own Linux system or a Vagrant box.**
 
@@ -34,7 +35,7 @@ The OpenSwitch source code is accessible at the [OpenSwitch Git Repository](http
 * Once the directory is configured it should not be moved.
 * In many proxied environments the DNS lookups performed to fetch `shared states` used by the build system could become a bottle neck. It is advisable to install a local DNS cache tool like `dnsmasq`.
 
-To clone the OpenHalon repository, use the following `git clone` command and URL. The use of `<directory>` is optional but recommended. Use the directory name as an indicator of the purpose of the OpenSwitch workspace.  If omitted, `<directory>` will default to `ops-build`.
+To clone the OpenSwitch repository, use the following `git clone` command and URL. The use of `<directory>` is optional but recommended. Use the directory name as an indicator of the purpose of the OpenSwitch workspace.  If omitted, `<directory>` will default to `ops-build`.
 ````bash
 $ git clone https://git.openswitch.net/openswitch/ops-build [<directory>]
 ````
@@ -99,4 +100,42 @@ For information on developing for OpenSwitch, see the [How to contribute to the 
 
 ## Deploying an image
 
-TBD
+You can uploaded your image to an Edge-Code AS5712 as described in [Physical Switch Image](#physical-switch-image), or run a [Simulated Switch Image](#simulated-switch-Image) in [Docker](http://docs.docker.com/) if you built a ```genericx86-64``` image.
+
+### Physical Switch Image
+
+After your build completes you will have an ONIE file that can be uploaded to the switch. The file can be found in the images folder and is typically called ````onie-installer-x86_64-as5712_54x````. For an as5712 platform, follow the instructions below.
+
+1. Copy the ONIE file to a NFS shared directory.
+2. Reboot the switch by typing ````reboot````.
+3. When switch boots it will bring up a GNU GRUB selection screen.  Using your arrow keys move down to **ONIE** then select **ONIE : Rescue**.
+4. Type the following command:
+````
+onie-nos-install tftp://<tftp-server>/<onie-file>
+````
+5. The switch will automatically reboot when done.
+
+
+### Simulated Switch Image
+If you build an image for ````genericx86-64````, it's possible to run a simulated switch image in [Docker](http://docs.docker.com/).
+
+1. Make sure the Docker daemon is up and running. If it's not, run the following:
+````
+sudo docker -d
+````
+2. Add yourself to the docker group (this step is required only the first time):
+````
+sudo usermod -aG docker $USER
+````
+3. After building the image, run the following:
+````
+sudo make export_docker_image openswitch
+````
+4. To run the simulated switch image in Docker, type the following command:
+````
+sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup:/sys/fs/cgroup -h osw --name osw openswitch /sbin/init &
+````
+5. Once the Docker switch is running, you can connect to it via:
+````
+sudo docker exec -ti osw bash
+````
