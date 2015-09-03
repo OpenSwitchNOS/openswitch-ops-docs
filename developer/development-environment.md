@@ -6,9 +6,11 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 
 **All of the packages in OpenSwitch are not yet supported in the development environment.**
 
-- [The OpenSwitch Development Environment](#the-openswitch-development-environment)
-	- [Managing the development environment](#managing-the-development-environment)
-	- [Prerequisites for using Development Environment](#prerequisites-for-using-development-environment)
+
+## Contents
+
+- [Managing the development environment](#managing-the-development-environment)
+- [Prerequisites for using Development Environment](#prerequisites-for-using-development-environment)
 	- [devenv_init](#devenvinit)
 	- [devenv_list_all](#devenvlistall)
 	- [devenv_status](#devenvstatus)
@@ -27,12 +29,7 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 	- [Deploying and Undeploying](#deploying-and-undeploying)
 	- [Troubleshooting](#troubleshooting)
 	- [Understanding the Building System Infrastructure](#understanding-the-building-system-infrastructure)
-- [Working with branches](#working-with-branches)
-- [How to add new code to OpenSwitch](#how-to-add-new-code-to-openswitch)
-	- [Adding a New Repository](#adding-a-new-repository)
-	- [C/C++ code with CMake](#cc-code-with-cmake)
-		- [Writing a new daemon with CMake](#writing-a-new-daemon-with-cmake)
-	- [Adding a recipe for your daemon](#adding-a-recipe-for-your-daemon)
+	- [Working with branches](#working-with-branches)
 - [How to setup an NFS root environment for development](#how-to-setup-an-nfs-root-environment-for-development)
 	- [Introduction](#introduction)
 	- [Requirements](#requirements)
@@ -42,7 +39,7 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 		- [Working with devenv on NFS](#working-with-devenv-on-nfs)
 		- [Boot your hardware with NFS](#boot-your-hardware-with-nfs)
 
-### Managing the development environment
+## Managing the development environment
 
 The area for developing software will be found under the `src/` directory at the top level of the workspace.  The subdirectories will contain the source for the packages being worked with.  All targets for the development environment management begin with `devenv_` and can be shown with tab-completion:
 ```bash
@@ -51,20 +48,21 @@ devenv_add            devenv_clean          devenv_import         devenv_init
 devenv_patch_recipe   devenv_rm             devenv_status         devenv_update_recipe
 ```
 
-#### Prerequisites for using Development Environment
+## Prerequisites for using Development Environment
 * Follow the [Getting Started](./getting-started.md) guide to configure your system.
 * Review the [How to contribute to the OpenSwitch Project Code](./contrib-code.md) guide.
 * Follow the [OpenSwitch Coding Style](./contrib-code.md#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
 
-#### devenv_init
+### devenv_init
 Initiates the development environment.
 ```bash
 $ make devenv_init
 ```
 If git-review has been installed, `make`-ing the `devenv_init` target will configure the workspace for possible future change submissions.
 
-#### devenv_list_all
+### devenv_list_all
 This command is in charge of show the user the list of projects to use with the platform that has been configured.
+
 ```bash
 $ make devenv_list_all
 Build System for openswitch
@@ -81,14 +79,15 @@ List of available devenv packages for as5712 platform:
   * ops-dhcp-tftp
 ```
 
-#### devenv_status
+### devenv_status
+
 The `devenv_status` target may be used to show the status of the development environment.
 ```bash
 $ make devenv_status
 ops-vland: <path>/src/ops-vland
 ```
 
-#### devenv_add
+### devenv_add
 Packages to be developed may be added to the collection, one or more at a time, as shown in the following example.  As the packages are added, each one will be fetched into the development `src/` directory in separate sub-directories. Each package is also unpacked and patched (as required).
 ```bash
 $ make devenv_init
@@ -100,7 +99,7 @@ ops-pmd: <path>/ops-build/src/ops-pmd
 ops-vland: <path>/ops-build/src/ops-vland
 ```
 
-#### devenv_rm
+### devenv_rm
 Complementary to the `devenv_add` target, the `devenv_rm` target can be used to remove packages from the collection.  Continuing from the previous example:
 ```bash
 $ make devenv_rm ops-vland
@@ -110,7 +109,7 @@ ops-pmd: <path>/ops-build/src/ops-pmd
 ```
 **Note**: Unsaved changes to the source in the removed package will be irretrievably lost.
 
-#### devenv_update_recipe
+### devenv_update_recipe
 `devenv_update_recipe` is used to update build recipes after changes have been committed to a package in the development environment.  The workflow is as follows:
 ```bash
 $ make devenv_init
@@ -128,42 +127,42 @@ $ make devenv_update_recipe ops-vland
 ... # ops-vland recipe is updated with the changes committed to "Fix something"
 ```
 
-#### devenv_clean
+### devenv_clean
 The complementary target to `devenv_init`, this target will remove any/all package source as well as the `src/` directory.
 **Note**: Unsaved changes to the source in any/all packages will be irretrievably lost.
 
-#### devenv_cscope
+### devenv_cscope
 A tool for browsing in development enviroment, it has the same features as `cscope` for Linux, and it is necessary to install the `cscope` tool for Linux before using `devenv_cscope`.
 ```bash
 $  make devenv_cscope
 ```
 
-#### devenv_import
+### devenv_import
 This command will help the developer to import code, you have to specify the name of the package that you want to import
 ```bash
 $  make devenv_import <package_name>
 ```
 
-#### devenv_patch_recipe
+### devenv_patch_recipe
 If the user is working with a recipe and this recipe is not from OpenSwitch; after the user made the commit it will run this command in order to create the necessary patch for the OpenSwitch environment.
 ```bash
 $  make devenv_patch_recipe
 ```
 
-#### devenv_refresh
+### devenv_refresh
 This command performs a `git pull --rebase` in all your devenv repos. If you have local changes not staged the git pull will fail, and you will get a warning in red to let you know that particular repo wasn’t updated.
 ```bash
 $  make devenv_refresh
 ```
 
-#### git_pull
+### git_pull
 
 This command performs a `git pull --rebase` in the base Git repo and the overlay repos, and if you have a devenv, also on all the repos there (like the previous command).
 ```bash
 $  make git_pull
 ```
 
-### Working with the Modified Packages
+## Working with the Modified Packages
 All packages in the workspace will have targets to build, clean, deploy or undeploy, which are formed by prefixing these terms with the package name (can be seen with tab completion). Example:
 ```bash
 $ make devenv_init
@@ -174,12 +173,12 @@ $ make ops-vland-<TAB><TAB>
 ops-vland-build     ops-vland-clean     ops-vland-deploy    ops-vland-undeploy
 ```
 
-#### Building and Cleaning
+### Building and Cleaning
 After (or even before) modifying the source for a package, the package can be built by using the target with the `-build` suffix. **Note:** The `-clean` suffixed target for the package is intended to return the package to a clean state, but is not functional at this time.
 
 **Note:** The build system will ensure that any prerequisites for this target are updated before the package build takes place.
 
-#### Building Documentation
+### Building Documentation
 The OpenSwitch project uses the Markdown markup language to generate its documentation. To build the OpenSwitch documentation you will need to install `markdown`.
 
 After `markdown` is installed, the documentation can be built by `make`-ing `dist-docs` as seen below.
@@ -190,14 +189,13 @@ cd src/ops-vland/build
 make dist-docs
 ```
 
-#### Deploying and Undeploying
+### Deploying and Undeploying
 By specifying a running target, accessible via SSH, the results of the built package can be installed using the `-deploy` target. The example below will use SSH as user root to install the results of build vland on the device at address 10.0.2.5:
 
 
 ```bash
 $ make vland-deploy TARGET="root@10.0.2.5"
 ```
-
 
 To display the deployment progress add the `-s` option to the TARGET, e.g. `TARGET="-s root@10.0.2.5"`.
 To do a dry-run of the deployment without actually deploying the content use `-n`, e.g. `TARGET="-n root@10.0.2.5"`.
@@ -208,7 +206,7 @@ Undeploying a package will remove the content from the target device.  It does n
 
 After you're satisfied with your modifications, see the [Contribute Code](./contribute-code.html) guide.
 
-#### Troubleshooting
+### Troubleshooting
 While building the project you may encounter disk space error messages, such as the  following:
 ```bash
 ERROR: No space left on device or exceeds fs.inotify.max_user_watches?
@@ -228,7 +226,7 @@ udev                                      7.8G  4.0K  7.8G   1% /dev
 If enough disk space is available, modify the file `/etc/sysctl.d/30-tracker.conf`. The recommendation is to multiple current value of `fs.inotify.max_user_watches` by 2.
 
 
-#### Understanding the Building System Infrastructure
+### Understanding the Building System Infrastructure
 
 The building system is based in the [Yocto Project](https://www.yoctoproject.org/about). We will not cover how Yocto works but will include some important aspects that are related with OpenSwitch.
 
@@ -291,7 +289,8 @@ git review feature/foo # Send the review for this branch
 
 If you are a developer working on a feature branch (foo) that already exists, your workflow will look like:
 
-``` bash
+
+```bash
 make devenv_add sysd
 cd src/sysd
 git pull --rebase # update the local repo to find any new remote branches
@@ -310,130 +309,8 @@ git checkout [target]
 git pull # update the local repo to find any new remote branches
 git merge --no-ff [source] # merge the source branch changes to the target
 git commit -s --amend # this will modify the commit message to include a ChangeId. Without the ChangeID, commits will not go through
-git review [target] # send the review for target branch. The review for merge will not have any code as this is only a merge
+git review  [target] # send the review for target branch. The review for merge will not have any code as this is only a merge
 ```
-
-## How to add new code to OpenSwitch
-OpenSwitch preferred build system for C/C++ applications is `CMake`. But as the code start using other languages, guidelines will be provide here for them
-
-### Adding a New Repository
-The following are the steps to follow in order to add a new repo to the OpenSwitch project, referred as `<repo-name>`.
-
-1) Git clone project:
-```bash
-git clone https://review.openswitch.net/infra/project-config
-```
-
-2) Create a new file `./gerrit/acls/openswitch/<repo-name>.config` with the the following contents. **Note:** The code review and abandon group name should be `<repo-name>-maintainers` (e.g if the repo name is `ops-vland`, then the group name would be `ops-vland-maintainers`).
-```
-[access "refs/heads/*"]
-abandon = group Change Owner
-abandon = group <repo-name>-maintainers
-label-Code-Review = -2..+2 group <repo-name>-maintainers
-label-Workflow = -1..+1 group Change Owner
-```
-
-3) The `<repo-name>-maintainers` group for your repo will get created by the `project-config-maintainers` when they approve the code review.
-
-4) Modify `gerrit/projects.yaml` to add the repository.
-```
-- project: openswitch/<repo-name>
-  description: <Repo Description>
-```
-
-5) Git commit the changes. In the commit message please specify the `GitHub` full name of two users that you wish to add as maintainers of this repo.
-```bash
-git commit --signoff
-```
-
-6) Git review the changes
-```bash
-git review
- ```
-
-### C/C++ code with CMake
-#### Writing a new daemon with CMake
-The following is an example code
-```
-# Copyright (C) 2015 Hewlett Packard Enterprise Development LP
-# All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License. You may obtain
-# a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
-
-cmake_minimum_required (VERSION 2.8.1)
-
-PROJECT(mydaemon)
-
-# Find dependencies using pkg-config
-include(FindPkgConfig)
-pkg_check_modules(HALONUTILS halonutils)
-pkg_check_modules(SYSTEMD systemd)
-pkg_check_modules(OVSCOMMON libovscommon)
-pkg_check_modules(OVSDB libovsdb)
-
-######## Build and include settings ########
-include_directories(
-	${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}
-        ${OVSCOMMON_INCLUDE_DIRS}
-)
-
-file(GLOB SOURCES
-	"src/*.c"
-)
-
-add_executable(
-	mydaemon
-	${SOURCES}
-)
-
-target_link_libraries (mydaemon ${HALONUTILS_LIBRARIES}  ${OVSCOMMON_LIBRARIES}
-		        ${OVSDB_LIBRARIES}  ${SYSTEMD_LIBRARIES} -lpthread -lrt)
-
-# Install the daemon on bin directory
-INSTALL(TARGETS mydaemon
-	RUNTIME DESTINATION bin
-)
-```
-
-####  Adding a recipe for your daemon
-This is an example of a recipe
-
-```
-SUMMARY = "Halon My Daemon"
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
-
-DEPENDS = "halonutils halon-ovsdb"
-
-SRC_URI = "git://openswitch.net/openhalon/mydaemon;protocol=http"
-
-SRCREV="${AUTOREV}"
-
-S = "${WORKDIR}/git"
-
-inherit cmake
-```
-
-The recipes have some important parts:
-
-* **SUMMARY** = It is just a summary of your recipe.
-* **LICENSE** = It is the license for your recipe.
-* **LIC_FILES_CHKSUM** = It is the path of the license file with the md5.
-* **DEPENDS** = In this label we have to include all the dependency that our recipe have in order to compile in this case is depending on `halonutils` and `halon--ovsdb`
-* **SRC_URI** = This is the list of source files, it can be local or remote, Yocto supports several
- protocols. You can find the complete list in the [Yocto Ref Manual](http://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html)
-* **S** = This is the location in the build directory where the recipe source code resides. It is the work directory.
-* **inherit** = You can use this variable to inherit the functionality of a class, in our case we need `cmake` in order to build this recipe.
 
 ## How to setup an NFS root environment for development
 The OpenSwitch build environment supports working with an NFS Root Setup that speeds up development workflows. This section provides the instructions to set it up.
