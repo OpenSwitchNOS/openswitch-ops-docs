@@ -1,75 +1,70 @@
 # Quick Start Guide
-The following guide is the minimal set of steps that you need to follow in order to build an OpenSwitch image. This guide assumes Ubuntu 14.04. See the [Getting Started Guide](./getting-started.html) for details about other platforms.
 
-## Contents
-- [System requirements](#system-requirements)
-- [Define proxies](#define-proxies)
-- [Install required packages](#install-required-packages)
-- [Clone OpenSwitch](#clone-openswitch)
-- [The OpenSwitch Build System](#the-openswitch-build-system)
-- [Configure an OpenSwitch platform](#configure-an-openswitch-platform)
-- [Build an image](#build-an-image)
-- [More information](#more-information)
+The following guide uses [VirtualBox](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com) to provide an easy to setup development environment for the OpenSwitch project. The Vagrant image includes an Ubuntu VM with Docker already installed. Docker is used to run the OpenSwitch project image on a Linux container.
 
-## System requirements
-* Ubuntu 14.04.
-* 30GB of free disk space available.
+## What you get
 
-## Define proxies
-If required, set up the HTTP(s) proxies.
+* A VM running Ubuntu with the OpenSwitch development environment in `~/ops-build/`.
+* An OpenSwitch x86_64 image built and ready to be used.
+* An instance of OpenSwitch (the x86_64 image) running inside a Docker container.
 
+**Note:** The username/password for the VM is the default vagrant/vagrant.
+
+## Installation Steps
+1. Download and install [VirtualBox](https://www.virtualbox.org/).
+2. Download and install [Vagrant](https://www.vagrantup.com/).
+3. Install the required Vagrant plugins. Use the following command:
+``` bash
+$ vagrant plugin install vagrant-reload
+```
+4. If you are behind a proxy, install the `vagrant-proxyconf` plugin:
 ```bash
-$ export http_proxy=http://<proxy-url>:<proxy-port>
-$ export https_proxy=https://<proxy-url>:<proxy-port>
+$ vagrant plugin install vagrant-proxyconf
 ```
 
-## Install required packages
+## Configuration  and installation steps
+After following these steps, the system will be configured to work with OpenSwitch.
+1. Download and unzip the [Vagrant files](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
+
+2. If you are behind a proxy set the proxy `host:port` info in the `host/Vagrantfile`. The `host/Vagrantfile` is located in the workspace directory where you unzipped the Vagrant files.
+```bash
+config.proxy.http = "http://proxy.example.com:8080"
+config.proxy.https = "https://proxy.example.com:8080"
+```
+3. Go to your workspace directory and run `vagrant up`.
+```bash
+$ cd openswitch-vagrant-master
+$ vagrant up
+```
+**Note:** The first `vagrant up` can take a while since the entire OpenSwitch repository is fetched and built.
+
+
+
+## Login to the OpenSwitch instance
+After following the steps above, an OpenSwitch image has been built and Docker has been configured to run that image of OpenSwitch. Follow the steps below to connect to OpenSwitch. The steps below are to be performed in the newly created Ubuntu VM.
+
+1. Run a shell on the Docker instance with `docker exec -ti ops bash`
+2. Then run `vtysh` to start the OpenSwitch  CLI.
+
+Example:
 
 ```bash
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler libsdl1.2-dev xterm
-```
-If you encounter an error about `libsdl1.2`, the following can be used instead.
-
-```bash
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler xterm aptitude
-$ sudo aptitude install libsdl1.2-dev
+vagrant@ops-host:~/ops-build$ docker exec -ti ops bash
+bash-4.3# vtysh
+2015-09-01T23:31:47Z|00001|reconnect|INFO|unix:/var/run/openvswitch/db.sock: connecting...
+2015-09-01T23:31:47Z|00002|reconnect|INFO|unix:/var/run/openvswitch/db.sock: connected
 ```
 
-**DNS in proxied environments:**
-In proxied environments the DNS lookups to fetch `shared states` used by the build system could become a bottle neck. Install a local DNS cache tool like `dnsmasq`.
+## Build System and Development Environment
+After following these instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System assists in the development process by creating and maintaining an area containing a subset of the project's source files. It is a Git repository cloned to `~/ops-build` in your newly created Ubuntu VM. For details on how to manage it, see the [Development Environment](./dev-env.html) guide.
 
-```bash
-$ sudo -E apt-get install dnsmasq
-```
 
-## Clone OpenSwitch
-The source code is at the [OpenSwitch Git Repository](https://git.openswitch.net/), organized into several projects.  To build OpenSwitch only the [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project needs to be cloned.
-
-```bash
-$ git clone https://git.openswitch.net/openswitch/ops-build [<directory>]
-```
-
-## The OpenSwitch Build System
-The OpenSwitch build system is a GNU Make-based wrapper around the [Yocto Project](https://www.yoctoproject.org). The wrapper makes doing common operations easier, and is what a developer would interact with for typical image building and maintenance work.
-
-The wrapper supports bash shell tab completion, if it has been enabled in the shell.
-````bash
-$ make <TAB><TAB>
-````
-
-## Configure an OpenSwitch platform
-It is necessary to configure OpenSwitch for an specific platform before other `make` targets are usable. The example below configures it to build for an as5712 (Edge-Core AS5712) platform. Use `make help` to list all available platforms.
-````bash
-$ make configure as5712
-````
-
-## Build an image
-Each platform defines the default outputs produced by the build, typically all that is required is to invoke `make`.
-````bash
-$ make
-````
-
-All the build output will be found under the `images/` directory.
 
 ## More information
-For more information on developing for OpenSwitch, see the [Getting Started Guide](./getting-started.html), [How to contribute to the OpenSwitch Project Code](./contrib-code.html) and [Development Environment](./dev-env.html) documentation.
+For more information on developing for OpenSwitch, see the following guides:
+* [How to Contribute Code](./contrib-code.html) to learn how to submit your code UpStream.
+* [Development Environment](./dev-env.html) to learn how to work with the OpenSwitch Development Environment.
+
+## Notes
+1. Has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0.
+2. Latest versions of Vagrant and VirtualBox is recommended as Docker support is not present in older versions of Vagrant.
