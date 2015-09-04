@@ -4,40 +4,269 @@ Follow the [Getting Started](./getting-started.html) guide to prepare your syste
 
 ## Contents
 
-- [New code](#new-code)
-	- [Adding a New Repository](#adding-a-new-repository)
-		- [Writing a new daemon with CMake](#writing-a-new-daemon-with-cmake)
-		- [Adding a recipe for your daemon](#adding-a-recipe-for-your-daemon)
-- [Contributing changes](#contributing-changes)
-	- [Configuring the environment](#configuring-the-environment)
-		- [Create SSH keys](#create-ssh-keys)
-		- [Add the SSH Public Key to Gerrit](#add-the-ssh-public-key-to-gerrit)
-		- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
-		- [Client SSH configuration](#client-ssh-configuration)
-		- [Working behind a firewall](#working-behind-a-firewall)
-	- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
-	- [Installing git-review](#installing-git-review)
-	- [Preparing changes to be reviewed](#preparing-changes-to-be-reviewed)
-	- [Sending changes for review](#sending-changes-for-review)
-	- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
-	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
-- [Documenting the code](#documenting-the-code)
-  - [Documents distribution](#documents-distribution)
-- [Commit messages](#commit-messages)
-	- [Git commit message guidelines](#git-commit-message-guidelines)
-		- [Subject](#subject)
-		- [Body](#body)
-		- [Use cases](#use-cases)
-		- [Bug fixes](#bug-fixes)
-		- [Changes](#changes)
-	- [Using Gitchangelog](#using-gitchangelog)
-- [Coding Style](#coding-style)
-	- [Comparisons](#comparisons)
-	- [Variables](#variables)
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [How to contribute to the code](#how-to-contribute-to-the-code)
+	- [Contents](#contents)
+	- [Contributing changes](#contributing-changes)
+		- [Configuring the environment](#configuring-the-environment)
+			- [Create SSH keys](#create-ssh-keys)
+			- [Add the SSH Public Key to Gerrit](#add-the-ssh-public-key-to-gerrit)
+			- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
+			- [Client SSH configuration](#client-ssh-configuration)
+			- [Working behind a firewall](#working-behind-a-firewall)
+		- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
+		- [Installing git-review](#installing-git-review)
+		- [Preparing changes to be reviewed](#preparing-changes-to-be-reviewed)
+		- [Sending changes for review](#sending-changes-for-review)
+		- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
+		- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
+	- [Add New code](#add-new-code)
+		- [Working on a defect](#working-on-a-defect)
+		- [Adding a new feature](#adding-a-new-feature)
+		- [Adding a new component](#adding-a-new-component)
+		- [Documenting the code](#documenting-the-code)
+			- [Documents distribution](#documents-distribution)
+		- [Adding a New Repository](#adding-a-new-repository)
+			- [Writing a new daemon with CMake](#writing-a-new-daemon-with-cmake)
+	- [Commit messages](#commit-messages)
+		- [Git commit message guidelines](#git-commit-message-guidelines)
+			- [Subject](#subject)
+			- [Body](#body)
+			- [Use cases](#use-cases)
+			- [Bug fixes](#bug-fixes)
+			- [Changes](#changes)
+		- [Using Gitchangelog](#using-gitchangelog)
+	- [Coding Style](#coding-style)
+		- [Comparisons](#comparisons)
+		- [Variables](#variables)
 
-## New code
-OpenSwitch preferred build system for C/C++ applications is `CMake`.
+## Contributing changes
+Changes to the OpenSwitch code base go through a review process before being merged. This page describes how local modifications can be submitted for review and, if approved, made available upstream in the OpenSwitch project.
+
+### Configuring the environment
+
+OpenSwitch runs [Gerrit](https://code.google.com/p/gerrit/) for online code reviews and [Git](http://git-scm.com/) as the distributed version control system.
+The [OpenSwitch Gerrit](https://review.openswitch.net/) site is the entry point for change, review, test and inclusion in one of the OpenSwitch projects.
+
+#### Create SSH keys
+Do this only if no SSH keys have been created earlier for this development machine. To find out if keys exist for this development machine check the contents of the `~/.ssh/` directory. The following two files will exist if keys were already created:
+* `id_rsa`
+* `id_rsa.pub`
+
+If the `~/.ssh` directory or the files do not exist, then proceed to generate your SSH keys with the commands below:
+```bash
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t rsa
+```
+
+You will be prompted for a location to save the keys, and a pass-phrase for the keys. Accept the default location to save the keys and provide a pass-phrase. The pass-phrase is important as it keeps your keys secure while stored in your hard-drive. Do remember the pass-phrase as it will be needed to work with Gerrit. An example output is the following:
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/b/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/b/.ssh/id_rsa.
+Your public key has been saved in /home/b/.ssh/id_rsa.pub.
+```
+
+The public key needed to work with Gerrit is saved at `~/.ssh/id_rsa.pub`. The contents of this file (this is a text file) will be needed in the next step.
+
+If you get the `Agent admitted failure to sign using the key.` error message as seen below, simply run the command `ssh-add` after the error message.
+
+```bash
+"Agent admitted failure to sign using the key."
+# debug1: No more authentication methods to try.
+# Permission denied (publickey).
+```
+
+#### Add the SSH Public Key to Gerrit
+* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
+ * OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account create one by cliking on `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
+ * Keep record of the password and username as this is your Gerrit user and is needed to work with OpenSwitch.
+* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
+* Select `SSH Public Keys` in the panel on the left.
+* Paste the SSH public key (`id_rsa.pub` contents) in the input area for use with this site. The instructions for generating an SSH key are accessible just above the input area.
+* Click `Add`
+
+#### Verify that an username is assigned to Gerrit
+* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
+* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
+* Click on the `Profile` link (left side)
+* Verify that an username exists, or define one if it does not exist.
+* Keep track of the username as this is the Gerrit User and will be used to work with OpenSwitch
+
+#### Client SSH configuration
+* Add an entry similar to this to your `~/.ssh/config` file (preserve the indentation), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
+```bash
+Host review.openswitch.net
+  User <gerrit-user>
+  IdentityFile ~/.ssh/id_rsa
+```
+
+#### Working behind a firewall
+The network port used by Gerrit (29418) on the review website may be blocked in some networks, for example on a corporate network. One workaround (besides asking your ISP or corporate IT team to open the port) is to tunnel using your HTTP proxy. You can achieve that with the `nc` or `socat` command line utilities, or any other of your preference. Follow the instructions below to use `socat` or `nc` to configure a proxy for the SSH traffic.
+
+Take note of the proxy information.
+* Proxy URL (e.g web-proxy.location.domain.com). Referred as `<proxy-url>` below.
+* Proxy Port (e.g 8080). Referred as `<proxy-port>` below.
+
+Using `nc`
+* Install `nc` if not yet installed
+* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
+```
+Host review.openswitch.net
+   ProxyCommand nc -x <proxy-url>:<proxy-port> -X connect %h %p
+```
+
+Using `socat`
+* Install `socat` if not yet installed
+* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
+```
+Host review.openswitch.net
+   ProxyCommand socat - PROXY:<proxy-url>:%h:%p,proxyport=<proxy-port>
+```
+
+For more details and examples for adding user/passwords, see [this page](http://gitolite.com/git-over-proxy.html).
+
+### Configuring Git and Gerrit
+You need to configure your local repository to use your Gerrit account.
+* Set `gitreview.username` with your Gerrit login.
+```bash
+$ git config --global gitreview.username <gerrit-user>
+```
+* Configure email and name in Git:
+```bash
+$ git config --global user.email <email>
+$ git config --global user.name <name>
+```
+
+### Installing git-review
+`git-review` is used to contribute changes back to the OpenSwitch project.
+
+Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
+
+* Setup git-review
+```bash
+$ git-review -s
+```
+
+### Preparing changes to be reviewed
+Before attempting to commit changes, make sure that they are compliant with the [OpenSwitch Coding Style](#openswitch-coding-style). For non-OpenSwitch modules, follow the coding style that the module already uses.
+
+In particular,  the following files be rejected:
+* Files with trailing spaces
+* Files with with non-printable ASCII characters in their names.
+
+Changes for review should be **committed to a local branch** with a commit message that:
+* Begin with a single line of text which summarizes the contents of the change.
+* Additionally provide a description following the summarization line.
+
+If the change set has been composed by multiple commits to the local branch, **consider squashing them into a single commit** using `git rebase`.
+
+### Sending changes for review
+`git-review` is used as an aid when submitting a change set for review.
+The commit message for the set of changes must include a `Change-Id`, as generated by the `-i` option to `git-review`. To send changes for review, commit the changes and then run git-review as follows:
+```bash
+$ git commit -s -m "Meaningful summary of this change set."
+$ git-review -i
+```
+The `git-review` command output includes an URL for the change review. In example below the URL generated was: https://review.openswitch.net/1148.
+```bash
+$ git review
+remote: Resolving deltas: 100% (1/1)
+remote: Processing changes: new: 1, refs: 1, done
+remote: (W) 5421c73: commit subject >65 characters; use shorter first paragraph
+remote:
+remote: New Changes:
+remote:   https://review.openswitch.net/1148
+```
+Use the URL in the `git-review`output to login to the Review Site and add the list of reviewers.
+
+### Resubmitting a set of changes
+Reviewers may request modifications to the set of changes previously submitted. Make the changes as requested by the reviewers and then submit a patch with the following commands. The `-i` switch for `git-review` is not needed as a `Change-Id` was previously generated by the initial commit.
+```bash
+$ git commit --amend
+$ git-review
+```
+
+It is also possible to abandon a set of changes using the web interface, if that is desired.
+
+### After changes have been approved by Reviewers
+* Log in to the change review URL using the link provided by the `git-review` command output.
+* Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
+* This initiates the process of merging your change with the main product documentation.
+
+## Add New code
+There are different ways you can contribute to the OpenSwitch, follow this guide depending in the type of change you are doing.  
+
+### Working on a defect
+
+Defects will appear in OpenSwitch as in any other software project. Either if you want to collaborate with a known issue  or you find a defect that you would like to fix, please follow this steps to fix it.
+
+- Depending on if the defect is reproducible on VSI or not, configure the sandbox for genericx86-64 or as5712
+- Add the repository to your local workspace using `make devenv_add <repository-name>`. **Note:** If working on a branch in that repository, use `git checkout <branch name>  `
+- Work on the fix
+- Add a component test file to test the patch/fix. This test file is also submitted as part of the review in the next step.
+- Commit your change using [Contributing change](#contributing-changes) section
+
+### Adding a new feature
+
+Follow the next steps if you need to add a new feature that does not belong to any of the existing code.
+
+- Create the necessary module as mentioned under [Adding a new component](*adding-a-new-component)
+- Fetch any existing modules that will be modified as part of this feature.
+- Additionally, sufficient Feature test cases need to be added and integrated to CIT infra so that future commits are validated against the feature.
+- Update documentation on usage of the feature and design details, follow [Documenting the code](*documenting-the-code) section
+- Commit your changes
+
+### Adding a new component
+
+In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own by following the [Adding a new feature](*adding-a-new-feature).
+
+Follow these steps to create a new component.
+
+- [Create a new repo](*adding-a-new-repository)
+- [Create a recipe](*adding-a-recipe-for-your-daemon)
+- Add the code for your component
+- If this is a new daemon that should run when the switch boots up, add a service file in the same location as the recipe file
+- Create the correct repo structure with required top-level files and directories
+	- **Files:** AUTHORS, COPYING, Design.md, FAQ.md, NEWs, NOTICE, README.md
+	- **Directories:** /docs, /tests, /src, /include
+- Create a new directory called "tests" and add the necessary Component Test. CIT will pick up these test cases and run them for every commit to this module.
+- Add the module to the following file to allow the module to be included in the Openhalon package: `yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`
+- Commit your changes
+
+### Documenting the code
+
+The OpenSwitch project uses the Markdown markup language to generate its documentation.
+All documentation that is contributed to the project needs to be written in this format so that it can get built into the project.
+
+#### Documents distribution
+
+The following table lists the type of documents, the  target locations and the expected file names. Find below the table a small description of each type of document.
+
+| Doc Type                	| Repo                     	 | Directory 	| File Name               	  |
+|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
+| User Guides            	  | openswitch/ops           	 | /docs     	| [feature]_user_guide.md 	  |
+| Command References      	| openswitch/ops           	 | /docs     	| [feature]_cli.md        	  |
+| Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  |
+| Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  |
+| Component Functionality 	| openswitch/ops-[component] | /         	| README.md               	  |
+| Component Design        	| openswitch/ops-[component] | /         	| DESIGN.md               	  |
+| Component Test Plan     	| openswitch/ops-[component] | /tests    	| [component]_test.md         |
+| Infrastructure            | opeswitch/ops-build        | /docs      | [Infrastructure section].md |
+
+- **User Guides:** It documents how to use the different OpenSwitch features.
+- **Command References:** It documents the command usage for the different features found in the OpenSwitch project.
+- **Feature Designs:** It provides a high level design description for the feature.
+- **Feature Test Plans:** It contains a high level overview of the test plans for each feature.
+- **Component Functionality:** It describes the content of the component on this repo and provides pointers to other documents.
+- **Component Design:** It describes a high level design of the component.
+- **Component Test Plan:** It contains all the component tests documentation relevant to the specific repository.
+- **Infrastructure:** It describes a process in the core from OpenSwitch. These documents are addressed for developers that want to contribute with the code and only use OpenSwitch.
+
 
 ### Adding a New Repository
 The following are the steps to follow in order to add a new repo to the OpenSwitch project, referred as `<repo-name>`.
@@ -199,192 +428,6 @@ The recipes have some important parts:
 
 If you need more details of how the BitBake works, please go to [BitBake documentation](https://www.yoctoproject.org/tools-resources/projects/bitbake).
 
-
-## Contributing changes
-Changes to the OpenSwitch code base go through a review process before being merged. This page describes how local modifications can be submitted for review and, if approved, made available upstream in the OpenSwitch project.
-
-### Configuring the environment
-
-OpenSwitch runs [Gerrit](https://code.google.com/p/gerrit/) for online code reviews and [Git](http://git-scm.com/) as the distributed version control system.
-The [OpenSwitch Gerrit](https://review.openswitch.net/) site is the entry point for change, review, test and inclusion in one of the OpenSwitch projects.
-
-#### Create SSH keys
-Do this only if no SSH keys have been created earlier for this development machine. To find out if keys exist for this development machine check the contents of the `~/.ssh/` directory. The following two files will exist if keys were already created:
-* `id_rsa`
-* `id_rsa.pub`
-
-If the `~/.ssh` directory or the files do not exist, then proceed to generate your SSH keys with the commands below:
-```bash
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen -t rsa
-```
-
-You will be prompted for a location to save the keys, and a pass-phrase for the keys. Accept the default location to save the keys and provide a pass-phrase. The pass-phrase is important as it keeps your keys secure while stored in your hard-drive. Do remember the pass-phrase as it will be needed to work with Gerrit. An example output is the following:
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/b/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/b/.ssh/id_rsa.
-Your public key has been saved in /home/b/.ssh/id_rsa.pub.
-```
-
-The public key needed to work with Gerrit is saved at `~/.ssh/id_rsa.pub`. The contents of this file (this is a text file) will be needed in the next step.
-
-If you get the `Agent admitted failure to sign using the key.` error message as seen below, simply run the command `ssh-add` after the error message.
-
-```bash
-"Agent admitted failure to sign using the key."
-# debug1: No more authentication methods to try.
-# Permission denied (publickey).
-```
-
-#### Add the SSH Public Key to Gerrit
-* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
- * OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account create one by cliking on `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
- * Keep record of the password and username as this is your Gerrit user and is needed to work with OpenSwitch.
-* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
-* Select `SSH Public Keys` in the panel on the left.
-* Paste the SSH public key (`id_rsa.pub` contents) in the input area for use with this site. The instructions for generating an SSH key are accessible just above the input area.
-* Click `Add`
-
-#### Verify that an username is assigned to Gerrit
-* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
-* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
-* Click on the `Profile` link (left side)
-* Verify that an username exists, or define one if it does not exist.
-* Keep track of the username as this is the Gerrit User and will be used to work with OpenSwitch
-
-#### Client SSH configuration
-* Add an entry similar to this to your `~/.ssh/config` file (preserve the indentation), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
-```bash
-Host review.openswitch.net
-  User <gerrit-user>
-  IdentityFile ~/.ssh/id_rsa
-```
-
-#### Working behind a firewall
-The network port used by Gerrit (29418) on the review website may be blocked in some networks, for example on a corporate network. One workaround (besides asking your ISP or corporate IT team to open the port) is to tunnel using your HTTP proxy. You can achieve that with the `nc` or `socat` command line utilities, or any other of your preference. Follow the instructions below to use `socat` or `nc` to configure a proxy for the SSH traffic.
-
-Take note of the proxy information.
-* Proxy URL (e.g web-proxy.location.domain.com). Referred as `<proxy-url>` below.
-* Proxy Port (e.g 8080). Referred as `<proxy-port>` below.
-
-Using `nc`
-* Install `nc` if not yet installed
-* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
-```
-Host review.openswitch.net
-   ProxyCommand nc -x <proxy-url>:<proxy-port> -X connect %h %p
-```
-
-Using `socat`
-* Install `socat` if not yet installed
-* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
-```
-Host review.openswitch.net
-   ProxyCommand socat - PROXY:<proxy-url>:%h:%p,proxyport=<proxy-port>
-```
-
-For more details and examples for adding user/passwords, see [this page](http://gitolite.com/git-over-proxy.html).
-
-### Configuring Git and Gerrit
-You need to configure your local repository to use your Gerrit account.
-* Set `gitreview.username` with your Gerrit login.
-```bash
-$ git config --global gitreview.username <gerrit-user>
-```
-* Configure email and name in Git:
-```bash
-$ git config --global user.email <email>
-$ git config --global user.name <name>
-```
-
-### Installing git-review
-`git-review` is used to contribute changes back to the OpenSwitch project.
-
-Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
-
-* Setup git-review
-```bash
-$ git-review -s
-```
-
-### Preparing changes to be reviewed
-Before attempting to commit changes, make sure that they are compliant with the [OpenSwitch Coding Style](#openswitch-coding-style). For non-OpenSwitch modules, follow the coding style that the module already uses.
-
-In particular,  the following files be rejected:
-* Files with trailing spaces
-* Files with with non-printable ASCII characters in their names.
-
-Changes for review should be **committed to a local branch** with a commit message that:
-* Begin with a single line of text which summarizes the contents of the change.
-* Additionally provide a description following the summarization line.
-
-If the change set has been composed by multiple commits to the local branch, **consider squashing them into a single commit** using `git rebase`.
-
-### Sending changes for review
-`git-review` is used as an aid when submitting a change set for review.
-The commit message for the set of changes must include a `Change-Id`, as generated by the `-i` option to `git-review`. To send changes for review, commit the changes and then run git-review as follows:
-```bash
-$ git commit -s -m "Meaningful summary of this change set."
-$ git-review -i
-```
-The `git-review` command output includes an URL for the change review. In example below the URL generated was: https://review.openswitch.net/1148.
-```bash
-$ git review
-remote: Resolving deltas: 100% (1/1)
-remote: Processing changes: new: 1, refs: 1, done
-remote: (W) 5421c73: commit subject >65 characters; use shorter first paragraph
-remote:
-remote: New Changes:
-remote:   https://review.openswitch.net/1148
-```
-Use the URL in the `git-review`output to login to the Review Site and add the list of reviewers.
-
-### Resubmitting a set of changes
-Reviewers may request modifications to the set of changes previously submitted. Make the changes as requested by the reviewers and then submit a patch with the following commands. The `-i` switch for `git-review` is not needed as a `Change-Id` was previously generated by the initial commit.
-```bash
-$ git commit --amend
-$ git-review
-```
-
-It is also possible to abandon a set of changes using the web interface, if that is desired.
-
-### After changes have been approved by Reviewers
-* Log in to the change review URL using the link provided by the `git-review` command output.
-* Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
-* This initiates the process of merging your change with the main product documentation.
-
-## Documenting the code
-
-The OpenSwitch project uses the Markdown markup language to generate its documentation.
-All documentation that is contributed to the project needs to be written in this format so that it can get built into the project.
-
-### Documents distribution
-
-The following table lists the type of documents, the  target locations and the expected file names. Find below the table a small description of each type of document.
-
-| Doc Type                	| Repo                     	 | Directory 	| File Name               	  |
-|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
-| User Guides            	  | openswitch/ops           	 | /docs     	| [feature]_user_guide.md 	  |
-| Command References      	| openswitch/ops           	 | /docs     	| [feature]_cli.md        	  |
-| Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  |
-| Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  |
-| Component Functionality 	| openswitch/ops-[component] | /         	| README.md               	  |
-| Component Design        	| openswitch/ops-[component] | /         	| DESIGN.md               	  |
-| Component Test Plan     	| openswitch/ops-[component] | /tests    	| [component]_test.md         |
-| Infrastructure            | opeswitch/ops-build        | /docs      | [Infrastructure section].md |
-
-- **User Guides:** It documents how to use the different OpenSwitch features.
-- **Command References:** It documents the command usage for the different features found in the OpenSwitch project.
-- **Feature Designs:** It provides a high level design description for the feature.
-- **Feature Test Plans:** It contains a high level overview of the test plans for each feature.
-- **Component Functionality:** It describes the content of the component on this repo and provides pointers to other documents.
-- **Component Design:** It describes a high level design of the component.
-- **Component Test Plan:** It contains all the component tests documentation relevant to the specific repository.
-- **Infrastructure:** It describes a process in the core from OpenSwitch. These documents are addressed for developers that want to contribute with the code and only use OpenSwitch.
 
 ## Commit messages
 
