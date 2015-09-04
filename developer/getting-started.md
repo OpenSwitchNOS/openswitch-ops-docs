@@ -106,12 +106,15 @@ You can uploaded your image to an Edge-Code AS5712 as described in [Physical Swi
 
 After your build completes you will have an ONIE file that can be uploaded to the switch. The file can be found in the images folder and is typically called ```onie-installer-x86_64-as5712_54x```. For an as5712 platform, follow the instructions below.
 
-1. Copy the ONIE file to a NFS shared directory.
-2. Reboot the switch by typing ```reboot```.
-3. When switch boots it will bring up a GNU GRUB selection screen.  Using your arrow keys move down to **ONIE** then select **ONIE : Rescue**.
-4. Type the following command:
+1. Copy the ONIE file to a FTP shared directory.
+2. Reboot the switch.
+3. When switch boots it will bring up a GNU GRUB selection screen.  Using your arrow keys move down to **ONIE** then select **ONIE : Install OS**.
+4. Type the following commands:
 ```
-onie-nos-install tftp://<tftp-server>/<onie-file>
+tftp -g -r <onie-file> -l <onie-file> <ftp-server>
+chmod +x <onie-file>
+./<onie-file>
+reboot
 ```
 5. The switch will automatically reboot when done.
 
