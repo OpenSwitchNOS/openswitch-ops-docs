@@ -25,9 +25,9 @@ Two options are available to work with OpenSwitch:
 The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you plan to build OpenSwitch to create a software image, only the overarching [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project needs to be cloned.
 
 **Important Notes:**
-* NFS and encryptfs file systems are known to have issues with the build system.
+* NFS and encryptfs file systems are not supported.
 * Using directory paths containing whitespace or special characters is not supported.
-* In proxied environments the use of a DNS cache tool like `dnsmasq` is recommended
+* In proxied environments the use of a DNS cache tool like `dnsmasq` is recommended.
 * Once the directory is configured it should not be moved.
 
 To clone the OpenSwitch repository, use the following `git clone` command and URL. The use of `<directory>` is optional (if omitted, `<directory>` defaults to `ops-build`).
