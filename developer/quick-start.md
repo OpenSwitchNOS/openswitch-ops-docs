@@ -2,15 +2,16 @@
 
 The following guide describes an easy way to set up your development environment for the OpenSwitch project using  [VirtualBox](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com).  The Vagrant image includes an Ubuntu VM with Docker already installed. Docker is used to run the OpenSwitch project image on a Linux container.
 
-## Contents
+This approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0.
 
+## Contents
+- [Notes](#notes)
 - [Development environment features](#development-environment-features)
 - [Installing the OpenSwitch project development environment](#installing-the-openswitch-project-development-environment)
 - [Configuring the system to work with OpenSwitch](#configuring-the-system-to-work-with-openswitch)
 - [Connecting to the OpenSwitch instance](#connecting-to-the-openswitch-instance)
 - [Build system and development environment](#build-system-and-development-environment)
 - [Developing for OpenSwitch resources](#developing-for-openswitch-resources)
-- [Notes](#notes)
 
 ## Development environment features
 
@@ -31,6 +32,8 @@ $ vagrant plugin install vagrant-reload
 ```bash
 $ vagrant plugin install vagrant-proxyconf
 ```
+
+**Note:** The latest versions of Vagrant and VirtualBox are recommended, as Docker support is not present in older versions of Vagrant.
 
 ## Configuring the system to work with OpenSwitch
 
@@ -71,7 +74,3 @@ After following the above instructions, the newly created Ubuntu VM has been ful
 For more information on developing for OpenSwitch, see the following guides:
 * [How to Contribute Code](./contribute-code.html) to learn how to submit your code UpStream.
 * [Development Environment](./development-environment.html) to learn how to work with the OpenSwitch development environment.
-
-## Notes
-1. This OpenSwitch development environment approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0.
-2. The latest versions of Vagrant and VirtualBox are recommended, as Docker support is not present in older versions of Vagrant.
