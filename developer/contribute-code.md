@@ -302,7 +302,7 @@ git commit --signoff
 6) Git review the changes
 ```bash
 git review
- ```
+```
 
 #### Writing a new daemon with CMake
 
