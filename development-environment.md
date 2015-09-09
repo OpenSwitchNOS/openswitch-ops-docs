@@ -6,10 +6,8 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 
 **All of the packages in OpenSwitch are not yet supported in the development environment.**
 
-## Contents
-
 - [Managing the development environment](#managing-the-development-environment)
-	- [Prerequisites for using Development Environment](#prerequisites-for-using-development-environment)
+	- [Prerequisites for using the development environment](#prerequisites-for-using-the-development-environment)
     - [devenv_init](#devenv_init)
     - [devenv_list_all](#devenv_list_all)
     - [devenv_status](#devenv_status)
@@ -22,12 +20,12 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
     - [devenv_patch_recipe](#devenv_patch_recipe)
     - [devenv_refresh](#devenv_refresh)
     - [git_pull](#git_pull)
-- [Build System Infrastructure](#build-system-infrastructure)
-- [Working with the Modified Packages](#working-with-the-modified-packages)
-	- [Building and Cleaning](#building-and-cleaning)
+- [Build system infrastructure](#build-system-infrastructure)
+- [Working with modified packages](#working-with-modified-packages)
+	- [Building and cleaning](#building-and-cleaning)
 	- [Deploying a package](#deploying-a-package)
 	- [Undeploying a package](#undeploying-a-package)
-	- [Building Documentation](#building-documentation)
+	- [Building the documentation](#building-the-documentation)
 	- [Troubleshooting](#troubleshooting)
 - [Working with branches](#working-with-branches)
 - [Setting up an NFS root environment for development](#setting-up-an-nfs-root-environment-for-development)
@@ -49,11 +47,11 @@ devenv_add            devenv_clean          devenv_import         devenv_init
 devenv_patch_recipe   devenv_rm             devenv_status         devenv_update_recipe
 ```
 
-See a description of the available targets below.
+Detailed information about each available target is provided below.
 
 The area for developing software is under the `src/` directory at the top level of the workspace. Use `make devenv_add <package>` to fetch packages and its source code to `src/`. The subdirectories contain the source for the packages.
 
-### Prerequisites for using Development Environment
+### Prerequisites for using the development environment
 1. Follow the [Getting Started](./getting-started.md) guide to configure your system.
 2. Review the [How to contribute to the OpenSwitch Project Code](./contrib-code.md) guide.
 3. Follow the [OpenSwitch Coding Style](./contrib-code.md#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
@@ -164,7 +162,7 @@ This command performs a `git pull --rebase` in the base Git repository and the o
 ```bash
 $  make git_pull
 ```
-## Build System Infrastructure
+## Build system infrastructure
 
 The build system is based in the [Yocto Project](https://www.yoctoproject.org/about). This document does not cover how Yocto works, but it does include some important aspects related to OpenSwitch.
 
@@ -193,7 +191,7 @@ openswitch/  poky/
 
 **poky/**: This directory is the core of the Yocto project. For more information, see [YoctoProject Documentation](http://www.yoctoproject.org/docs/1.6/dev-manual/dev-manual.html)
 
-**openswitch/**: This directory is the core of the OpenSwitch project. Its contents are shown in the following example:
+**openswitch/**: This directory is the core OpenSwitch directory. Its contents are shown in the following example:
 
 ```bash
 $ ls
@@ -209,7 +207,7 @@ meta-foss-openswitch/    meta-platform-openswitch-genericx86-64/
 
 Every directory contains a structure to keep its contents in order. For example, the  `meta-platform-openswitch-genericx86-64` directory contains subdirectories for core `recipes`,`kernel recipes`, in addition to other subdirectories. For example, if you have to change something in the kernel and the change is just for x86, open `yocto/openswitch/meta-platform-openswitch-genericx86-64/recipes-kernel` and add your recipe or the `bbapend` file.
 
-## Working with Modified Packages
+## Working with modified packages
 All packages in the workspace have targets to `build`, `clean`, `deploy` or `undeploy`, which are formed by prefixing the package name to the operation, as shown in the following example:
 ```bash
 $ make devenv_init
@@ -220,7 +218,7 @@ $ make ops-vland-<TAB><TAB>
 ops-vland-build     ops-vland-clean     ops-vland-deploy    ops-vland-undeploy
 ```
 
-### Building and Cleaning
+### Building and cleaning
 A package can be built by using the target with the `-build` suffix.
 
 **Note:** The `-clean` suffixed target for the package is intended to return the package to a clean state, but it is not functional at this time.
@@ -242,7 +240,7 @@ To do a dry-run of the deployment without actually deploying the content, use `-
 ### Undeploying a package
 Undeploying a package removes the content from the target device.  It does not replace or restore the original content.  The syntax is similar to that used for deploying.
 
-### Building Documentation
+### Building the documentation
 The OpenSwitch project uses the markdown markup language to generate its documentation. To build the OpenSwitch documentation, install `markdown`.
 
 After `markdown` is installed, the documentation can be built by `make`-ing `dist-docs` as shown in the following example.
@@ -260,7 +258,7 @@ ERROR: No space left on device or exceeds fs.inotify.max_user_watches?
 ERROR: To check max_user_watches: sysctl -n fs.inotify.max_user_watches.
 ERROR: To modify max_user_watches: sysctl -n -w fs.inotify.max_user_watches=<value>.
 ```
-The problem could be caused by not enough disk space available in your system. Make sure that you have enough free disk space by using the `df -h` command, as shown in the following example:
+The problem could be caused by not enough disk space available on your system. Make sure you have enough free disk space by using the `df -h` command, as shown in the following example:
 ```bash
 $ df -h
 Filesystem                                Size  Used Avail Use% Mounted on
@@ -341,7 +339,7 @@ You can also specify the IP address directly.
 ### Directory structure of the deployed NFS directory
 The build system includes a make target that deploys the root file system into a directory with the name `nfsroot-{machine}` where `{machine}` is the name of the platform that you are using. It also invokes the `exportfs` tool to publish the exported directory over the NFS server with the right permissions.
 
-For example, if you are using the `AS5712` platform, a directory called `nfsroot-as5712` gets created after you enter the `make deploy_nfsroot` command for deploying the NFS directory.
+For example, if you are using the `AS5712` platform, a directory called `nfsroot-as5712` is created after you enter the `make deploy_nfsroot` command for deploying the NFS directory.
 
 ### Deploying your NFS directory
 To deploy your NFS directory:
