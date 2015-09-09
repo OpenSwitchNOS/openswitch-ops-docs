@@ -6,5 +6,5 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut ferm
 
 ## Contents
 
-- [Pre-built images](#)
-- [Hardware Compatibility](#)
+- [Pre-built images](pre-built-images)
+- [Hardware Compatibility](hardware-compatibility)

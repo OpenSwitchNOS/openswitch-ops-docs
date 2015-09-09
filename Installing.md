@@ -6,5 +6,5 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut ferm
 
 ## Contents
 
-- [ONIE installation guidelines](#contributing-changes-to-openswitch)
-- [Setting up containers](#openswitch-coding-style)
+- [ONIE installation guidelines](onie-install)
+- [Setting up containers](setup-containers)
