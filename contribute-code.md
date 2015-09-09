@@ -287,7 +287,7 @@ label-Workflow = -1..+1 group Change Owner
 3) The `ops-<repo-name>-maintainers` group for your repo will get created by the `project-config-maintainers` when they approve the code review.
 
 4) Modify `gerrit/projects.yaml` to add the repository.
-```html4strict
+```bash
 - project: openswitch/<repo-name>
   description: <Repo Description>
 ```
