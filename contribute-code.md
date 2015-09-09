@@ -6,8 +6,8 @@ Follow the [Getting Started](./getting-started.html) guide to prepare your syste
 
 - [Contributing changes](#contributing-changes)
 	- [Configuring the environment](#configuring-the-environment)
-		- [Create SSH keys](#create-ssh-keys)
-		- [Add the SSH Public Key to Gerrit](#add-the-ssh-public-key-to-gerrit)
+		- [Creating SSH keys](#creating-ssh-keys)
+		- [Adding the SSH Public Key to Gerrit](#adding-the-ssh-public-key-to-gerrit)
 		- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
 		- [Client SSH configuration](#client-ssh-configuration)
 		- [Working behind a firewall](#working-behind-a-firewall)
@@ -17,14 +17,15 @@ Follow the [Getting Started](./getting-started.html) guide to prepare your syste
 	- [Sending changes for review](#sending-changes-for-review)
 	- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
 	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
-- [Add New code](#add-new-code)
-	- [Working on a defect](#working-on-a-defect)
+- [Adding new code](#adding-new-code)
+	- [Working on issues](#working-on-issues)
 	- [Adding a new feature](#adding-a-new-feature)
 	- [Adding a new component](#adding-a-new-component)
 	- [Documenting the code](#documenting-the-code)
 		- [Documents distribution](#documents-distribution)
 	- [Adding a New Repository](#adding-a-new-repository)
 		- [Writing a new daemon with CMake](#writing-a-new-daemon-with-cmake)
+		- [Adding a recipe for your daemon](#adding-a-recipe-for-your-daemon)
 - [Commit messages](#commit-messages)
 	- [Git commit message guidelines](#git-commit-message-guidelines)
 		- [Subject](#subject)
@@ -43,33 +44,33 @@ Changes to the OpenSwitch code base go through a review process before being mer
 ### Configuring the environment
 
 OpenSwitch runs [Gerrit](https://code.google.com/p/gerrit/) for online code reviews and [Git](http://git-scm.com/) as the distributed version control system.
-The [OpenSwitch Gerrit](https://review.openswitch.net/) site is the entry point for change, review, test and inclusion in one of the OpenSwitch projects.
+The [OpenSwitch Gerrit](https://review.openswitch.net/) site is the entry point for change, review, test, and inclusion in the OpenSwitch project.
 
-#### Create SSH keys
-Do this only if no SSH keys have been created earlier for this development machine. To find out if keys exist for this development machine check the contents of the `~/.ssh/` directory. The following two files will exist if keys were already created:
+#### Creating SSH keys
+Create SSH keys only if no keys have been created earlier for the designated development machine. To find out if keys exist for the designated development machine, check the contents of the `~/.ssh/` directory. The following two files exist if keys were already created:
 * `id_rsa`
 * `id_rsa.pub`
 
-If the `~/.ssh` directory or the files do not exist, then proceed to generate your SSH keys with the commands below:
+If the `~/.ssh` directory or the files do not exist, then generate the SSH keys with the following commands:
 ```bash
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 ssh-keygen -t rsa
 ```
 
-You will be prompted for a location to save the keys, and a pass-phrase for the keys. Accept the default location to save the keys and provide a pass-phrase. The pass-phrase is important as it keeps your keys secure while stored in your hard-drive. Do remember the pass-phrase as it will be needed to work with Gerrit. An example output is the following:
+You are prompted for both a location to save the keys, and for a pass-phrase for the keys. Accept the default location to save the keys and enterResubmitting a set of changes a pass-phrase. The pass-phrase is important as it keeps your keys secure while stored on your hard drive. Remember the pass-phrase as it will be needed to work with Gerrit. An example output follows:
 ```
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/b/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
+Enter pass-phrase (empty for no pass-phrase):
+Enter same pass-phrase again:
 Your identification has been saved in /home/b/.ssh/id_rsa.
 Your public key has been saved in /home/b/.ssh/id_rsa.pub.
 ```
 
-The public key needed to work with Gerrit is saved at `~/.ssh/id_rsa.pub`. The contents of this file (this is a text file) will be needed in the next step.
+The public key needed to work with Gerrit is saved at `~/.ssh/id_rsa.pub`. The contents of this file (this is a text file) is needed in the next step.
 
-If you get the `Agent admitted failure to sign using the key.` error message as seen below, simply run the command `ssh-add` after the error message.
+If you get the error message, `Agent admitted failure to sign using the key.` as seen below, simply run the command `ssh-add` after the message.
 
 ```bash
 "Agent admitted failure to sign using the key."
@@ -77,24 +78,24 @@ If you get the `Agent admitted failure to sign using the key.` error message as 
 # Permission denied (publickey).
 ```
 
-#### Add the SSH Public Key to Gerrit
-* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
- * OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account create one by cliking on `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
- * Keep record of the password and username as this is your Gerrit user and is needed to work with OpenSwitch.
-* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
+#### Adding the SSH Public Key to Gerrit
+1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
+	* OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account, create one by 	clicking  `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
+	* Keep a record of the password and username as this is your Gerrit User information and is needed to work with OpenSwitch.
+* Click  `Settings` (in the menu under the user's name in the upper right-hand corner).
 * Select `SSH Public Keys` in the panel on the left.
-* Paste the SSH public key (`id_rsa.pub` contents) in the input area for use with this site.
-* Click `Add`
+* Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
+* Click `Add`.
 
 #### Verify that an username is assigned to Gerrit
-* Login to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the Top Right `Sign in` link.
-* Click on the `Settings` link (in the menu under the user's name in the upper right-hand corner).
-* Click on the `Profile` link (left side)
-* Verify that an username exists, or define one if it does not exist.
-* Keep track of the username as this is the Gerrit User and will be used to work with OpenSwitch
+1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
+* Click `Settings` in the menu under the user's name in the upper right-hand corner.
+* Click `Profile` on the left side.
+* Verify that a username exists, or define a username if one does not exist.
+* Keep track of the username as this is the Gerrit User information and is used to work with OpenSwitch.
 
 #### Client SSH configuration
-* Add an entry similar to this to your `~/.ssh/config` file (preserve the indentation), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
+Add an entry similar to the following in your `~/.ssh/config` file (preserve the identification), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
 ```
 Host review.openswitch.net
 	User <gerrit-user>
@@ -102,14 +103,14 @@ Host review.openswitch.net
 ```
 
 #### Working behind a firewall
-The network port used by Gerrit (29418) on the review website may be blocked in some networks, for example on a corporate network. One workaround (besides asking your ISP or corporate IT team to open the port) is to tunnel using your HTTP proxy. You can achieve that with the `nc` or `socat` command line utilities, or any other of your preference. Follow the instructions below to use `socat` or `nc` to configure a proxy for the SSH traffic.
+The network port used by Gerrit (29418) on the review website may be blocked in some networks, for example on a corporate network. One workaround (besides asking your ISP or corporate IT team to open the port) is to tunnel in using your HTTP proxy. You can achieve that with the `nc` or `socat` command line utilities, or any other utilities of your preference. Follow the instructions below to use `socat` or `nc` to configure a proxy for the SSH traffic.
 
 Take note of the proxy information.
-* Proxy URL (e.g web-proxy.location.domain.com). Referred as `<proxy-url>` below.
-* Proxy Port (e.g 8080). Referred as `<proxy-port>` below.
+* Proxy URL such as `web-proxy.location.domain.com`. The proxy URL is referred to as `<proxy-url>` below.
+* Proxy port such as 8080. The proxy port is referred to as `<proxy-port>` below.
 
 Using `nc`
-* Install `nc` if not yet installed
+1. Install `nc` if not yet installed
 * Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
 ```
 Host review.openswitch.net
@@ -117,22 +118,22 @@ Host review.openswitch.net
 ```
 
 Using `socat`
-* Install `socat` if not yet installed
+1. Install `socat` if not yet installed
 * Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
 ```
 Host review.openswitch.net
    ProxyCommand socat - PROXY:<proxy-url>:%h:%p,proxyport=<proxy-port>
 ```
 
-For more details and examples for adding user/passwords, see [this page](http://gitolite.com/git-over-proxy.html).
+For more details and examples for adding usernames or passwords, see [this page](http://gitolite.com/git-over-proxy.html).
 
 ### Configuring Git and Gerrit
-You need to configure your local repository to use your Gerrit account.
-* Set `gitreview.username` with your Gerrit login.
+You need to configure your local repository to use your Gerrit account. To configure your repository:
+1. Set `gitreview.username` with your Gerrit login.
 ```bash
 $ git config --global gitreview.username <gerrit-user>
 ```
-* Configure email and name in Git:
+* Configure your email and your username in Git:
 ```bash
 $ git config --global user.email <email>
 $ git config --global user.name <name>
@@ -141,9 +142,9 @@ $ git config --global user.name <name>
 ### Installing git-review
 `git-review` is used to contribute changes back to the OpenSwitch project.
 
-Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
+1. Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
 
-* Setup git-review
+* Set up the git-review.
 ```bash
 $ git-review -s
 ```
@@ -151,13 +152,13 @@ $ git-review -s
 ### Preparing changes to be reviewed
 Before attempting to commit changes, make sure that they are compliant with the [OpenSwitch Coding Style](#openswitch-coding-style). For non-OpenSwitch modules, follow the coding style that the module already uses.
 
-In particular,  the following files be rejected:
+In particular,  the following files types are rejected:
 * Files with trailing spaces
 * Files with with non-printable ASCII characters in their names.
 
-Changes for review should be committed to a local branch with a commit message that:
-* Begin with a single line of text which summarizes the contents of the change.
-* Additionally provide a description following the summarization line.
+Changes for review must be committed to a local branch with a commit message that:
+* Begins with a single line of text which summarizes the contents of the change.
+* Additionally provides a description following the summarization line.
 
 If the change set has been composed by multiple commits to the local branch, **consider squashing them into a single commit** using `git rebase`.
 
@@ -187,61 +188,67 @@ $ git commit --amend
 $ git-review
 ```
 
-It is also possible to abandon a set of changes using the web interface, if that is desired.
+Using the web interface, click **Abandon Change** to cancel the changes, if that is desired.
 
 ### After changes have been approved by Reviewers
-* Log in to the change review URL using the link provided by the `git-review` command output.
+1. Log in to the change review URL using the link provided by the `git-review` command output.
 * Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
-* This initiates the process of merging your change with the main product.
+This initiates the process of merging your change with the main product.
 
-## Add New code
-There are different ways you can contribute to the OpenSwitch, follow this guide depending in the type of change you are doing.
+## Adding new code
+There are different ways you can contribute to the OpenSwitch such as:
 
-### Working on a defect
+- [Working on issues](#working-on-issues)
+- [Adding a new feature](#adding-a-new-feature)
+- [Adding a new component](#adding-a-new-component)
+- [Documenting the code](#documenting-the-code)
 
-Defects will appear in OpenSwitch as in any other software project. Either if you want to collaborate with a known issue  or you find a defect that you would like to fix, please follow this steps to fix it.
+### Working on issues
 
-- Depending on if the defect is reproducible on VSI or not, configure the sandbox for genericx86-64 or as5712
-- Add the repository to your local workspace using `make devenv_add <repository-name>`. **Note:** If working on a branch in that repository, use `git checkout <branch name>  `
-- Work on the fix
-- Add a component test file to test the patch/fix. This test file is also submitted as part of the review in the next step.
-- Commit your change using [Contributing change](#contributing-changes) section
+Issues appear in OpenSwitch sometimes. If you want to collaborate on a known issue, or you find a issue that you would like to fix, use the following steps to fix it:
+
+1. Depending on if the defect is reproducible in VSI or not, configure the sandbox for genericx86-64 or as5712
+1. Add the repository to your local workspace using `make devenv_add <repository-name>`.
+**Note:** If you are working on a branch in that repository, use `git checkout <branch name> . `
+1. Work on the fix.
+1. Add a component test file to test the patch/fix. This test file is also submitted as part of the review in the next step.
+1. Commit your change using the [Contributing change](#contributing-changes) section.
 
 ### Adding a new feature
 
-Follow the next steps if you need to add a new feature that does not belong to any of the existing code.
+To add a new feature that does not belong to any of the existing code:
 
-- Create the necessary module as mentioned under [Adding a new component](*adding-a-new-component)
-- Fetch any existing modules that will be modified as part of this feature.
-- Additionally, sufficient Feature test cases need to be added and integrated to CIT infra so that future commits are validated against the feature.
-- Update documentation on usage of the feature and design details, follow [Documenting the code](*documenting-the-code) section
-- Commit your changes
+1. Create the necessary module as mentioned under [Adding a new component](*adding-a-new-component).
+1. Fetch any existing modules that will be modified as part of this feature.
+1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
+1. Update the documentation on feautre usage and design details, follow the [Documenting the code](*documenting-the-code) section.
+1. Commit your changes.
 
 ### Adding a new component
 
-In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own by following the [Adding a new feature](*adding-a-new-feature).
+In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own component by following the [Adding a new feature](*adding-a-new-feature).
 
-Follow these steps to create a new component.
+To create a new component:
 
-- [Create a new repo](*adding-a-new-repository)
-- [Create a recipe](*adding-a-recipe-for-your-daemon)
-- Add the code for your component
-- If this is a new daemon that should run when the switch boots up, add a service file in the same location as the recipe file
-- Create the correct repo structure with required top-level files and directories
+1. [Create a new repository](*adding-a-new-repository).
+1. [Create a recipe](*adding-a-recipe-for-your-daemon).
+1. Add the code for your component.
+1. Add a service file in the same location as the recipe file if this is a new daemon that runs when the switch boots up.
+1. Create the correct repository structure with the required top-level files and directories as follows:
 	- **Files:** AUTHORS, COPYING, Design.md, FAQ.md, NEWs, NOTICE, README.md
-	- **Directories:** /docs, /tests, /src, /include
-- Create a new directory called "tests" and add the necessary Component Test. CIT will pick up these test cases and run them for every commit to this module.
-- Add the module to the following file to allow the module to be included in the Openhalon package: `yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`
-- Commit your changes
+    - **Directories:** /docs, /tests, /src, /include
+1. Create a new directory named "tests" and add the necessary Component tests. CIT will pick up these test cases and run them for every commit to this module.
+1. Add the module to the following file to allow the module to be included in the Openhalon package: `yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`.
+1. Commit your changes.
 
 ### Documenting the code
 
 The OpenSwitch project uses the Markdown markup language to generate its documentation.
-All documentation that is contributed to the project needs to be written in this format so that it can get built into the project.
+All documentation that is contributed to the project needs to be written in this format so that it can be built into the project.
 
 #### Documents distribution
 
-The following table lists the type of documents, the  target locations and the expected file names. Find below the table a small description of each type of document.
+The following table lists the type of documents, the  target locations, and the expected file names. For a description of each type of document, see the following table:
 
 | Doc Type                	| Repo                     	 | Directory 	| File Name               	  |
 |-------------------------	|--------------------------	 |-----------	|-------------------------	  |
@@ -254,27 +261,26 @@ The following table lists the type of documents, the  target locations and the e
 | Component Test Plan     	| openswitch/ops-[component] | /tests    	| [component]_test.md         |
 | Infrastructure            | opeswitch/ops-build        | /docs      | [Infrastructure section].md |
 
-- **User Guides:** It documents how to use the different OpenSwitch features.
-- **Command References:** It documents the command usage for the different features found in the OpenSwitch project.
-- **Feature Designs:** It provides a high level design description for the feature.
-- **Feature Test Plans:** It contains a high level overview of the test plans for each feature.
-- **Component Functionality:** It describes the content of the component on this repo and provides pointers to other documents.
-- **Component Design:** It describes a high level design of the component.
-- **Component Test Plan:** It contains all the component tests documentation relevant to the specific repository.
-- **Infrastructure:** It describes a process in the core from OpenSwitch. These documents are addressed for developers that want to contribute with the code and only use OpenSwitch.
+- **User Guides**--Documents how to use the different OpenSwitch features.
+- **Command References**--Details the command usage for the different features found in the OpenSwitch project.
+- **Feature Designs**--Provides a high-level design description for each feature.
+- **Feature Test Plans**--Contains a high-level overview of the test plans for each feature.
+- **Component Functionality**--Describes the content of the component in this repository and provides pointers to other documents.
+- **Component Design**--Documents a high-level design of the component.
+- **Component Test Plan**--Contains all the component tests documentation relevant to the specific repository.
+- **Infrastructure**--Describes a process in the core of OpenSwitch. These documents are addressed to developers that want to contribute to the code and only use OpenSwitch.
 
 
 ### Adding a New Repository
-The following are the steps to follow in order to add a new repo to the OpenSwitch project, referred as `<repo-name>`.
+To add a new repository to the OpenSwitch project (referred to as `<repo-name>`):
 
-1) Git clone project:
+1) Clone the project with the following command:
 ```bash
 git clone https://review.openswitch.net/infra/project-config
 ```
+2) Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents.
 
-2) Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with following contents.
-
-**Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example:
+**Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example below.
 
 ```bash
 [access "refs/heads/*"]
@@ -283,26 +289,27 @@ abandon = group ops-<repo-name>-maintainers
 label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
 label-Workflow = -1..+1 group Change Owner
 ```
-
-3) The `ops-<repo-name>-maintainers` group for your repo will get created by the `project-config-maintainers` when they approve the code review.
+3) The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
 
 4) Modify `gerrit/projects.yaml` to add the repository.
+
+
 ```bash
 - project: openswitch/<repo-name>
   description: <Repo Description>
 ```
 
-5) Git commit the changes.
+5) Commit the changes with the following command:
 
 **Note:** In the commit message please specify the full name for two users in `Git Hub` that you wish to add as maintainers of this repo.
 ```bash
 git commit --signoff
 ```
 
-6) Git review the changes
+6) Review the changes with the following command:
 ```bash
 git review
-```
+ ```
 
 #### Writing a new daemon with CMake
 
@@ -363,7 +370,7 @@ install(TARGETS ${VLAND}
 For more details of how CMake works, please go to [CMake documentation](http://www.cmake.org/documentation/).
 
 ####  Adding a recipe for your daemon
-It has to be a recipe for your deamon to work properly. This recipe should be placed in the `ops-build` repo, inside `yocto/openswitch/meta-distro-openswitch`.
+In order that your deamon work properly, you must have a recipe. This recipe should be placed in the `ops-build` repo, inside `yocto/openswitch/meta-distro-openswitch`.
 
 There are different directories for the recipes:
 
@@ -374,9 +381,9 @@ There are different directories for the recipes:
 - recipes-onie
 - recipes-ops
 
-Choose the directory that applies and add the `.bb` file in there.
+Choose the directory that applies and add the `.bb` file to it.
 
-This is an example of a recipe
+The following is an example of a recipe:
 
 ``` bash
 SUMMARY = "Management Interface Configuration Daemon"
@@ -413,16 +420,16 @@ inherit openswitch setuptools systemd
 
 The recipes have some important parts:
 
-* **SUMMARY** = It is just a summary of your recipe.
-* **LICENSE** = It is the license for your recipe.
-* **LIC_FILES_CHKSUM** = It is the path of the license file with the md5.
-* **DEPENDS** = In this label we have to include all the dependency that our recipe have in order to compile in this case is depending on `ops-utils` and `ops-ovsdb`
-* **SRC_URI** = This is the list of source files, it can be local or remote, Yocto supports several
+* **SUMMARY**--Summary of your recipe.
+* **LICENSE**--License for your recipe.
+* **LIC_FILES_CHKSUM**--Path of the license file with the md5.
+* **DEPENDS**--Label we have to include all the dependencies that our recipe has in order to compile, in this case,  depending on `ops-utils` and `ops-ovsdb`
+* **SRC_URI**--List of source files, it can be local or remote, Yocto supports several
  protocols. You can find the complete list in the [Yocto Ref Manual](http://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html)
-* **S** = This is the location in the build directory where the recipe source code resides. It is the work directory.
-* **inherit** = You can use this variable to inherit the functionality of a class, in our case we need `cmake` in order to build this recipe.
+* **S**--Location in the build directory where the recipe source code resides. It is the work directory.
+* **inherit**--Variable used to inherit the functionality of a class, in our case we need `cmake` in order to build this recipe.
 
-If you need more details of how the BitBake works, please go to [BitBake documentation](https://www.yoctoproject.org/tools-resources/projects/bitbake).
+If you need more details of how the BitBake works, see [BitBake documentation](https://www.yoctoproject.org/tools-resources/projects/bitbake).
 
 
 ## Commit messages
@@ -458,12 +465,12 @@ Further paragraphs come after blank lines.
 
 ### Git commit message guidelines
 
-The commit messages are of great importance on a development process. They help the developers and final users to understand why changes were made. Therefore it is important to follow these guidelines. The first thing to take into account is that ALL our commit messages must have a subject and a body, explained in detail in the next sections.
-The commit messages should been write impersonal. Use verbs like _Add_, _Fix_, _Change_, _Update_ or _Implement_. **Don't** use _Added_ or _Adding_, for example. Another important point is that each commit must change/add/fix only one thing. Keep in mind that each published commit, will live forever and sometime when you go back to the project history for some issue, it could save you the day due to a good hint in an informative commit message.
+The commit messages are of great importance on a development process. They help the developers and final users to understand why changes were made. Therefore it is important to follow these guidelines. The first thing to take into account is that ALL our commit messages must have a subject and a body, which is explained in detail in the next sections.
+The commit messages should be written impersonally. Use verbs like _Add_, _Fix_, _Change_, _Update_ or _Implement_. **Don't** use _Added_ or _Adding_, for example. Another important point is that each commit must change/add/fix only one thing. Keep in mind that each published commit, will live forever and sometimes when you go back to the project history for some issue, it could save you time due to a good hint in an informative commit message.
 
 #### Subject
 
-The first line of the commit message is known as the subject. It describes the change briefly and helps reviewers to see at a glance what the commit is about. It should be no more than 50 characters (must be less than 80). Since we are using gitchangelog (a open source tool that generates changelogs) the subject must have the following format:
+The first line of the commit message is known as the subject. It describes the change briefly and helps reviewers to see at a glance what the commit is about. It should not be longer than 50 character. Since we are using gitchangelog (a open source tool that generates changelogs) the subject must have the following format:
 
 ```
 act: aud: Here comes the subject of the commit @tag
@@ -490,7 +497,7 @@ If a subject has a tag the commit will not appear in the changelog. _tag_ could 
 
 #### Body
 
-Use the body of the commit message to describe your commit in detail. And follow these guidelines:
+Use the body of the commit message to describe your commit in detail and follow these guidelines:
 
 - Separate the body from the subject with an empty line.
 - Give an overview of why you're committing this change.
@@ -503,18 +510,18 @@ Use the body of the commit message to describe your commit in detail. And follow
 
 #### Use cases
 
-The general format of a commit message should look like:
+The general format of a commit message should look like the following:
 
 ```
 act: aud: Short description of the work done in this commit
 
 Explanation of the work done in this commit. This explanation
-must explain in detail the change. Don't use bullet points.
+must explain the change in detail . Don't use bullet points.
 ```
 
 #### Bug fixes
 
-If the bug #1043 has been fixed and you want it to be in the release notes then its commit message should look like:
+If the bug #1043 has been fixed and you want it to be in the release notes, then the commit message should look like the following:
 
 ```
 fix: usr: Fix Bug #1043. Now Action_set could increase size.
@@ -524,7 +531,7 @@ hardware when low GPT half is written. gpt_location_idx_get is giving a
 relative position to the action_set label in UCO.
 ```
 
-If the same bug has been fixed but you don't want it in the release notes then you'll have to change _usr_ to _dev_
+If the same bug has been fixed but you don't want it in the release notes then you'll have to change _usr_ to _dev_.
 
 ```
 fix: dev: Fix Bug #1043. Now Action_set could increase size.
@@ -534,7 +541,7 @@ hardware when low GPT half is written. gpt_location_idx_get is giving a
 relative position to the action_set label in UCO.
 ```
 
-If more than one bug has been fixed with the same change then its commit message should look like:
+If more than one bug has been fixed with the same change, then the commit message should look like the following:
 
 ```
 fix: usr: Fix Bugs #1043, #1045 and #1056. Now Action_set could increase size.
@@ -544,11 +551,11 @@ hardware when low GPT half is written. gpt_location_idx_get is giving a
 relative position to the action_set label in UCO.
 ```
 
-**If each bug requires a separate change then _don't_ put all them together in the same commit, you should do a commit for each bug.**
+**If each bug requires a separate change then _don't_ put all them together in the same commit. Write a separate commit for each bug.**
 
 #### Changes
 
-You have made a small improvement on the pv_pm_neo_indirectLookUpEntry and you want to share it with you coworkers but not with the final user (release notes). Your commit message should look like:
+You have made a small improvement on the pv_pm_neo_indirectLookUpEntry and you want to share it with you coworkers, but not with the final user (release notes). Your commit message should look like the following:
 
 ```
 hg: dev: Change pv_pm_neo_indirectLookUpEntry SPs handling (no ucx support)
@@ -557,7 +564,7 @@ Move ind_lut entries for extension mode to entries 125 & 126
 (now INDLUT_MODE_ENTRY on pm.h can be used only to change it)
 ```
 
-After you did this commit you realize that the name of a non-important variable should be change. The message of the commit changing the name of the variable should look like:
+After you did this commit you realize that the name of a non-important variable should be change. The message of the commit changing the name of the variable should look like the following:
 
 ```
 chg: dev: Change pv_pm_neo_indirectLookUpEntry variable name @minor
@@ -566,7 +573,7 @@ Change the name of the variable the variable old_name that stored the
 a previous state to new_name.
 ```
 
-Maybe you need to edit some comments in the code. Then your commit message should look like:
+Perhaps you need to edit some comments in the code. Your commit message should look like the following:
 
 ```
 chg: dev: Edit comments of pv_pm_neo_indirectLookUpEntry @cosmetic
@@ -575,7 +582,7 @@ Edit the comments of the pv_pm_neo_indirectLookUpEntry. Explain the usage
 of some variables inside the function function_name.
 ```
 
-Or you need to refactor the code and you don't want that commit to appear in any changelog. Then your commit message should look like:
+You need to refactor the code and you don't want that commit to appear in any changelog. Your commit message should look like the following:
 
 ```
 chg: dev: Refactor pv_pm_neo_indirectLookUpEntry @refactor
@@ -585,11 +592,11 @@ Change the way the loop works to save clock cycles.
 
 All the commits with a commit message subject with a tag like **@minor**, **@cosmetic** and **@refactor** won't appear in any changelog.
 
-**Don't include many different changes into one commit. Each change must have it's separate commit.**
+**Don't include many different changes into one commit. Each change must have a separate commit.**
 
 ### Using Gitchangelog
 
-Gitchangelog is an open source project that parse the git log to generate formated changelogs. We use this tool to autogenerate the release notes. The API repository has a ChangeLog file updated when each release is done. If you want to see the current ChangeLog (changes since last release plus the unreleased changes) you can run the gitchangelog script from the API repository. Before running the script you'll have to install mako:
+Gitchangelog is an open source project that parses the git log to generate formated changelogs. We use this tool to autogenerate the release notes. The API repository has a ChangeLog file that is updated when each release is done. If you want to see the current ChangeLog (changes since last release plus the unreleased changes) you can run the gitchangelog script from the API repository. Before running the script you'll have to install mako:
 
 ```bash
 sudo apt-get install python-mako
@@ -609,17 +616,17 @@ cd <pvapi path>/tools/scripts/gitchangelog
 sudo ./autogen.sh && sudo python setup.py install
 ```
 
-Now you can simply run
+Now you can simply run:
 
 ```
 gitchangelog
 ```
 
-Inside the API repository and you'll see the current changelog.
+You'll see the current changelog inside the API repository.
 
 
 ## Coding Style
-The coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is itself an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting. The additions below are clarifications and do not conflict with the Open vSwitch style.
+The coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting. The additions below are clarifications and do not conflict with the Open vSwitch style.
 
 ### Comparisons
 Write comparisons in a form that reads naturally. Examples:
@@ -638,7 +645,7 @@ if (!foo_i)          /* Yes */
 ```
 
 ### Variables
-Do not do gratuitous initialization of variables.  Doing this prevents the compiler from detecting accidental use before initialization.
+Do not do a gratuitous initialization of variables.  Doing this prevents the compiler from detecting accidental use before initialization.
 
 ```c
 struct Goofus *goofus = NULL;   /* Wrong */
