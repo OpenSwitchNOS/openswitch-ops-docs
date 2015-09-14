@@ -1,6 +1,6 @@
 # How to contribute to the code
 
-Follow the [Getting Started](./getting-started.html) guide to prepare your system to be able to contribute to the OpenSwitch project.
+Follow the [Getting Started](./getting-started) guide to prepare your system to be able to contribute to the OpenSwitch project.
 
 ## Contents
 

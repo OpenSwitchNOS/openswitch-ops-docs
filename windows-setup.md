@@ -30,7 +30,7 @@
 	- [After the document maintainers  have approved the changes](#after-the-document-maintainers-have-approved-the-changes)
 
 ## Clarification
-Windows can only be used to contribute to the OpenSwitch documentation. To contribute to or build the project, a GNU/Linux-based operating system is required (a VM-running Linux on your Windows workstation works too). The information in [Getting Started with OpenSwitch](./getting-started.html) provides instructions to contribute to and build OpenSwitch using a GNU/Linux operating system.
+Windows can only be used to contribute to the OpenSwitch documentation. To contribute to or build the project, a GNU/Linux-based operating system is required (a VM-running Linux on your Windows workstation works too). The information in [Getting Started with OpenSwitch](getting-started) provides instructions to contribute to and build OpenSwitch using a GNU/Linux operating system.
 
 ## Documentation changes workflow summary
 In a nutshell, the workflow for documentation contribution is as follows:
