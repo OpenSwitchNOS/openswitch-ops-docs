@@ -62,7 +62,7 @@ The following votes needs to be given to the change before it is attempted to be
 2. If the tests pass, the change gets merged into the project, if the `Gate` tests fail, a message is left by Jenkins and the contributor needs to take action.
 
 ### Process feedback
-If the tests failed or feedback is received from the community or the Core Reviewers, the contributor should have followed the process described in the [How to contribute](./how-to-contribute.html) guide to amend the changes and re-submit them for review. In a nutshell:
+If the tests failed or feedback is received from the community or the Core Reviewers, the contributor should have followed the process described in the [How to contribute](contribute-code) guide to amend the changes and re-submit them for review. In a nutshell:
 
 1. The contributor makes the changes and commits them with the `git commit --amend` command so that Gerrit can process them as part of the same Change Request (another patch set within the same change).
 2. The contributor sends the changes back for review with `git review`
@@ -73,4 +73,4 @@ If the tests failed or feedback is received from the community or the Core Revie
 ## Architecture
 The following diagram describes how the different servers integrate with each other.
 
-![CIT Architecture](./images/CIT-architecture.png "CIT Architecture")
+![CIT Architecture](images/CIT-architecture.png "CIT Architecture")

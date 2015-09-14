@@ -218,20 +218,20 @@ Issues appear in OpenSwitch sometimes. If you want to collaborate on a known iss
 
 To add a new feature that does not belong to any of the existing code:
 
-1. Create the necessary module as mentioned under [Adding a new component](*adding-a-new-component).
+1. Create the necessary module as mentioned under [Adding a new component](adding-a-new-component).
 1. Fetch any existing modules that will be modified as part of this feature.
 1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
-1. Update the documentation on feautre usage and design details, follow the [Documenting the code](*documenting-the-code) section.
+1. Update the documentation on feautre usage and design details, follow the [Documenting the code](documenting-the-code) section.
 1. Commit your changes.
 
 ### Adding a new component
 
-In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own component by following the [Adding a new feature](*adding-a-new-feature).
+In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own component by following the [Adding a new feature](adding-a-new-feature).
 
 To create a new component:
 
-1. [Create a new repository](*adding-a-new-repository).
-1. [Create a recipe](*adding-a-recipe-for-your-daemon).
+1. [Create a new repository](adding-a-new-repository).
+1. [Create a recipe](adding-a-recipe-for-your-daemon).
 1. Add the code for your component.
 1. Add a service file in the same location as the recipe file if this is a new daemon that runs when the switch boots up.
 1. Create the correct repository structure with the required top-level files and directories as follows:

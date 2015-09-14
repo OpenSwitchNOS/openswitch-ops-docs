@@ -52,9 +52,9 @@ Detailed information about each available target is provided below.
 The area for developing software is under the `src/` directory at the top level of the workspace. Use `make devenv_add <package>` to fetch packages and its source code to `src/`. The subdirectories contain the source for the packages.
 
 ### Prerequisites for using the development environment
-1. Follow the [Getting Started](./getting-started.md) guide to configure your system.
-2. Review the [How to contribute to the OpenSwitch Project Code](./contrib-code.md) guide.
-3. Follow the [OpenSwitch Coding Style](./contrib-code.md#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
+1. Follow the [Getting Started](getting-started) guide to configure your system.
+2. Review the [How to contribute to the OpenSwitch Project Code](contribute-code) guide.
+3. Follow the [OpenSwitch Coding Style](contribute-code#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
 
 ### devenv_init
 Initiates the development environment.
