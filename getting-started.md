@@ -1,5 +1,5 @@
 # Getting Started with OpenSwitch
-OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup.html) guide for instructions).
+OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
 ## Contents
 - [Build system requirements](#build-system-requirements)
@@ -16,8 +16,8 @@ OpenSwitch requires a Linux-based OS in order to build an image or contribute to
 
 Two options are available to work with OpenSwitch:
 
-* Bring Your Own Linux (BYOL)--Follow the instructions to [Setup a GNU/Linux machine for OpenSwitch development](./linux-setup.html) to develop using your own GNU/Linux machine.
-* Use a Vagrant image--See [Use a Vagrant box for OpenSwitch development](./vagrant-setup.html) to set up a Vagrant image.
+* Bring Your Own Linux (BYOL)--Follow the instructions to [Setup a GNU/Linux machine for OpenSwitch development](./linux-setup) to develop using your own GNU/Linux machine.
+* Use a Vagrant image--See [Use a Vagrant box for OpenSwitch development](./vagrant-setup) to set up a Vagrant image.
 
 **Proceed to the following sections once you have set up your own Linux system or a Vagrant box.**
 
@@ -91,7 +91,7 @@ $ make cleansstate RECIPE=virtual/kernel
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contrib-code.html) and the [Development Environment](./dev-env.html) documentation.
+For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contrib-code) and the [Development Environment](./dev-env) documentation.
 
 ## Deploying an image
 
