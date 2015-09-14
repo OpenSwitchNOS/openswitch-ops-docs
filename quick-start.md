@@ -64,10 +64,10 @@ bash-4.3# vtysh
 ```
 
 ## Build system and development environment
-After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files. For details on how to manage it, see the [Development Environment](./development-environment.html) guide.
+After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files. For details on how to manage it, see the [Development Environment](development-environment) guide.
 
 
 ## Developing for OpenSwitch resources
 For more information on developing for OpenSwitch, see the following guides:
-* [How to Contribute Code](./contribute-code.html) to learn how to submit your code UpStream.
-* [Development Environment](./development-environment.html) to learn how to work with the OpenSwitch development environment.
+* [How to Contribute Code](contribute-code) to learn how to submit your code UpStream.
+* [Development Environment](development-environment) to learn how to work with the OpenSwitch development environment.
