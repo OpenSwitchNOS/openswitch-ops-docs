@@ -1,4 +1,4 @@
-# Getting Started with OpenSwitch
+# Comprehensive Setup Guide
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
 ## Contents
@@ -14,10 +14,10 @@ OpenSwitch requires a Linux-based OS in order to build an image or contribute to
 * A GNU/Linux machine running a recent Linux distribution. OpenSwitch is developed in Ubuntu but Debian, Fedora or SuSe should work fine as well.
 * At least 30 GB of free disk space.
 
-Two options are available to work with OpenSwitch:
+Two options are available to work with OpenSwitch: (You can skip this step if your environment is ready)
 
-* Bring Your Own Linux (BYOL)--Follow the instructions to [Setup a GNU/Linux machine for OpenSwitch development](./linux-setup) to develop using your own GNU/Linux machine.
-* Use a Vagrant image--See [Use a Vagrant box for OpenSwitch development](./vagrant-setup) to set up a Vagrant image.
+* Use a Vagrant image--See [Quick Start Guide using Vagrant for Windows 7](quick-start) to set up a Vagrant image.
+* Bring Your Own Linux (BYOL)--Follow the instructions to [Setting up a Linux machine for OpenSwitch Development](linux-setup) to develop using your own GNU/Linux machine.
 
 **Proceed to the following sections once you have set up your own Linux system or a Vagrant box.**
 
