@@ -82,17 +82,17 @@ If you get the error message, `Agent admitted failure to sign using the key.` as
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
 	* OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account, create one by 	clicking  `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
 	* Keep a record of the password and username as this is your Gerrit User information and is needed to work with OpenSwitch.
-* Click  `Settings` (in the menu under the user's name in the upper right-hand corner).
-* Select `SSH Public Keys` in the panel on the left.
-* Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
-* Click `Add`.
+1. Click  `Settings` (in the menu under the user's name in the upper right-hand corner).
+1. Select `SSH Public Keys` in the panel on the left.
+1. Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
+1. Click `Add`.
 
 #### Verify that an username is assigned to Gerrit
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
-* Click `Settings` in the menu under the user's name in the upper right-hand corner.
-* Click `Profile` on the left side.
-* Verify that a username exists, or define a username if one does not exist.
-* Keep track of the username as this is the Gerrit User information and is used to work with OpenSwitch.
+1. Click `Settings` in the menu under the user's name in the upper right-hand corner.
+1. Click `Profile` on the left side.
+1. Verify that a username exists, or define a username if one does not exist.
+1. Keep track of the username as this is the Gerrit User information and is used to work with OpenSwitch.
 
 #### Client SSH configuration
 Add an entry similar to the following in your `~/.ssh/config` file (preserve the identification), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
@@ -111,7 +111,7 @@ Take note of the proxy information.
 
 Using `nc`
 1. Install `nc` if not yet installed
-* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
+1. Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
 ```
 Host review.openswitch.net
    ProxyCommand nc -x <proxy-url>:<proxy-port> -X connect %h %p
@@ -119,7 +119,7 @@ Host review.openswitch.net
 
 Using `socat`
 1. Install `socat` if not yet installed
-* Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
+1. Open (or create) the `~/.ssh/config` file and add the following lines (preserve the indentation):
 ```
 Host review.openswitch.net
    ProxyCommand socat - PROXY:<proxy-url>:%h:%p,proxyport=<proxy-port>
@@ -133,7 +133,7 @@ You need to configure your local repository to use your Gerrit account. To confi
 ```bash
 $ git config --global gitreview.username <gerrit-user>
 ```
-* Configure your email and your username in Git:
+1. Configure your email and your username in Git:
 ```bash
 $ git config --global user.email <email>
 $ git config --global user.name <name>
@@ -144,7 +144,7 @@ $ git config --global user.name <name>
 
 1. Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
 
-* Set up the git-review.
+1. Set up the git-review.
 ```bash
 $ git-review -s
 ```
@@ -192,7 +192,7 @@ Using the web interface, click **Abandon Change** to cancel the changes, if that
 
 ### After changes have been approved by Reviewers
 1. Log in to the change review URL using the link provided by the `git-review` command output.
-* Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
+1. Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
 This initiates the process of merging your change with the main product.
 
 ## Adding new code
@@ -274,14 +274,12 @@ The following table lists the type of documents, the  target locations, and the 
 ### Adding a New Repository
 To add a new repository to the OpenSwitch project (referred to as `<repo-name>`):
 
-1) Clone the project with the following command:
+1. Clone the project with the following command:
 ```bash
 git clone https://review.openswitch.net/infra/project-config
 ```
-2) Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents.
-
+1. Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents.
 **Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example below.
-
 ```bash
 [access "refs/heads/*"]
 abandon = group Change Owner
@@ -289,24 +287,19 @@ abandon = group ops-<repo-name>-maintainers
 label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
 label-Workflow = -1..+1 group Change Owner
 ```
-3) The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
+1. The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
 
-4) Modify `gerrit/projects.yaml` to add the repository.
-
-
+1. Modify `gerrit/projects.yaml` to add the repository.
 ```bash
 - project: openswitch/<repo-name>
   description: <Repo Description>
 ```
-
-5) Commit the changes with the following command:
-
+1. Commit the changes with the following command:
 **Note:** In the commit message please specify the full name for two users in `Git Hub` that you wish to add as maintainers of this repo.
 ```bash
 git commit --signoff
 ```
-
-6) Review the changes with the following command:
+1. Review the changes with the following command:
 ```bash
 git review
  ```
