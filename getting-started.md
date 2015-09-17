@@ -1,8 +1,11 @@
 # Comprehensive Setup Guide
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
+This guide is only if you need to configure your environment manually with a different Linux distribution than Ubuntu. If you already follow the [Quick Start Guide](#quick-start), everything in this web page is already configured in your environment.
+
+Follow the instruction in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide.
+
 ## Contents
-- [Build system requirements](#build-system-requirements)
 - [Cloning OpenSwitch](#cloning-openswitch)
 - [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system)
 - [Configuring an OpenSwitch product](#configuring-an-openswitch-product)
@@ -10,16 +13,6 @@ OpenSwitch requires a Linux-based OS in order to build an image or contribute to
 - [Working with OpenSwitch](#working-with-openswitch)
 - [Deploying an image](#deploying-an-image)
 
-## Build System Requirements
-* A GNU/Linux machine running a recent Linux distribution. OpenSwitch is developed in Ubuntu but Debian, Fedora or SuSe should work fine as well.
-* At least 30 GB of free disk space.
-
-Two options are available to work with OpenSwitch: (You can skip this step if your environment is ready)
-
-* Use a Vagrant image--See [Quick Start Guide using Vagrant for Windows 7](quick-start) to set up a Vagrant image.
-* Bring Your Own Linux (BYOL)--Follow the instructions to [Setting up a Linux machine for OpenSwitch Development](linux-setup) to develop using your own GNU/Linux machine.
-
-**Proceed to the following sections once you have set up your own Linux system or a Vagrant box.**
 
 ## Cloning OpenSwitch
 The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you plan to build OpenSwitch to create a software image, only the overarching [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project needs to be cloned.
@@ -95,22 +88,8 @@ For information on developing for OpenSwitch, see the [How to contribute to the 
 
 ## Deploying an image
 
-You can upload your image to an Edge-Code AS5712 as described in [Physical Switch Image](#physical-switch-image), or run a [Simulated Switch Image](#simulated-switch-Image) in [Docker](http://docs.docker.com/) if you built a ``genericx86-64` image.
+You can upload your image to a Simulated Switch in [Docker](http://docs.docker.com/) when you built a `genericx86-64` image.
 
-### Physical switch image
-
-After your build completes you will have an ONIE file that can be uploaded to the switch. The file can be found in the `images` directory and is typically called `onie-installer-x86_64-as5712_54x`. For an as5712 platform, follow these instructions:
-
-1. Copy the ONIE file to your TFTP directory.
-2. Reboot the switch.
-3. When switch boots it will bring up a GNU GRUB selection screen.  Using your arrow keys move down to **ONIE** then select **ONIE : Install OS**.
-4. Enter the following commands:
-```
-tftp -g -r <onie-file> -l <onie-file> <tftp-server>
-chmod +x <onie-file>
-./<onie-file>
-reboot
-```
 
 ### Simulated switch image
 If you build an image for```genericx86-64```, you can run a simulated switch image in [Docker](http://docs.docker.com/).

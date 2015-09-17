@@ -11,16 +11,16 @@ Follow the [Getting Started](./getting-started) guide to prepare your system to 
 		- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
 		- [Client SSH configuration](#client-ssh-configuration)
 		- [Working behind a firewall](#working-behind-a-firewall)
-	- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
-	- [Installing git-review](#installing-git-review)
+		- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
+		- [Installing git-review](#installing-git-review)
 	- [Preparing changes to be reviewed](#preparing-changes-to-be-reviewed)
 	- [Sending changes for review](#sending-changes-for-review)
 	- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
 	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
 - [Adding new code](#adding-new-code)
 	- [Working on a defect](#working-on-a-defect)
-	- [Adding a new feature](#adding-a-new-feature)
 	- [Adding a new component](#adding-a-new-component)
+	- [Adding a new feature](#adding-a-new-feature)
 	- [Documenting the code](#documenting-the-code)
 		- [Documents distribution](#documents-distribution)
 	- [Adding a New Repository](#adding-a-new-repository)
@@ -127,7 +127,7 @@ Host review.openswitch.net
 
 For more details and examples for adding usernames or passwords, see [this page](http://gitolite.com/git-over-proxy.html).
 
-### Configuring Git and Gerrit
+#### Configuring Git and Gerrit
 You need to configure your local repository to use your Gerrit account. To configure your repository:
 1. Set `gitreview.username` with your Gerrit login.
 ```bash
@@ -139,7 +139,7 @@ $ git config --global user.email <email>
 $ git config --global user.name <name>
 ```
 
-### Installing git-review
+#### Installing git-review
 `git-review` is used to contribute changes back to the OpenSwitch project.
 
 1. Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
@@ -199,8 +199,8 @@ This initiates the process of merging your change with the main product.
 There are different ways you can contribute to the OpenSwitch such as:
 
 - [Working on a defect](#working-on-a-defect)
-- [Adding a new feature](#adding-a-new-feature)
 - [Adding a new component](#adding-a-new-component)
+- [Adding a new feature](#adding-a-new-feature)
 - [Documenting the code](#documenting-the-code)
 
 ### Working on a defect
@@ -213,16 +213,6 @@ Issues appear in OpenSwitch sometimes. If you want to collaborate on a known iss
 1. Work on the fix.
 1. Add a component test file to test the patch/fix. This test file is also submitted as part of the review in the next step.
 1. Commit your change using the [Contributing change](#contributing-changes) section.
-
-### Adding a new feature
-
-To add a new feature that does not belong to any of the existing code:
-
-1. Create the necessary module as mentioned under [Adding a new component](adding-a-new-component).
-1. Fetch any existing modules that will be modified as part of this feature.
-1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
-1. Update the documentation on feautre usage and design details, follow the [Documenting the code](documenting-the-code) section.
-1. Commit your changes.
 
 ### Adding a new component
 
@@ -239,6 +229,16 @@ To create a new component:
     - **Directories:** /docs, /tests, /src, /include
 1. Create a new directory named "tests" and add the necessary Component tests. CIT will pick up these test cases and run them for every commit to this module.
 1. Add the module to the following file to allow the module to be included in the Openhalon package: `yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`.
+1. Commit your changes.
+
+### Adding a new feature
+
+To add a new feature that does not belong to any of the existing code:
+
+1. Create the necessary module as mentioned under [Adding a new component](adding-a-new-component).
+1. Fetch any existing modules that will be modified as part of this feature.
+1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
+1. Update the documentation on feautre usage and design details, follow the [Documenting the code](documenting-the-code) section.
 1. Commit your changes.
 
 ### Documenting the code

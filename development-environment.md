@@ -1,4 +1,4 @@
-# The OpenSwitch Development Environment
+# Develop on OpenSwitch
 
 In addition to building images, the OpenSwitch build system assists in the development process by creating and maintaining an area containing a subset of the project's source files.  Once an OpenSwitch repository has been cloned and configured, working in the development environment may begin, i.e. no need to build the image.
 
