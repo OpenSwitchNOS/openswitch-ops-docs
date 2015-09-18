@@ -1,48 +1,44 @@
-# Code Repositories & Maintainers
+# Code Repositories
 
-## SAMPLE CONTENT ONLY
+Click a link below for a description of the various roles:
+[Maintainers](http://governance.openswitch.net/governance/maintainers.html)
+[Code Reviewers](http://governance.openswitch.net/governance/core-reviewers.html)
+[Bug Czar](http://governance.openswitch.net/governance/bug-czar.html)
 
-|Repo Name | Description | Primary Maintainer | Secondary Maintainer | +2 Transitioned | All scripts enabled | Pending CIT owner |
-|-----|-------------|--------------------|----------------------|-----------------|---------------------|-------------------|
-|infra/puppet-iptables | Puppet Iptables Module | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|infra/puppet-jenkins | Puppet Jenkins Module | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|infra/puppet-module-puppetboard | Puppet Puppetboard Module | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|infra/puppet-ssh | Puppet SSH Module | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|infra/system-config | Infrastructure System Configuration | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|infra/website | Infrastructure Website | Diego Dompe, David Ramirez | jennahung, yingwang | yes | n/a | n/a |
-|openswitch/governance | OpenHalon Governance | Kyle Mestery | Mark Lambert | To be added | n/a | n/a |
-|openswitch/ops-aaa-utils | AAA | gururaj.palmurkar, Sandeep Mohan | Ram Bhadravati, Rangaprasad Sampath | yes | no | Ajay |
-|openswitch/ops-arpmgrd | ARP Manager Daemon | Vivek Ramamoorthy | Aslam Khan | yes | in progress | Kalpana |
-|openswitch/ops-config-as5712 | Configuration files for AS5712 | Gary Evans | Dan Cripe | yes | n/a | Gary |
-|openswitch/ops-bufmond | Buffer Monitor Daemon | shanmugamari | Mohan Ram Bhadravati, Rangaprasad Sampath | yes | no | Ajay |
-|openswitch/ops-cfgd | Configuration Daemon | Gary Evans | Dan Cripe | no | no | Gary |
-|openswitch/ops-cli | CLI daemon | ksebasti, Guru G J | Rahul Rajagopal, Madhulika  Celestian | to be added | in progress | Kalpana |
-|openswitch/ops-config-yaml | Library to read config yaml files | Dan Cripe | Gary Evans | no | no | Gary |
-|openswitch/dhcp-tftp | Dhcp and tftp server | Varun VIjayakumar | Siva Muthusamy | yes | no | Shreeni |
-|openswitch/ops-docs | Documentation | Diego Dompe, David Ramirez | Kattia Chaves, Walinton Cambronero | yes | no | Vince |
-|openswitch/ops-fand | Fan Daemon | Dan Cripe | Gary Evans | yes | no | Gary |
-|openswitch/ops-ft-framework | Feature Test Framework | Vincent Mendoza | Payal Upadhyaya | yes | no | Vince |
-|openswitch/ops-intfd | Interface Daemon | sreedhar | Dan Cripe | yes | no | Gary |
-|openswitch/ops-lacpd | LACP Daemon | sreedhar | Dan Cripe, Gary Evans | yes | no | Gary |
-|openswitch/ops-ledd | LED Daemon | Gary Evans | Dan Cripe | yes | no | Gary |
-|openswitch/ops-lldpd | LLDP Daemon | Vivek Ramamoorthy | Amir Shalit | yes | no | Oleg |
-|openswitch/ops-mgmt-intf | Management Interface | shanmugamari | Mohan Ram Bhadravati, Rangaprasad Sampath | yes | no | Ajay |
-|openswitch/ops-openvswitch | OpenVswitch Daemon L2 | sreedhar | Dan Cripe, Gary Evans | yes | in progress | Kalpana |
-| |OpenVswitch Daemon L3 | Aslam Khan | Rahul Rajagopal | yes | | |
-| |OVSDB IDL | Aslam Khan, sreedhar | Dan Cripe, Gary Evans | yes | | |
-|ops-switchd-bcm-plugin | Halon Broadcom OVS Plugin L2 | sreedhar | Dan Cripe | no change | no | Gary |
-| |Halon Broadcom OVS Plugin L3 | Vivek Ramamoorthy | Ligeo George | no change | | |
-|openswitch/ops-pmd | Pluggable Module Daemon | Dan Cripe | Sreedhar Reddy | yes | no | Gary |
-|openswitch/ops-portd | Port Daemon | Ligeo George | Bhaskar Sarma Upadhyayula | yes | in progress | Kalpana |
-|openswitch/ops-powerd | Power Daemon | Dan Cripe | Gary Evans | yes | no | Gary |
-|openswitch/restd | REST Daemon | Joshua Zhao | Mir M Ali, Oleg Spirt, Allan Delgado | yes | no | Oleg |
-|openswitch/ops-switchd-sim-plugin | Halon Simulator OVS Plugin L2 | Amir Shalit | Aslam Khan | yes | in progress | Kalpana |
-|openswitch/quagga | Quagga - BGP | Jia Chen | Cihangir Akyol | yes | in progress | Kalpana |
-| |Quagga - Zebra | Rahul Rajagopal | Aslam Khan | yes | | |
-| |Quagga - OSPF | Rangaprasad Sampath | Suresh | yes | | |    
-|openswitch/ops-sysd | System Daemon | Sreedhar Reddy, Dan Cripe | Gary Evans | yes | no | Gary |
-|openswitch/ops-tempd | Temparature Daemon | Dan Cripe | Gary Evans | yes | no | Gary |
-|openswitch/ops-utils | Openswitch Utils | Sreedhar Reddy | Dan Cripe | yes | no | Gary |
-|openswitch/ops-vland | VLAN Daemon | Sreedhar Reddy | Dan Cripe, Gary Evans | yes | no | Gary |
-|openswitch/vsi | Virtual Switch Image | Sreedhar Reddy | Amir Shalit | yes | no | Gary |
-|openswitch/webui | Web UI | Al Harrington | Frank Wood | yes | no | Al |
+|	Repo Name	|	Description	|	Maintainers	|	Code Reviewers	|	Bug Czar	|
+|-----------|-------------|-------------|-----------------|-----------|
+|	openswitch/governance	|	OpenSwitch Governance Documentation	|	 Kyle Mestery, Mark Lambert 	|	 Kyle Mestery, Mark Lambert 	|	 Kyle Mestery, Mark Lambert 	|
+|	openswitch/ops	|	OpenSwitch Global Repository	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|
+|	openswitch/ops-aaa-utils	|	 OpenSwitch Authentication, Authorization and Accounting Utils 	|	 gururaj.palmurkar, Sandeep Mohan, Ram Bhadravati, Rangaprasad Sampath 	|	 gururaj.palmurkar, Sandeep Mohan, Ram Bhadravati, Rangaprasad Sampath 	|	 gururaj.palmurkar, Sandeep Mohan, Ram Bhadravati, Rangaprasad Sampath 	|
+|	openswitch/ops-arpmgrd	|	OpenSwitch ARP Manager Daemon	|	  Vivek Ramamoorthy, Aslam Khan 	|	  Vivek Ramamoorthy, Aslam Khan 	|	  Vivek Ramamoorthy, Aslam Khan 	|
+|	openswitch/ops-bufmond	|	OpenvSwitch Buffer Monitor Daemon	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|
+|	openswitch/ops-build	|	OpenSwitch Build System	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|
+|	openswitch/ops-cfgd	|	OpenSwitch Configuration Daemon	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
+|	openswitch/ops-checkmk-agent	|	Check_mk Agent	|	Shad Ansari	|	Shad Ansari	|	Shad Ansari	|
+|	openswitch/ops-cli	|	OpenSwitch command line interface	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|
+|	openswitch/ops-config-as5712	|	Configuration files for AS5712 platform	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
+|	openswitch/ops-config-simulator	|	Configuration files for Simulator platform	|		|		|		|
+|	openswitch/ops-config-yaml	|	OpenSwitch Config Yaml	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
+|	openswitch/ops-dhcp-tftp	|	Python daemon to integrate DHCP and TFTP to OVSDB	|	  Varun Vijayakumar, Siva Muthusamy 	|	  Varun Vijayakumar, Siva Muthusamy 	|	  Varun Vijayakumar, Siva Muthusamy 	|
+|	openswitch/ops-docs	|	OpenSwitch Documentation	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|
+|	openswitch/ops-fand	|	OpenSwitch Fan Daemon	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
+|	openswitch/ops-ft-framework	|	OpenSwitch Feature Test Framework	|	 Vincent Mendoza, Payal Upadhyaya 	|	 Vincent Mendoza, Payal Upadhyaya 	|	 Vincent Mendoza, Payal Upadhyaya 	|
+|	openswitch/ops-intfd	|	OpenSwitch Interface Daemon	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|
+|	openswitch/ops-lacpd	|	OpenSwitch LACP Daemon	|	 sreedhar, Dan Cripe, Gary Evans 	|	 sreedhar, Dan Cripe, Gary Evans 	|	 sreedhar, Dan Cripe, Gary Evans 	|
+|	openswitch/ops-ledd	|	OpenSwitch LED Daemon	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
+|	openswitch/ops-lldpd	|	OpenSwitch LLDP Daemon	|	 Vivek Ramamoorthy, Amir Shalit 	|	 Vivek Ramamoorthy, Amir Shalit 	|	 Vivek Ramamoorthy, Amir Shalit 	|
+|	openswitch/ops-mgmt-intf	|	OpenSwitch Management Interface Daemon	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|	 shanmugamari, Mohan Ram Bhadravati, Rangaprasad Sampath 	|
+|	openswitch/ops-openvswitch	|	OpenSwitch's OpenVswitch	|	 sreedhar, Dan Cripe, Gary Evans 	|	 sreedhar, Dan Cripe, Gary Evans 	|	 sreedhar, Dan Cripe, Gary Evans 	|
+|	openswitch/ops-pmd	|	OpenSwitch Pluggable Module Daemon	|	 Dan Cripe, Sreedhar Reddy 	|	 Dan Cripe, Sreedhar Reddy 	|	 Dan Cripe, Sreedhar Reddy 	|
+|	openswitch/ops-portd	|	OpenSwitch Port Manager Daemon	|	 Ligeo George, Bhaskar Sarma Upadhyayula 	|	 Ligeo George, Bhaskar Sarma Upadhyayula 	|	 Ligeo George, Bhaskar Sarma Upadhyayula 	|
+|	openswitch/ops-powerd	|	OpenSwitch Power Daemon	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
+|	openswitch/ops-quagga	|	Quagga	|	 Jia Chen, Cihangir Akyol 	|	 Jia Chen, Cihangir Akyol 	|	 Jia Chen, Cihangir Akyol 	|
+|	openswitch/ops-restd	|	OpenSwitch REST interface	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|
+|	openswitch/ops-switchd-opennsl-plugin	|	OpenSwitch Broadcom OVS plugin	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|
+|	openswitch/ops-switchd-sim-plugin	|	OpenSwitch Simulator OVS plugin	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|
+|	openswitch/ops-sysd	|	OpenSwitch System Daemon	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|
+|	openswitch/ops-tempd	|	OpenSwitch Temperature Daemon	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
+|	openswitch/ops-utils	|	OpenSwitch Utils	|	 Sreedhar Reddy, Dan Cripe 	|	 Sreedhar Reddy, Dan Cripe 	|	 Sreedhar Reddy, Dan Cripe 	|
+|	openswitch/ops-vland	|	OpenSwitch VLAN Daemon	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|
+|	openswitch/ops-vsi	|	OpenSwitch Virtual Switch Image	|	 Sreedhar Reddy, Amir Shalit 	|	 Sreedhar Reddy, Amir Shalit 	|	 Sreedhar Reddy, Amir Shalit 	|
+|	openswitch/ops-webui	|	OpenSwitch Web User Interface	|	 Al Harrington, Frank Wood 	|	 Al Harrington, Frank Wood 	|	 Al Harrington, Frank Wood 	|
