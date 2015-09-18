@@ -87,7 +87,7 @@ If you get the error message, `Agent admitted failure to sign using the key.` as
 1. Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
 1. Click `Add`.
 
-#### Verify that an username is assigned to Gerrit
+#### Verify that a username is assigned to Gerrit
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
 1. Click `Settings` in the menu under the user's name in the upper right-hand corner.
 1. Click `Profile` on the left side.
@@ -143,8 +143,7 @@ $ git config --global user.name <name>
 `git-review` is used to contribute changes back to the OpenSwitch project.
 
 1. Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
-
-1. Set up the git-review.
+2. Set up the git-review.
 ```bash
 $ git-review -s
 ```
@@ -192,7 +191,7 @@ Using the web interface, click **Abandon Change** to cancel the changes, if that
 
 ### After changes have been approved by Reviewers
 1. Log in to the change review URL using the link provided by the `git-review` command output.
-1. Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
+2. Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
 This initiates the process of merging your change with the main product.
 
 ## Adding new code
@@ -267,7 +266,7 @@ The following table lists the type of documents, the  target locations, and the 
 - **Feature Test Plans**--Contains a high-level overview of the test plans for each feature.
 - **Component Functionality**--Describes the content of the component in this repository and provides pointers to other documents.
 - **Component Design**--Documents a high-level design of the component.
-- **Component Test Plan**--Contains all the component tests documentation relevant to the specific repository.
+- **Component Test Plan**--Contains all the component test documentation relevant to the specific repository.
 - **Infrastructure**--Describes a process in the core of OpenSwitch. These documents are addressed to developers that want to contribute to the code and only use OpenSwitch.
 
 
@@ -279,30 +278,33 @@ To add a new repository to the OpenSwitch project (referred to as `<repo-name>`)
 git clone https://review.openswitch.net/infra/project-config
 ```
 1. Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents.
-**Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example below.
-```bash
-[access "refs/heads/*"]
-abandon = group Change Owner
-abandon = group ops-<repo-name>-maintainers
-label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
-label-Workflow = -1..+1 group Change Owner
-```
+
+	**Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example 	below.
+
+   ```bash
+   [access "refs/heads/*"]
+   abandon = group Change Owner
+   abandon = group ops-<repo-name>-maintainers
+   label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
+   label-Workflow = -1..+1 group Change Owner
+   ```
 1. The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
 
 1. Modify `gerrit/projects.yaml` to add the repository.
-```bash
-- project: openswitch/<repo-name>
-  description: <Repo Description>
-```
+      ```bash
+      - project: openswitch/<repo-name>
+        description: <Repo Description>
+      ```
 1. Commit the changes with the following command:
-**Note:** In the commit message please specify the full name for two users in `Git Hub` that you wish to add as maintainers of this repo.
-```bash
-git commit --signoff
-```
+
+   **Note:** In the commit message please specify the full name for two users in `Git Hub` that you wish to add as maintainers of this repo.
+   ```bash
+   git commit --signoff
+   ```
 1. Review the changes with the following command:
-```bash
-git review
- ```
+   ```bash
+   git review
+    ```
 
 #### Writing a new daemon with CMake
 
