@@ -6,20 +6,25 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 
 **All of the packages in OpenSwitch are not yet supported in the development environment.**
 
+- [Prerequisites for using the development environment](#prerequisites-for-using-the-development-environment)
 - [Managing the development environment](#managing-the-development-environment)
-	- [Prerequisites for using the development environment](#prerequisites-for-using-the-development-environment)
-    - [devenv_init](#devenv_init)
-    - [devenv_list_all](#devenv_list_all)
-    - [devenv_status](#devenv_status)
-    - [devenv_add](#devenv_add)
-    - [devenv_rm](#devenv_rm)
-    - [devenv_update_recipe](#devenv_update_recipe)
-    - [devenv_clean](#devenv_clean)
-    - [devenv_cscope](#devenv_cscope)
-    - [devenv_import](#devenv_import)
-    - [devenv_patch_recipe](#devenv_patch_recipe)
-    - [devenv_refresh](#devenv_refresh)
-    - [git_pull](#git_pull)
+	- [Workflows](#workflows)
+		- [Working with one repository](#working-with-one-repository)
+		- [Component Testing](#component-testing)
+		- [Reconfigure to a different platform](#reconfigure-to-a-different-platform)
+	- [Development commands](#development-commands)
+		- [devenv_init](#devenvinit)
+		- [devenv_list_all](#devenvlistall)
+		- [devenv_status](#devenvstatus)
+		- [devenv_add](#devenvadd)
+		- [devenv_rm](#devenvrm)
+		- [devenv_update_recipe](#devenvupdaterecipe)
+		- [devenv_clean](#devenvclean)
+		- [devenv_cscope](#devenvcscope)
+		- [devenv_import](#devenvimport)
+		- [devenv_patch_recipe](#devenvpatchrecipe)
+		- [devenv_refresh](#devenvrefresh)
+		- [git_pull](#gitpull)
 - [Build system infrastructure](#build-system-infrastructure)
 - [Working with modified packages](#working-with-modified-packages)
 	- [Building and cleaning](#building-and-cleaning)
@@ -30,13 +35,19 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 - [Working with branches](#working-with-branches)
 - [Setting up an NFS root environment for development](#setting-up-an-nfs-root-environment-for-development)
 	- [Introduction](#introduction)
-	- [Requirements](#requirements)
+	- [Prerequisites](#prerequisites)
 	- [Using NFS root](#using-nfs-root)
 		- [Configuring your NFS server IP address in the image](#configuring-your-nfs-server-ip-address-in-the-image)
-		- [Directory stucture of the deployed NFS directory](#directory-stucture-of-the-deployed-nfs-directory)
-		- [Deploying your NFS directory ](#deploying-your-nfs-directory)
+		- [Directory structure of the deployed NFS directory](#directory-structure-of-the-deployed-nfs-directory)
+		- [Deploying your NFS directory](#deploying-your-nfs-directory)
 		- [Working with devenv on NFS](#working-with-devenv-on-nfs)
 		- [Booting your hardware with NFS](#booting-your-hardware-with-nfs)
+
+
+## Prerequisites for using the development environment
+    1. Follow the [Getting Started](getting-started) guide to configure your system.
+    2. Review the [How to contribute to the OpenSwitch Project Code](contribute-code) guide.
+    3. Follow the [OpenSwitch Coding Style](contribute-code#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
 
 ## Managing the development environment
 
@@ -51,44 +62,107 @@ Detailed information about each available target is provided below.
 
 The area for developing software is under the `src/` directory at the top level of the workspace. Use `make devenv_add <package>` to fetch packages and its source code to `src/`. The subdirectories contain the source for the packages.
 
-### Prerequisites for using the development environment
-1. Follow the [Getting Started](getting-started) guide to configure your system.
-2. Review the [How to contribute to the OpenSwitch Project Code](contribute-code) guide.
-3. Follow the [OpenSwitch Coding Style](contribute-code#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
+### Workflows
+There are basic scenarios in the development environment where you'll have to use the `devenv_` commands. This section will give you workflow examples that can help you get familiar with the commands.
 
-### devenv_init
+#### Working with one repository
+
+1. Clone OpenSwitch repo, configure your platform and compile the code.
+```
+git clone https://git.openswitch.net/openswitch/ops-build
+cd ops-build
+make configure genericx86-64
+make
+```
+1. Setup your sandbox before adding other repositories to your environment
+```
+make devenv_init
+```
+1. Add the repository you need, for example:
+```
+make devenv_add ops-vland
+```
+The added repository can be found in `src/`
+1. Make changes to the repository
+1. Build the component code with the following command:
+```
+make ops-vland-build
+```
+1. If you need to clean a repository from `src/`:
+```
+make ops-vland-clean
+```
+**Note**: Unsaved changes to the source in any/all packages are lost.
+1. To deploy the newly built image to a docker container switch:
+```
+make ops-vland-deploy root@<IP of docker container>
+```
+**Note**: Remember to run `systemctl-daemon reload ` on the docker container to pick up these changes.
+If the build goes through fine, doing a `make` will build the new image with the changes.
+1. If you need to remove a repository from `src/`, run the command:
+```
+make devenv_rm ops-vland
+```
+
+#### Component Testing
+Component tests are run using pytest.
+* Setup the sandbox for running tests with:
+```
+make devenv_ct_init
+```
+* Run all tests inside the repositories in the `src/` directory:
+```
+make devenv_ct_test
+```
+**Note**: This will run all scripts that have the format: `test_xxx.py`.
+
+#### Reconfigure to a different platform
+1. Configure the platform
+```
+make configure genericx86-64
+```
+1. Build for a new platform
+```
+make distclean
+```
+**Note**: The above step will remove all the existing configuration, build and previously added source code from the sandbox. Configure the platform again using the command from step 1.
+
+### Development commands
+This section provides a complete list for all the development commands you can use while contributing with code to the OpenSwitch project.
+
+#### devenv_init
 Initiates the development environment.
 ```bash
 $ make devenv_init
 ```
 If git-review has been installed, `make`-ing the `devenv_init` target will configure the workspace for possible future change submissions.
 
-### devenv_list_all
+#### devenv_list_all
 This command shows the list of available packages for use with the platform that has been configured.
-```bash
+```
 $ make devenv_list_all
 Build System for openswitch
 
 Platform: as5712
 
 List of available devenv packages for as5712 platform:
-  * ops-aaa-utils
-  * ops-arpmgrd
-  * ops-bufmond
-  * ops-cfgd
-  * ops-cli
-  * ops-config-yaml
-  * ops-dhcp-tftp
+* ops-aaa-utils
+* ops-arpmgrd
+* ops-bufmond
+* ops-cfgd
+* ops-cli
+* ops-config-yaml
+* ops-dhcp-tftp
 ```
 
-### devenv_status
+#### devenv_status
 The `devenv_status` target shows the status of the development environment.
 ```bash
 $ make devenv_status
 ops-vland: <path>/src/ops-vland
 ```
 
-### devenv_add
+#### devenv_add
 Packages to be developed can be added to the collection, one or more at a time, by using this command, as shown in the following example. As the packages are added, each one will be fetched into the development `src/` directory in separate sub-directories. Each package is also unpacked and patched as required.
 ```bash
 $ make devenv_init
@@ -100,7 +174,7 @@ ops-pmd: <path>/ops-build/src/ops-pmd
 ops-vland: <path>/ops-build/src/ops-vland
 ```
 
-### devenv_rm
+#### devenv_rm
 Complementary to the `devenv_add` target, the `devenv_rm` target is used to remove packages from the collection, as shown in the following example:
 ```bash
 $ make devenv_rm ops-vland
@@ -110,7 +184,7 @@ ops-pmd: <path>/ops-build/src/ops-pmd
 ```
 **Note**: Unsaved changes to the source in the removed package are lost.
 
-### devenv_update_recipe
+#### devenv_update_recipe
 `devenv_update_recipe` is used to update build recipes after changes have been committed to a package in the development environment.  The workflow is as follows:
 ```bash
 $ make devenv_init
@@ -162,6 +236,7 @@ This command performs a `git pull --rebase` in the base Git repository and the o
 ```bash
 $  make git_pull
 ```
+
 ## Build system infrastructure
 
 The build system is based in the [Yocto Project](https://www.yoctoproject.org/about). This document does not cover how Yocto works, but it does include some important aspects related to OpenSwitch.
@@ -323,7 +398,7 @@ A Linux host machine that has an NFS server installed.
 ### Using NFS root
 The OpenSwitch build system includes logic that simplifies working with NFS root configuration.
 
-### Configuring your NFS server IP address in the image
+#### Configuring your NFS server IP address in the image
 By default the build system creates a debug entry on the boot menus of the switch to start with an NFS root.
 1. Configure the IP address and path to your NFS root for the menu by modifying the file `build/nfs.conf` on the build directory.
 
@@ -336,12 +411,12 @@ You can also specify the IP address directly.
 
 2. Rebuild your image and re-flash it on the target hardware. As alternative you can manually modify the address on the bootloader before booting. <!--How would you do this? -->
 
-### Directory structure of the deployed NFS directory
+#### Directory structure of the deployed NFS directory
 The build system includes a make target that deploys the root file system into a directory with the name `nfsroot-{machine}` where `{machine}` is the name of the platform that you are using. It also invokes the `exportfs` tool to publish the exported directory over the NFS server with the right permissions.
 
 For example, if you are using the `AS5712` platform, a directory called `nfsroot-as5712` is created after you enter the `make deploy_nfsroot` command for deploying the NFS directory.
 
-### Deploying your NFS directory
+#### Deploying your NFS directory
 To deploy your NFS directory:
 ```bash
 $ make deploy_nfsroot
@@ -351,7 +426,7 @@ Important notes:
 * If you have previously deployed the NFS root directory, it will give an error message warning that the previous directory will be wipe-out. You will be able to press `CTRL+C` at that point or proceed. Any change that you did to that directory is lost.
 * If you build the image again, the changes are not automatically deployed to the NFS root, you need to run the deploy target again after changing the image (see next section about how to use it with the `devenv` environment).
 
-### Working with devenv on NFS
+#### Working with devenv on NFS
 In the developer environment (`devenv`), there is a make target for every package named `<package>-nfs-deploy` that will deploy your modified code to the NFS root directory in a similar way that the `deploy-target` works.
 
 To avoid always being prompted for the local user password, install your ssh-key in your own authorized keys:
@@ -359,7 +434,7 @@ To avoid always being prompted for the local user password, install your ssh-key
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 
-### Booting your hardware with NFS
+#### Booting your hardware with NFS
 In platforms that use grub as boot loader, select the menu entry labeled `Switch Development -- NFS root` to boot your hardware in NFS root mode.
 
 As explained previously, the bootloader that was flashed with the last installation set ups this entry to point to the IP address of the developer's machine and the path to the development directory. You can manually change these values by using the editor for the entry on the grub menu if required.
