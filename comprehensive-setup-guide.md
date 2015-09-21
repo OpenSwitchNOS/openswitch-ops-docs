@@ -115,3 +115,9 @@ sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup
 ```
 sudo docker exec -ti osw bash
 ```
+Or you can connect using ssh using the switch IP given by docker.
+```
+ssh admin@<Switch-IP>
+```
+***Note**: You can get the IP from the simulated switch with `dock instapec`.
+
