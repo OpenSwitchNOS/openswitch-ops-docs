@@ -1,10 +1,6 @@
 # Comprehensive Setup Guide
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
-This guide is only if you need to configure your environment manually with a different Linux distribution than Ubuntu. If you already follow the [Quick Start Guide](#quick-start), everything in this web page is already configured in your environment.
-
-Follow the instruction in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide.
-
 ## Contents
 - [Cloning OpenSwitch](#cloning-openswitch)
 - [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system)
@@ -13,6 +9,11 @@ Follow the instruction in [Setting up a Linux machine for OpenSwitch Development
 - [Working with OpenSwitch](#working-with-openswitch)
 - [Deploying an image](#deploying-an-image)
 
+
+## Setting up the environment
+
+- If you already followed the [Quick Start Guide](#quick-start), you can skip this step and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
+- Follow the instructions in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide
 
 ## Cloning OpenSwitch
 The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you plan to build OpenSwitch to create a software image, only the overarching [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project needs to be cloned.
@@ -49,9 +50,9 @@ $ make help
 At this point, the help output indicates that the platform isn't configured.
 
 ## Configuring an OpenSwitch product
-After cloning the basic OpenSwitch repository, you need to configure OpenSwitch for a specific platform. This must be done before most other make targets are usable. In this example, OpenSwitch is configured to build for an as5712 platform.
+After cloning the basic OpenSwitch repository, you need to configure OpenSwitch for a specific platform. This must be done before most other make targets are usable. In this example, OpenSwitch is configured to build for a `genericx86-64` platform.
 ```bash
-$ make configure as5712
+$ make configure genericx86-64
 ```
 
 ## Building the product
@@ -92,7 +93,7 @@ You can upload your image to a Simulated Switch in [Docker](http://docs.docker.c
 
 
 ### Simulated switch image
-If you build an image for```genericx86-64```, you can run a simulated switch image in [Docker](http://docs.docker.com/).
+If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
 
 1. Make sure the Docker daemon is running. If it is not, execute the following:
 ```
