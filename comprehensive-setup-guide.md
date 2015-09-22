@@ -119,11 +119,8 @@ Or you can connect using ssh using the switch IP given by docker.
 ```bash
 ssh admin@<Switch-IP>
 ```
-
 **Note**: You can get the IP from the simulated switch with `dock inspect`. Search for the simulated switch ID with `docker ps`, then you can run `docker inspect [id]` and look for the IP address attribute.
-
 **For example:**
-
 ```bash
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
