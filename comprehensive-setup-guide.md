@@ -96,28 +96,41 @@ You can upload your image to a Simulated Switch in [Docker](http://docs.docker.c
 If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
 
 1. Make sure the Docker daemon is running. If it is not, execute the following:
-```
+```bash
 sudo docker -d
 ```
 2. Add yourself to the docker group (this step is required only the first time):
-```
+```bash
 sudo usermod -aG docker $USER
 ```
 3. After building the image, execute the following command:
-```
+```bash
 sudo make export_docker_image openswitch
 ```
 4. Enter the following command to run the simulated switch image in Docker:
-```
-sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup:/sys/fs/cgroup -h osw --name osw openswitch /sbin/init &
+```bash
+sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup:/sys/fs/cgroup -h ops --name ops openswitch /sbin/init &
 ```
 5. Once the Docker switch is running, you can connect to it with the following command:
-```
-sudo docker exec -ti osw bash
+```bash
+sudo docker exec -ti ops bash
 ```
 Or you can connect using ssh using the switch IP given by docker.
-```
+```bash
 ssh admin@<Switch-IP>
 ```
-***Note**: You can get the IP from the simulated switch with `dock instapec`.
 
+**Note**: You can get the IP from the simulated switch with `dock inspect`. Search for the simulated switch ID with `docker ps`, then you can run `docker inspect [id]` and look for the IP address attribute.
+
+**For example:**
+
+```bash
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+3ff6184474b9        openswitch          "/sbin/init"        About an hour ago   Up About an hour                        ops
+
+$ dock inspect 3ff6184474b9 | grep IPAddress
+"IPAddress": "172.17.0.1",
+"SecondaryIPAddresses": null,
+
+```
