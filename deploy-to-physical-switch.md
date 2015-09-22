@@ -1,4 +1,4 @@
-# Deploy image to physical switch
+# Installing and Booting OpenSwitch
 
 After your build completes you will have an ONIE file that can be uploaded to the switch. The file can be found in the `images` directory and is typically called `onie-installer-x86_64-as5712_54x`. For an as5712 platform, follow these instructions:
 
