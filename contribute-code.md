@@ -1,31 +1,34 @@
-# How to contribute to the code
+# How to contribute to OpenSwitch
 
-Follow the [Getting Started](./getting-started) guide to prepare your system to be able to contribute to the OpenSwitch project.
+This guide assumes that you have:
 
+ - Set up your environment to build and run OpenSwitch, and
+ - Made changes to source code that you want to contribute to OpenSwitch
+ 
 ## Contents
 
+- [Preparing to contribute changes](#preparing-to-contribute-changes)
+	- [Creating SSH keys](#creating-ssh-keys)
+	- [Adding the SSH Public Key to Gerrit](#adding-the-ssh-public-key-to-gerrit)
+	- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
+	- [Client SSH configuration](#client-ssh-configuration)
+	- [Working behind a firewall](#working-behind-a-firewall)
+	- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
+	- [Installing git-review](#installing-git-review)
 - [Contributing changes](#contributing-changes)
-	- [Configuring the environment](#configuring-the-environment)
-		- [Creating SSH keys](#creating-ssh-keys)
-		- [Adding the SSH Public Key to Gerrit](#adding-the-ssh-public-key-to-gerrit)
-		- [Verify that an username is assigned to Gerrit](#verify-that-an-username-is-assigned-to-gerrit)
-		- [Client SSH configuration](#client-ssh-configuration)
-		- [Working behind a firewall](#working-behind-a-firewall)
-		- [Configuring Git and Gerrit](#configuring-git-and-gerrit)
-		- [Installing git-review](#installing-git-review)
 	- [Preparing changes to be reviewed](#preparing-changes-to-be-reviewed)
 	- [Sending changes for review](#sending-changes-for-review)
 	- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
 	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
-- [Adding new code](#adding-new-code)
-	- [Working on a defect](#working-on-a-defect)
-	- [Adding a new component](#adding-a-new-component)
-	- [Adding a new feature](#adding-a-new-feature)
-	- [Documenting the code](#documenting-the-code)
-		- [Documents distribution](#documents-distribution)
+- [Adding a new component](#adding-a-new-component)
 	- [Adding a New Repository](#adding-a-new-repository)
-		- [Writing a new daemon with CMake](#writing-a-new-daemon-with-cmake)
-		- [Adding a recipe for your daemon](#adding-a-recipe-for-your-daemon)
+	- [Adding a recipe for the component](#adding-a-recipe-for-the-component)
+	- [Adding CMake file for the component](#adding-cmake-file-for-the-component)
+	- [Adding top-level files and directories](#adding-top-level-files-and-directories)
+	- [Final steps](#final-steps)
+- [Adding a new feature](#adding-a-new-feature)
+	- [Feature Documentation](#feature-documentation)
+- [Documenting the code](#documenting-the-code)
 - [Commit messages](#commit-messages)
 	- [Git commit message guidelines](#git-commit-message-guidelines)
 		- [Subject](#subject)
@@ -34,19 +37,17 @@ Follow the [Getting Started](./getting-started) guide to prepare your system to 
 		- [Bug fixes](#bug-fixes)
 		- [Changes](#changes)
 	- [Using Gitchangelog](#using-gitchangelog)
-- [Coding Style](#coding-style)
+- [OpenSwitch Coding Style](#openswitch-coding-style)
 	- [Comparisons](#comparisons)
 	- [Variables](#variables)
 
-## Contributing changes
-Changes to the OpenSwitch code base go through a review process before being merged. This page describes how local modifications can be submitted for review and, if approved, made available upstream in the OpenSwitch project.
-
-### Configuring the environment
+## Preparing to contribute changes
+Before you can contribute your changes, you will need to prepare your development environment.
 
 OpenSwitch runs [Gerrit](https://code.google.com/p/gerrit/) for online code reviews and [Git](http://git-scm.com/) as the distributed version control system.
 The [OpenSwitch Gerrit](https://review.openswitch.net/) site is the entry point for change, review, test, and inclusion in the OpenSwitch project.
 
-#### Creating SSH keys
+### Creating SSH keys
 Create SSH keys only if no keys have been created earlier for the designated development machine. To find out if keys exist for the designated development machine, check the contents of the `~/.ssh/` directory. The following two files exist if keys were already created:
 * `id_rsa`
 * `id_rsa.pub`
@@ -78,7 +79,7 @@ If you get the error message, `Agent admitted failure to sign using the key.` as
 # Permission denied (publickey).
 ```
 
-#### Adding the SSH Public Key to Gerrit
+### Adding the SSH Public Key to Gerrit
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
 	* OpenSwitch uses a `GitHub` account to login to the Review Site (Gerrit). If you do not have an account, create one by 	clicking  `Sign up` in the GitHub page after you try to login to the [OpenSwitch Review](https://review.openswitch.net/).
 	* Keep a record of the password and username as this is your Gerrit User information and is needed to work with OpenSwitch.
@@ -87,14 +88,14 @@ If you get the error message, `Agent admitted failure to sign using the key.` as
 1. Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
 1. Click `Add`.
 
-#### Verify that an username is assigned to Gerrit
+### Verify that an username is assigned to Gerrit
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
 1. Click `Settings` in the menu under the user's name in the upper right-hand corner.
 1. Click `Profile` on the left side.
 1. Verify that a username exists, or define a username if one does not exist.
 1. Keep track of the username as this is the Gerrit User information and is used to work with OpenSwitch.
 
-#### Client SSH configuration
+### Client SSH configuration
 Add an entry similar to the following in your `~/.ssh/config` file (preserve the identification), which directs SSH to the proper SSH private key file to use for the OpenSwitch review website:
 ```
 Host review.openswitch.net
@@ -102,7 +103,7 @@ Host review.openswitch.net
 	IdentityFile ~/.ssh/id_rsa
 ```
 
-#### Working behind a firewall
+### Working behind a firewall
 The network port used by Gerrit (29418) on the review website may be blocked in some networks, for example on a corporate network. One workaround (besides asking your ISP or corporate IT team to open the port) is to tunnel in using your HTTP proxy. You can achieve that with the `nc` or `socat` command line utilities, or any other utilities of your preference. Follow the instructions below to use `socat` or `nc` to configure a proxy for the SSH traffic.
 
 Take note of the proxy information.
@@ -127,7 +128,7 @@ Host review.openswitch.net
 
 For more details and examples for adding usernames or passwords, see [this page](http://gitolite.com/git-over-proxy.html).
 
-#### Configuring Git and Gerrit
+### Configuring Git and Gerrit
 You need to configure your local repository to use your Gerrit account. To configure your repository:
 1. Set `gitreview.username` with your Gerrit login.
 ```bash
@@ -139,7 +140,7 @@ $ git config --global user.email <email>
 $ git config --global user.name <name>
 ```
 
-#### Installing git-review
+### Installing git-review
 `git-review` is used to contribute changes back to the OpenSwitch project.
 
 1. Install `git-review` as described [here](http://www.mediawiki.org/wiki/Gerrit/git-review), if not already installed on the development machine.
@@ -148,6 +149,15 @@ $ git config --global user.name <name>
 ```bash
 $ git-review -s
 ```
+
+## Contributing changes
+Now that you prepared your development environment to contribute changes, you can follow the following steps to actually make the changes.
+
+Changes to the OpenSwitch code base go through a review process before being merged. This section describes how local code changes can be submitted for review and, if approved, made available upstream in the OpenSwitch project.
+
+This section assumes that the changes are contained to adding new functionality to an existing feature, adding new capability to an existing component, or fixing a defect in existing code base. More elaborate changes that require adding a new component or a feature are addressed in subsequent sections.
+
+Each change-set submitted to review should include, along with the changes to source code, corresponding additions or changes to test scripts and documentation. Without these, your change-set may not be approved by the reviewers.
 
 ### Preparing changes to be reviewed
 Before attempting to commit changes, make sure that they are compliant with the [OpenSwitch Coding Style](#openswitch-coding-style). For non-OpenSwitch modules, follow the coding style that the module already uses.
@@ -195,81 +205,15 @@ Using the web interface, click **Abandon Change** to cancel the changes, if that
 1. Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
 This initiates the process of merging your change with the main product.
 
-## Adding new code
-There are different ways you can contribute to the OpenSwitch such as:
+## Adding a new component
 
-- [Working on a defect](#working-on-a-defect)
-- [Adding a new component](#adding-a-new-component)
-- [Adding a new feature](#adding-a-new-feature)
-- [Documenting the code](#documenting-the-code)
+In OpenSwitch, a module is known as a component. Each component resides in a seperate repository. Each feature will have several components associated, depending in the size of the feature. This section shows you how you can add a new component to an existing feature or create your own component.
 
-### Working on a defect
+Adding a new component to OpenSwitch comes with responsibility to invest in ongoing maintenance of the component. To enable this, per the Governance document, identify individuals who are willing to take on the roles of [Maintainer](http://governance.openswitch.net/governance/maintainers.html), [Reviewer](http://governance.openswitch.net/governance/core-reviewers.html), and [Bug Czar](http://governance.openswitch.net/governance/bug-czar.html) for the component.
 
-Issues appear in OpenSwitch sometimes. If you want to collaborate on a known issue, or you find a issue that you would like to fix, use the following steps to fix it:
+Start by sending an email to the [infra-ops@lists.openswitch.net](mailto:infra-ops@lists.openswitch.net?subject=Request%20for%20new%20component%20repository) mailing list, with the Github IDs of the individuals identified for the above roles, and the name of the component/repository you would like to add. You will receive back a confirmation email including a new group, of the form `ops-<repo-name>-maintainers`, created for the above individuals that you can use in the steps below.
 
-1. Depending on if the defect is reproducible in VSI or not, configure the sandbox for genericx86-64 or as5712
-1. Add the repository to your local workspace using `make devenv_add <repository-name>`.
-**Note:** If you are working on a branch in that repository, use `git checkout <branch name> . `
-1. Work on the fix.
-1. Add a component test file to test the patch/fix. This test file is also submitted as part of the review in the next step.
-1. Commit your change using the [Contributing change](#contributing-changes) section.
-
-### Adding a new component
-
-In OpenSwitch a module is known as a component. Each feature will have several components associated, depending in the size of the feature. You can add a new component to an existing feature or create your own component by following the [Adding a new feature](adding-a-new-feature).
-
-To create a new component:
-
-1. [Create a new repository](adding-a-new-repository).
-1. [Create a recipe](adding-a-recipe-for-your-daemon).
-1. Add the code for your component.
-1. Add a service file in the same location as the recipe file if this is a new daemon that runs when the switch boots up.
-1. Create the correct repository structure with the required top-level files and directories as follows:
-	- **Files:** AUTHORS, COPYING, Design.md, FAQ.md, NEWs, NOTICE, README.md
-    - **Directories:** /docs, /tests, /src, /include
-1. Create a new directory named "tests" and add the necessary Component tests. CIT will pick up these test cases and run them for every commit to this module.
-1. Add the module to the following file to allow the module to be included in the Openhalon package: `yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`.
-1. Commit your changes.
-
-### Adding a new feature
-
-To add a new feature that does not belong to any of the existing code:
-
-1. Create the necessary module as mentioned under [Adding a new component](adding-a-new-component).
-1. Fetch any existing modules that will be modified as part of this feature.
-1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
-1. Update the documentation on feautre usage and design details, follow the [Documenting the code](documenting-the-code) section.
-1. Commit your changes.
-
-### Documenting the code
-
-The OpenSwitch project uses the Markdown markup language to generate its documentation.
-All documentation that is contributed to the project needs to be written in this format so that it can be built into the project.
-
-#### Documents distribution
-
-The following table lists the type of documents, the  target locations, and the expected file names. For a description of each type of document, see the following table:
-
-| Doc Type                	| Repo                     	 | Directory 	| File Name               	  |
-|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
-| User Guides            	  | openswitch/ops           	 | /docs     	| [feature]_user_guide.md 	  |
-| Command References      	| openswitch/ops           	 | /docs     	| [feature]_cli.md        	  |
-| Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  |
-| Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  |
-| Component Functionality 	| openswitch/ops-[component] | /         	| README.md               	  |
-| Component Design        	| openswitch/ops-[component] | /         	| DESIGN.md               	  |
-| Component Test Plan     	| openswitch/ops-[component] | /tests    	| [component]_test.md         |
-| Infrastructure            | opeswitch/ops-build        | /docs      | [Infrastructure section].md |
-
-- **User Guides**--Documents how to use the different OpenSwitch features.
-- **Command References**--Details the command usage for the different features found in the OpenSwitch project.
-- **Feature Designs**--Provides a high-level design description for each feature.
-- **Feature Test Plans**--Contains a high-level overview of the test plans for each feature.
-- **Component Functionality**--Describes the content of the component in this repository and provides pointers to other documents.
-- **Component Design**--Documents a high-level design of the component.
-- **Component Test Plan**--Contains all the component tests documentation relevant to the specific repository.
-- **Infrastructure**--Describes a process in the core of OpenSwitch. These documents are addressed to developers that want to contribute to the code and only use OpenSwitch.
-
+Now you are ready to follow the following steps in creating a new component.
 
 ### Adding a New Repository
 To add a new repository to the OpenSwitch project (referred to as `<repo-name>`):
@@ -279,7 +223,7 @@ To add a new repository to the OpenSwitch project (referred to as `<repo-name>`)
 git clone https://review.openswitch.net/infra/project-config
 ```
 1. Create a new file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents.
-**Note:** The code review and abandon group name should be `<repo-name>`-maintainers, as shown in this example below.
+**Note:** The code review and abandon group name should be `ops-<repo-name>-maintainers` that you received n the earlier step, as shown in this example below.
 ```bash
 [access "refs/heads/*"]
 abandon = group Change Owner
@@ -302,68 +246,11 @@ git commit --signoff
 1. Review the changes with the following command:
 ```bash
 git review
- ```
-
-#### Writing a new daemon with CMake
-
-The new repo needs a CMake file to be able to index with the rest of the OpenSwitch project.
-The easiest way to create a CMake file is to take a similar repo, copy the CMake and adapt it for the new repo.
-The following is an example code taken from vland.
-
-```bash
-# Copyright (C) 2015 Hewlett-Packard Development Company, L.P.
-# All Rights Reserved.
-#
-#    Licensed under the Apache License, Version 2.0 (the "License"); you may
-#    not use this file except in compliance with the License. You may obtain
-#    a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-#    Unless required by applicable law or agreed to in writing, software
-#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-#    License for the specific language governing permissions and limitations
-#    under the License.
-
-cmake_minimum_required (VERSION 2.8)
-
-set (VLAND vland)
-project (${VLAND})
-set (SRC_DIR src)
-set (INCL_DIR include)
-
-# Rules to locate needed libraries
-include(FindPkgConfig)
-pkg_check_modules(OVSCOMMON REQUIRED libovscommon)
-pkg_check_modules(OVSDB REQUIRED libovsdb)
-
-include_directories (${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/${INCL_DIR}
-                     ${OVSCOMMON_INCLUDE_DIRS}
-)
-
-# Define compile flags
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Werror")
-
-# Source files to build vland
-set (SOURCES ${SRC_DIR}/vland.c ${SRC_DIR}/vland_ovsdb_if.c)
-
-# Rules to build vland
-add_executable (${VLAND} ${SOURCES})
-
-target_link_libraries (${VLAND} ${OVSCOMMON_LIBRARIES} ${OVSDB_LIBRARIES}
-                       -lpthread -lrt)
-
-# Rules to install vland binary in rootfs
-install(TARGETS ${VLAND}
-        RUNTIME DESTINATION bin)
-
 ```
 
-For more details of how CMake works, please go to [CMake documentation](http://www.cmake.org/documentation/).
 
-####  Adding a recipe for your daemon
-In order that your deamon work properly, you must have a recipe. This recipe should be placed in the `ops-build` repo, inside `yocto/openswitch/meta-distro-openswitch`.
+###  Adding a recipe for the component
+For your component work properly, you must have a recipe. This recipe should be placed in the `ops-build` repo, inside `yocto/openswitch/meta-distro-openswitch`.
 
 There are different directories for the recipes:
 
@@ -417,12 +304,122 @@ The recipes have some important parts:
 * **LICENSE**--License for your recipe.
 * **LIC_FILES_CHKSUM**--Path of the license file with the md5.
 * **DEPENDS**--Label we have to include all the dependencies that our recipe has in order to compile, in this case,  depending on `ops-utils` and `ops-ovsdb`
-* **SRC_URI**--List of source files, it can be local or remote, Yocto supports several
- protocols. You can find the complete list in the [Yocto Ref Manual](http://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html)
+* **SRC_URI**--List of source files, it can be local or remote, Yocto supports several protocols. You can find the complete list in the [Yocto Ref Manual](http://www.yoctoproject.org/docs/current/ref-manual/ref-manual.html)
 * **S**--Location in the build directory where the recipe source code resides. It is the work directory.
 * **inherit**--Variable used to inherit the functionality of a class, in our case we need `cmake` in order to build this recipe.
 
 If you need more details of how the BitBake works, see [BitBake documentation](https://www.yoctoproject.org/tools-resources/projects/bitbake).
+
+### Adding CMake file for the component
+
+The new repo needs a CMake file to be able to index with the rest of the OpenSwitch project. The easiest way to create a CMake file is to take a similar repo, copy the CMake and adapt it for the new repo.
+
+All executable that OpenSwitch repositories generate must have ops- prefix (except openvswitch). Similarly, all Python scripts/daemons names also must have ops- prefix.
+
+The following is an example code taken from ops-vland.
+
+```bash
+# Copyright (C) 2015 Hewlett-Packard Development Company, L.P.
+# All Rights Reserved.
+#
+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
+#    not use this file except in compliance with the License. You may obtain
+#    a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#    License for the specific language governing permissions and limitations
+#    under the License.
+
+cmake_minimum_required (VERSION 2.8)
+
+set (VLAND ops-vland)
+project (${VLAND})
+set (SRC_DIR src)
+set (INCL_DIR include)
+
+# Rules to locate needed libraries
+include(FindPkgConfig)
+pkg_check_modules(OVSCOMMON REQUIRED libovscommon)
+pkg_check_modules(OVSDB REQUIRED libovsdb)
+
+include_directories (${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/${INCL_DIR}
+                     ${OVSCOMMON_INCLUDE_DIRS}
+)
+
+# Define compile flags
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Werror")
+
+# Source files to build ops-vland
+set (SOURCES ${SRC_DIR}/vland.c ${SRC_DIR}/vland_ovsdb_if.c)
+
+# Rules to build ops-vland
+add_executable (${VLAND} ${SOURCES})
+
+target_link_libraries (${VLAND} ${OVSCOMMON_LIBRARIES} ${OVSDB_LIBRARIES}
+                       -lpthread -lrt)
+
+# Rules to install ops-vland binary in rootfs
+install(TARGETS ${VLAND}
+        RUNTIME DESTINATION bin)
+
+```
+
+For more details of how CMake works, please go to [CMake documentation](http://www.cmake.org/documentation/).
+
+### Adding top-level files and directories
+All components should follow the following structure for top-level files and directories:
+| Directory or File                	| Name | Purpose |
+|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
+| File | AUTHORS           	 | List of everyone who has contributed to this repository     	|
+| File      	| COPYING           	 | Explanation of licenses applicable to this repository        	  |
+| File         	| README.md           	 | Overall explanation of the component residing in this repository     	  |
+| File | DESIGN.md | Explanation of the design of internals of this component |
+| File | FAQ.md | **(Optional)** Collection of frequently asked questions  regarding this component |
+| File | NEWS | **(Optional)**  Should specify what changed from one release to another |
+| File | NOTICE | **(Optional)** Includes references for all the projects that were used for this repository   |
+| Directory | /src | Source code |
+| Directory | /include | Header files |
+| Directory | /tests | Test scripts and test case documentation. Each [component]_*.py test script should be accompanied by corresponding [component]_*.md file  that document the tests cases in that test script  |
+| Directory | /docs | **(Optional)** Any other documentation that you prefer to add |
+
+### Final steps in adding a new component
+Now that you have created a new repository, and set up the recipe, CMake and top-level files and directories, follow the following last steps to complete the process of adding a new component.
+
+1. Add the code for your component by following the steps under [Contributing changes](#contributing-changes).
+1. If this is a new daemon that runs when the switch boots up, add a service file in the same location as the recipe file. Set up makefiles/recipes, such that any executable that we generate has ops- prefix (except openvswitch, see below). Similarly, all Python scripts/daemons names must have ops- prefix.
+1. Add the necessary component tests and corresponding documentation as per [Adding top-level files and directories](#adding-top-level-files-and-directories). CIT will pick up these test cases and run them for every commit to this module.`yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups$ vim packagegroup-openswitch.bb`.
+1. Commit your changes.
+
+## Adding a new feature
+
+To add a new feature that does not belong to any of the existing code:
+
+1. Create the necessary module as mentioned under [Adding a new component](#adding-a-new-component).
+1. Fetch any existing modules that will be modified as part of this feature.
+1. Additionally, add and integrate sufficient Feature test cases to CIT infra so that future commits are validated against the feature.
+1. Update the documentation on feature usage and design details, follow the [Documenting the code](#documenting-the-code) section.
+1. Commit your changes.
+
+### Feature Documentation
+The following table lists the type of documents, the  target locations, and the expected file names. For a description of each type of document, see the following table:
+
+| Doc Type                	| Repo                     	 | Directory 	| File Name               	  | Purpose |
+|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
+| User Guides            	  | openswitch/ops           	 | /docs     	| [feature]_user_guide.md 	  | Detailed walkthrough on how to use this feature |
+| Command References      	| openswitch/ops           	 | /docs     	| [feature]_cli.md        	  | Details of all various commands and corresponding arguments for this feature |
+| Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  | Details of how the various components come together to deliver feature functionality to end user |
+| Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  | Document each test case from corresponding [feature]_test.py test script |
+
+## Documenting the code
+
+The OpenSwitch project uses the Markdown markup language to generate its documentation. All documentation that is contributed to the project needs to be written in this format so that it can be built into the project. You can leverage the following tools to generate the markdown documentation.
+
+ - WYSIWYG-like markdown editor https://stackedit.io/editor
+ - Build ASCII-based block and flow diagrams to embed in markdown documents http://asciiflow.com/
 
 
 ## Commit messages
@@ -618,13 +615,27 @@ gitchangelog
 You'll see the current changelog inside the API repository.
 
 
-## Coding Style
-The coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting. The additions below are clarifications and do not conflict with the Open vSwitch style.
+## OpenSwitch Coding Style
+For Python source code, the coding style used for OpenSwitch is [PEP8](https://www.python.org/dev/peps/pep-0008/ ).
+
+For C source code, the coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting. 
+
+Where the repository is based on an external open source project, all code must align the coding style of that project.
+
+"ops" is the acronym adopted by OpenSwitch project. If any new file name or new function name prefix is required, "ops_" should be used. (**NOTE:** Existing external open source project file and function names should not be changed for easier upstreaming.)
+
+Code must be heavily commented assuming someone completely new to the codebase.
+
+Avoid adding personal references in the code or comments such as, "I", "me", "he", "we" etc.
+
+Add TODO/FIXME comments as needed.
+
+The additions below are clarifications and do not conflict with the Open vSwitch style.
 
 ### Comparisons
 Write comparisons in a form that reads naturally. Examples:
 ```c
- bool foo_b = some_bool_function(x);
+bool foo_b = some_bool_function(x);
 int foo_i = some_int_function(x);
 
 if (true == foo_b)   /* No, unnecessary comparison and doesn't read well */
