@@ -5,24 +5,26 @@ The following guide describes an easy way to set up your development environment
 This approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0.
 
 ## Contents
-- [Development environment features](#development-environment-features)
-- [Installing the OpenSwitch project development environment](#installing-the-openswitch-project-development-environment)
-- [Configuring the system to work with OpenSwitch](#configuring-the-system-to-work-with-openswitch)
+
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Installing the OpenSwitch development environment](#installing-the-openswitch-development-environment)
 - [Connecting to the OpenSwitch instance](#connecting-to-the-openswitch-instance)
 - [Build system and development environment](#build-system-and-development-environment)
 - [Developing for OpenSwitch resources](#developing-for-openswitch-resources)
 
-## Development environment features
-
-* A VM running Ubuntu with the OpenSwitch development environment in `~/ops-build/`.
+## Overview
+This guide shows you how to set up your development environment with the following components:
+* A VM running Ubuntu with the OpenSwitch development environment.
 * An OpenSwitch x86_64 image built and ready to be used.
 * An instance of OpenSwitch (the x86_64 image) running inside a Docker container.
 
-**Note:** The username/password for the VM is the default vagrant/vagrant.
+**Note:** The default username/password for the VM is vagrant/vagrant.
 
-## Installing the OpenSwitch project development environment
+## Prerequisites
 1. Download and install [VirtualBox](https://www.virtualbox.org/).
 2. Download and install [Vagrant](https://www.vagrantup.com/).
+3. If you are behind a proxy, make sure that the http_proxy and https_proxy environment variables are set in the command prompt or shell from which the commands to install the vagrant plugins (steps 4 and 5 below) are executed.
 3. Install the required Vagrant plugins. Use the following command:
 ``` bash
 $ vagrant plugin install vagrant-reload
@@ -32,7 +34,7 @@ $ vagrant plugin install vagrant-reload
 $ vagrant plugin install vagrant-proxyconf
 ```
 
-## Configuring the system to work with OpenSwitch
+## Installing the OpenSwitch development environment
 
 1. Download and unzip the [Vagrant files](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
 
@@ -49,7 +51,7 @@ $ vagrant up
 **Note:** The first `vagrant up` process can take a while since the entire OpenSwitch repository is fetched and built.
 
 ## Connecting to the OpenSwitch instance
-After following the steps above *"Configuring the system to work with OpenSwitch"*, an OpenSwitch image has been built and Docker has been configured to run that OpenSwitch image. Use the following steps to connect to OpenSwitch. The following steps are performed in the newly created Ubuntu VM.
+After following the steps above *"Installing the OpenSwitch development environment"*, an OpenSwitch image has been built and Docker has been configured to run that OpenSwitch image. Use the following steps to connect to OpenSwitch. The following steps are performed in the newly created Ubuntu VM.
 
 1. Run a shell on the Docker instance with `docker exec -ti ops bash`
 2. Run `vtysh` to start the OpenSwitch  CLI.
@@ -64,10 +66,10 @@ bash-4.3# vtysh
 ```
 
 ## Build system and development environment
-After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files. For details on how to manage it, see the [Development Environment](development-environment) guide.
+After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files. For details on how to manage it, see the [Develop on OpenSwitch](develop-on-openswitch) guide.
 
 
 ## Developing for OpenSwitch resources
 For more information on developing for OpenSwitch, see the following guides:
+* [Develop on OpenSwitch](develop-on-openswitch) to learn how to work with the OpenSwitch development environment.
 * [How to Contribute Code](contribute-code) to learn how to submit your code UpStream.
-* [Development Environment](development-environment) to learn how to work with the OpenSwitch development environment.
