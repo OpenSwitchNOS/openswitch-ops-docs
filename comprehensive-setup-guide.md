@@ -2,35 +2,38 @@
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
 ## Contents
+- [Setting up the environment](#setting-up-the-environment)
 - [Cloning OpenSwitch](#cloning-openswitch)
 - [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system)
 - [Configuring an OpenSwitch product](#configuring-an-openswitch-product)
 - [Building the product](#building-the-product)
-- [Working with OpenSwitch](#working-with-openswitch)
 - [Deploying an image](#deploying-an-image)
-
+	- [Simulated switch image](#simulated-switch-image)
+- [Working with OpenSwitch](#working-with-openswitch)
 
 ## Setting up the environment
 
-- If you already followed the [Quick Start Guide](./quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
+- If you already followed the [Quick Start Guide](quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
 - Follow the instructions in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide
 
 ## Cloning OpenSwitch
 The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you only plan to build OpenSwitch for the purpose of creating a software image, then you only need to clone the  [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project.
 
+Refer to the [Develop on OpenSwitch](develop-on-openswitch) guide for instructions on how to contribute to the OpenSwitch code.
+
 **Important Notes:**
 * NFS and encryptfs file systems are not supported.
 * Using directory paths containing whitespace or special characters is not supported.
 * In proxied environments the use of a DNS cache tool like `dnsmasq` is recommended.
-* Once the directory is configured it should not be moved.
+* Once the cloned directory is configured it should not be moved.
 
 To clone the OpenSwitch repository, use the following `git clone` command and URL. The use of `<directory>` is optional (if omitted, `<directory>` defaults to `ops-build`).
-```bash
+```
 $ git clone https://git.openswitch.net/openswitch/ops-build [<directory>]
 ```
 
 Once the repository is cloned, change the directory to the newly created repository.
-```bash
+```
 $ cd <directory>
 ```
 
@@ -38,12 +41,12 @@ $ cd <directory>
 The OpenSwitch build system is a GNU make-based wrapper around the [Yocto Project](https://www.yoctoproject.org). The make wrapper allows for easier common operations, and it is what a developer uses for typical image building and maintenance work.  Advanced interfaces through the make wrapper allows access to the underlying facilities that Yocto provides. These advanced features are not covered here.
 
 The wrapper supports bash shell tab completion, if it has been enabled in the shell:
-```bash
+```
 $ make <TAB><TAB>
 ```
 
 For example, `<TAB><TAB>` shows the targets that the make wrapper supports. An obvious target to try first is "help", and the syntax is:
-```bash
+```
 $ make help
 ```
 
@@ -51,64 +54,66 @@ At this point, the help output indicates that the platform isn't configured.
 
 ## Configuring an OpenSwitch product
 After cloning the basic OpenSwitch repository, you need to configure OpenSwitch for a specific platform. This must be done before most other make targets are usable. In this example, OpenSwitch is configured to build for a `genericx86-64` platform.
-```bash
+```
 $ make configure genericx86-64
 ```
 
 ## Building the product
-Each platform defines the default outputs produced by the build. Typically, all that is required to invoke the build is `make`:
-```bash
+Each platform defines the default output produced by the build. Typically, all that is required to invoke the build is `make`:
+```
 $ make
 ```
 
-The build output is found under the `images/` directory.
+The build output can be found under the `images/` directory.
 
 
 ## Deploying an image
-
-You can upload your image to a Simulated Switch in [Docker](http://docs.docker.com/) when you built a `genericx86-64` image.
-
 
 ### Simulated switch image
 If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
 
 1. Make sure the Docker daemon is running. If it is not, execute the following:
-```bash
+```
 sudo docker -d
 ```
 2. Add yourself to the docker group (this step is required only the first time):
-```bash
+```
 sudo usermod -aG docker $USER
 ```
 3. After building the image, execute the following command:
-```bash
+```
 sudo make export_docker_image openswitch
 ```
 4. Enter the following command to run the simulated switch image in Docker:
-```bash
+```
 sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup:/sys/fs/cgroup -h ops --name ops openswitch /sbin/init &
 ```
 5. Once the Docker switch is running, you can connect to it with the following command:
-```bash
+```
 sudo docker exec -ti ops bash
 ```
 Or you can connect using ssh using the switch IP given by docker.
-```bash
+```
 ssh admin@<Switch-IP>
 ```
-**Note**: You can get the IP from the simulated switch with `dock inspect`. Search for the simulated switch ID with `docker ps`, then you can run `docker inspect [id]` and look for the IP address attribute.
+
+To get the IP from the simulated switch the following can be done:
+
+1. Run `docker ps` to simulated switch ID (CONTAINER ID)
+2. Run `docker inspect <id> | grep IPAddress`
+3. The IP address attribute is displayed.
+
 **For example:**
-```bash
+```
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 3ff6184474b9        openswitch          "/sbin/init"        About an hour ago   Up About an hour                        ops
-
 $ dock inspect 3ff6184474b9 | grep IPAddress
 
 "IPAddress": "172.17.0.1",
 
 "SecondaryIPAddresses": null,
-
+```
 
 
 ## Working with OpenSwitch
@@ -127,10 +132,10 @@ OpenSwitch provides a set of `make` targets to simplify working with Yocto:
 
 You can pass the environment variables on the make invocation. For example, to clean the kernel build shared state:
 
-```bash
+```
 $ make cleansstate RECIPE=virtual/kernel
 ```
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contribute-code) and the [Develop on OpenSwitch](./develop-on-openswitch) documentation.
+For information on developing for OpenSwitch, see the [How to contribute to OpenSwitch](contribute-code) and the [Develop on OpenSwitch](develop-on-openswitch) documentation.
