@@ -12,7 +12,7 @@ OpenSwitch requires a Linux-based OS in order to build an image or contribute to
 
 ## Setting up the environment
 
-- If you already followed the [Quick Start Guide](#http://www.openswitch.net/documents/dev/quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
+- If you already followed the [Quick Start Guide](./quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
 - Follow the instructions in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide
 
 ## Cloning OpenSwitch
@@ -133,4 +133,4 @@ $ make cleansstate RECIPE=virtual/kernel
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contrib-code) and the [Development Environment](./dev-env) documentation.
+For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contribute-code) and the [Develop on OpenSwitch](./develop-on-openswitch) documentation.
