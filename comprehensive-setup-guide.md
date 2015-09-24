@@ -12,11 +12,11 @@ OpenSwitch requires a Linux-based OS in order to build an image or contribute to
 
 ## Setting up the environment
 
-- If you already followed the [Quick Start Guide](#quick-start), you can skip this step and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
+- If you already followed the [Quick Start Guide](#http://www.openswitch.net/documents/dev/quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
 - Follow the instructions in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide
 
 ## Cloning OpenSwitch
-The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you plan to build OpenSwitch to create a software image, only the overarching [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project needs to be cloned.
+The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you only plan to build OpenSwitch for the purpose of creating a software image, then you only need to clone the  [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project.
 
 **Important Notes:**
 * NFS and encryptfs file systems are not supported.
