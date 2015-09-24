@@ -17,7 +17,7 @@ Click a link below for a description of the various roles:
 |	openswitch/ops-checkmk-agent	|	Check_mk Agent	|	Shad Ansari	|	Shad Ansari	|	Shad Ansari	|
 |	openswitch/ops-cli	|	OpenSwitch command line interface	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|
 |	openswitch/ops-config-as5712	|	Configuration files for AS5712 platform	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
-|	openswitch/ops-config-simulator	|	Configuration files for Simulator platform	|		|		|		|
+|	openswitch/ops-config-container	|	Configuration files for Simulator platform	| Sreedhar Papudippu | Sreedhar Papudippu | Sreedhar Papudippu |
 |	openswitch/ops-config-yaml	|	OpenSwitch Config Yaml	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
 |	openswitch/ops-dhcp-tftp	|	Python daemon to integrate DHCP and TFTP to OVSDB	|	  Varun Vijayakumar, Siva Muthusamy 	|	  Varun Vijayakumar, Siva Muthusamy 	|	  Varun Vijayakumar, Siva Muthusamy 	|
 |	openswitch/ops-docs	|	OpenSwitch Documentation	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|	 Diego Dompe, David Ramirez, Kattia Chaves, Walinton Cambronero 	|
@@ -35,7 +35,7 @@ Click a link below for a description of the various roles:
 |	openswitch/ops-quagga	|	Quagga	|	 Jia Chen, Cihangir Akyol 	|	 Jia Chen, Cihangir Akyol 	|	 Jia Chen, Cihangir Akyol 	|
 |	openswitch/ops-restd	|	OpenSwitch REST interface	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|	 Joshua Zhao, Mir M Ali, Oleg Spirt, Allan Delgado 	|
 |	openswitch/ops-switchd-opennsl-plugin	|	OpenSwitch Broadcom OVS plugin	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|	 sreedhar, Dan Cripe 	|
-|	openswitch/ops-switchd-sim-plugin	|	OpenSwitch Simulator OVS plugin	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|
+|	openswitch/ops-switchd-container-plugin	|	OpenSwitch Simulator OVS plugin	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|	 Amir Shalit, Aslam Khan 	|
 |	openswitch/ops-sysd	|	OpenSwitch System Daemon	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|	 Sreedhar Reddy, Dan Cripe, Gary Evans 	|
 |	openswitch/ops-tempd	|	OpenSwitch Temperature Daemon	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
 |	openswitch/ops-utils	|	OpenSwitch Utils	|	 Sreedhar Reddy, Dan Cripe 	|	 Sreedhar Reddy, Dan Cripe 	|	 Sreedhar Reddy, Dan Cripe 	|
