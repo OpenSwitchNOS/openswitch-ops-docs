@@ -1,6 +1,5 @@
 # Prerequisites
 
-# Prerequisites
 
 These are the SW and HW prerquisites needed in order to contribute to the code
 
