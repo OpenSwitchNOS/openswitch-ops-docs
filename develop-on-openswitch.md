@@ -4,7 +4,7 @@ In addition to building images, the OpenSwitch build system assists in the devel
 
 The OpenSwitch development environment is built upon the `devtool` recently written by Paul Eggleton.
 
-**All of the packages in OpenSwitch are not yet supported in the development environment.**
+**Not all of the Ycoto packages in OpenSwitch are supported in the development environment.**
 
 - [Prerequisites for using the development environment](#prerequisites-for-using-the-development-environment)
 - [Managing the development environment](#managing-the-development-environment)
