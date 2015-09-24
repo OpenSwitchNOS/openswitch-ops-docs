@@ -34,7 +34,7 @@ The Jenkins and Zuul user interfaces can be accessed by their respective links: 
 
 After you have cloned a project and submitted a patch set using `git-review`, the change goes through a validation process in the Continuous Integration workflow. The following diagram shows a typical workflow:
 
-![CIT Workflow](./images/CIT-workflow.png "CIT Workflow")
+![CIT Workflow](/img/CIT-workflow.png "CIT Workflow")
 
 The current status for all tests currently scheduled or running can be seen at the [Zuul](http://zuul.openswitch.net/) status page.
 
@@ -73,4 +73,4 @@ If the tests failed or feedback is received from the community or the Core Revie
 ## Architecture
 The following diagram describes how the different servers integrate with each other.
 
-![CIT Architecture](images/CIT-architecture.png "CIT Architecture")
+![CIT Architecture](/img/CIT-architecture.png "CIT Architecture")
