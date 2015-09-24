@@ -106,6 +106,10 @@ make devenv_rm ops-vland
 
 #### Component Testing
 Component tests are run using pytest.
+* Export the Docker image
+```
+make export_docker_image
+```
 * Setup the sandbox for running tests with:
 ```
 make devenv_ct_init
