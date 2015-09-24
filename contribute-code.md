@@ -4,7 +4,7 @@ This guide assumes that you have:
 
  - Set up your environment to build and run OpenSwitch, and
  - Made changes to source code that you want to contribute to OpenSwitch
- 
+
 ## Contents
 
 - [Preparing to contribute changes](#preparing-to-contribute-changes)
@@ -371,8 +371,9 @@ For more details of how CMake works, please go to [CMake documentation](http://w
 
 ### Adding top-level files and directories
 All components should follow the following structure for top-level files and directories:
-| Directory or File                	| Name | Purpose |
-|-------------------------	|--------------------------	 |-----------	|-------------------------	  |
+
+| Directory or File | Name | Purpose |
+|-------------------|------|---------|
 | File | AUTHORS           	 | List of everyone who has contributed to this repository     	|
 | File      	| COPYING           	 | Explanation of licenses applicable to this repository        	  |
 | File         	| README.md           	 | Overall explanation of the component residing in this repository     	  |
@@ -617,7 +618,7 @@ You'll see the current changelog inside the API repository.
 ## OpenSwitch Coding Style
 For Python source code, the coding style used for OpenSwitch is [PEP8](https://www.python.org/dev/peps/pep-0008/ ).
 
-For C source code, the coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting. 
+For C source code, the coding style used for OpenSwitch is an extension of the [Open vSwitch Coding Style](https://github.com/openvswitch/ovs/blob/master/CodingStyle.md), which is an extension of the [One True Brace Style](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) for indenting.
 
 Where the repository is based on an external open source project, all code must align the coding style of that project.
 
