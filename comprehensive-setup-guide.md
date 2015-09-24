@@ -63,29 +63,6 @@ $ make
 
 The build output is found under the `images/` directory.
 
-## Working with OpenSwitch
-OpenSwitch provides a set of `make` targets to simplify working with Yocto:
-
-| Command | Parameters | Description              |
-|---------|------------|--------------------------|
-|kernel   | None       | Builds the Linux kernel  |
-|fs       | None       | Builds the file system image (only supported in platforms that use a filesystem de-coupled from the kernel) |
-|sdk      | None       | Builds the platform's SDK installer |
-|bake     | RECIPE     | Invoke bitbake over the recipe defined by the RECIPE environment variable |
-|devshell | RECIPE     | Invoke bitbake's devshell over the recipe defined by the RECIPE environment variable |
-|cleansstate | RECIPE  | Clears Yocto's shared state of the recipe defined by the RECIPE environment variable |
-|clean    | None       | Cleans all the build (but not the shared states), without un-configuring the directory |
-|distclean|None        | Cleans the build and unconfigures the project |
-
-You can pass the environment variables on the make invocation. For example, to clean the kernel build shared state:
-
-```bash
-$ make cleansstate RECIPE=virtual/kernel
-```
-
-**Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
-
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contrib-code) and the [Development Environment](./dev-env) documentation.
 
 ## Deploying an image
 
@@ -127,7 +104,33 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 3ff6184474b9        openswitch          "/sbin/init"        About an hour ago   Up About an hour                        ops
 
 $ dock inspect 3ff6184474b9 | grep IPAddress
+
 "IPAddress": "172.17.0.1",
+
 "SecondaryIPAddresses": null,
 
+
+
+## Working with OpenSwitch
+OpenSwitch provides a set of `make` targets to simplify working with Yocto:
+
+| Command | Parameters | Description              |
+|---------|------------|--------------------------|
+|kernel   | None       | Builds the Linux kernel  |
+|fs       | None       | Builds the file system image (only supported in platforms that use a filesystem de-coupled from the kernel) |
+|sdk      | None       | Builds the platform's SDK installer |
+|bake     | RECIPE     | Invoke bitbake over the recipe defined by the RECIPE environment variable |
+|devshell | RECIPE     | Invoke bitbake's devshell over the recipe defined by the RECIPE environment variable |
+|cleansstate | RECIPE  | Clears Yocto's shared state of the recipe defined by the RECIPE environment variable |
+|clean    | None       | Cleans all the build (but not the shared states), without un-configuring the directory |
+|distclean|None        | Cleans the build and unconfigures the project |
+
+You can pass the environment variables on the make invocation. For example, to clean the kernel build shared state:
+
+```bash
+$ make cleansstate RECIPE=virtual/kernel
 ```
+
+**Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
+
+For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./contrib-code) and the [Development Environment](./dev-env) documentation.
