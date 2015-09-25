@@ -1,4 +1,4 @@
-# Comprehensive Setup Guide
+# Step-by-Step Guide
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
 ## Contents
