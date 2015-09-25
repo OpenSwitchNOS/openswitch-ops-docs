@@ -12,7 +12,7 @@ A GNU/Linux machine running a recent distribution is recommended:
 • At least 30GB of disk available for each OpenSwitch build directory (usually takes way less, but this is the worst-case scenario).
 
 
-## Minimun Hradware Recommended
+## Minimun Hardware Recommended
 
 * 2 cores
 * 4GB of memory
