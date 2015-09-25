@@ -25,7 +25,7 @@ Unit testing tools can also be leveraged to supplement component test cases for 
 Blackbox testing tests the functionality of OpenSwitch as exposed by a certain feature to the end user.
 
 ### Feature testing
-Typically, functionality of a feature is brought together by interaction between multiple OpenSwitch components. Feature tests test this functionality of a feature, that spans multiple components, and will be functionality as exposed to end user on supported end-user interfaces, such as CLI, REST or WebUI. Feature tests should always leverage one of these interfaces for driving and verification. A feature test should be something that end user of OpenSwitch can verify in their private setups using supported end-user interfaces, and hence is not white-box. 
+Typically, functionality of a feature is brought together by interaction between multiple OpenSwitch components. Feature tests test this functionality of a feature, that spans multiple components, and will be functionality as exposed to end user on supported end-user interfaces, such as CLI, REST or WebUI. Feature tests should always leverage one of these interfaces for driving and verification. A feature test should be something that end user of OpenSwitch can verify in their private setups using supported end-user interfaces, and hence is not white-box.
 
 OpenSwitch virtual test framework also supports development of feature tests, especially by simulating multiple network nodes, each an instance of OpenSwitch or end hosts.
 
@@ -37,3 +37,15 @@ However, certain feature (or sometimes component) functionality will depend on e
 When developing such feature functionality, ensure that you have access to a test lab that hosts such hardware, against which these tests can be validated.
 
 OpenSwitch CIT infrastructure supports triggering test cases on RTLs (Remote Test Labs) where such hardware can be hosted. If you are a hardware vendor interested in supporting OpenSwitch on your platform, reach out on [infra-ops@lists.openswitch.net](mailto:infra-ops@lists.openswitch.net?subject=Support%20OpenSwitch%20on%20new%20hardware) mailer to learn how you can set up OpenSwitch to integrate with your RTL for validation of OpenSwitch functionality against your hardware.
+
+## CIT Tiers
+OpenSwitch CIT system has the following two tiers.
+
+| Tier | Trigger | Runtime Target | Tests target | Test run |
+|------|---------|-------------|--------------|----------|
+| 1| Commit (gating) | <60 mins | Virtual switch | Upstream |
+| 2 | Periodic | <6 hrs| Physical hardware switch | Vendor Remote Test Lab (RTL) |
+
+Tier 1  CIT is done using virtual switch and is triggered on any change to any component. During this Tier1 run, all whitebox tests (unit and/or component tests) for the component that was changed will be run, along with all the blackbox (feature tests) for all features (that reside in ops repository) will be run.
+
+Correspondingly, Tier 2 CIT focuses on test cases that require to be run on physical hardware. OpenSwitch leverages Remote Test Labs (RTLs) that reside in member labs to run these tests. When a hardware vendor joins OpenSwitch, they would contribute support for their hardware to OpenSwitch code base, and set up a RTL that integrates with OpenSwitch CIT to ensure that OpenSwitch features that are hardware dependent are tested on the hardware from that vendor. This ensures that functioning of those features on that hardware does not regress.
