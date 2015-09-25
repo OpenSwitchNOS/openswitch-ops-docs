@@ -9,10 +9,10 @@ A GNU/Linux machine running a recent distribution is recommended:
 * Unless you have powerful VMs, prefer real hardware.
 * OpenSwitch is developed on Ubuntu, but Debian, Fedora, SuSe should work fine as well.
 
-• At least 30GB of disk available for each OpenSwitch build directory (usually takes way less, but this is the worst-case scenario).
+At least 30GB of disk available for each OpenSwitch build directory (usually takes way less, but this is the worst-case scenario).
 
 
-## Minimun Hradware Recommended
+## Minimun Hardware Recommended
 
 * 2 cores
 * 4GB of memory
