@@ -71,5 +71,5 @@ After following the above instructions, the newly created Ubuntu VM has been ful
 
 ## Developing for OpenSwitch resources
 For more information on developing for OpenSwitch, see the following guides:
-* [Develop on OpenSwitch](develop-on-openswitch) to learn how to work with the OpenSwitch development environment.
+* [Changing OpenSwith Code](changing-openswitch-code) to learn how to work with the OpenSwitch development environment.
 * [How to Contribute Code](contribute-code) to learn how to submit your code UpStream.
