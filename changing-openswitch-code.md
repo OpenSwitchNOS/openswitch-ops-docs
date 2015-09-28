@@ -2,7 +2,7 @@
 
 In addition to building images, the OpenSwitch build system assists in the development process by creating and maintaining an area containing a subset of the project's source files.  Once an OpenSwitch repository has been cloned and configured, working in the development environment may begin, i.e. no need to build the image.
 
-The OpenSwitch development environment is built upon the `devtool` recently written by Paul Eggleton.
+The OpenSwitch development environment is built upon the `devtool` recently added to Yocto.
 
 **Not all of the Ycoto packages in OpenSwitch are supported in the development environment.**
 

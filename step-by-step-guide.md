@@ -133,4 +133,4 @@ $ make cleansstate RECIPE=virtual/kernel
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./changing-openswitch-code) and the [Develop on OpenSwitch](./develop-on-openswitch) documentation.
+For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./changing-openswitch-code).
