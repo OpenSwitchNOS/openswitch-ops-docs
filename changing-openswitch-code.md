@@ -45,9 +45,9 @@ The OpenSwitch development environment is built upon the `devtool` recently writ
 
 
 ## Prerequisites for using the development environment
-    1. Follow the [Getting Started](getting-started) guide to configure your system.
-    2. Review the [How to contribute to the OpenSwitch Project Code](contribute-code) guide.
-    3. Follow the [OpenSwitch Coding Style](contribute-code#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
+1. Follow the [Getting Started](getting-started) guide to configure your system.
+2. Review the [How to contribute to the OpenSwitch Project Code](contribute-code) guide.
+3. Follow the [OpenSwitch Coding Style](contribute-code#openswitch-coding-style) for new code, or follow the existing style in non-OpenSwitch modules.
 
 ## Managing the development environment
 
