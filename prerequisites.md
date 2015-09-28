@@ -1,18 +1,19 @@
 # Prerequisites
 
 
-These are the SW and HW prerquisites needed in order to contribute to the code
+These are the SW and HW prerequisites needed in order to contribute to the code
 
 ## Build System Requirements
 
 A GNU/Linux machine running a recent distribution is recommended:
-* Unless you have powerful VMs, prefer real hardware.
-* OpenSwitch is developed on Ubuntu, but Debian, Fedora, SuSe should work fine as well.
+
+* Unless you have used the [Quick Start Guide using Vagrant](quick-start), it is recommended to use an Ubuntu recent distribution using the [Ubuntu setup](linux-setup#ubuntu).
+* OpenSwitch is developed on Ubuntu. However, Debian, Fedora, SuSe should work fine using the [Linux Setup](linux-setup).
 
 At least 30GB of disk available for each OpenSwitch build directory (usually takes way less, but this is the worst-case scenario).
 
 
-## Minimun Hardware Recommended
+## Minimum Hardware Recommended
 
 * 2 cores
 * 4GB of memory
@@ -22,4 +23,4 @@ At least 30GB of disk available for each OpenSwitch build directory (usually tak
 
 * 4 cores
 * 8GB of memory
-* 50 gb of hard disk
+* 50GB of hard disk
