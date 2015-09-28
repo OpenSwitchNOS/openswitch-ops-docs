@@ -55,7 +55,7 @@ Once all the required information has been provided and a root cause analysis ha
 
 **Skip-fix:** The engineer has completed the investigation and recommends not to fix the defect.  This status could be transitioned later on to either deferred or to a closed state.
 
-**Duplicate:** A defect will be considered as Duplicate, when there is a defect with the same root cause already filed in [Taiga](https://tree.taiga.io/project/openswitch/issues?page=1). 
+**Duplicate:** A defect will be considered as Duplicate, when there is a defect with the same unexpected behavior already filed in a [Taiga](https://tree.taiga.io/project/openswitch/issues?page=1) ticket. 
 
 **Invalid-bug:** This status means the submitted defect is not a valid issue. This status is used when the defect entered reflects an expected behavior, is using wrong assumptions, is an enhancement or is referring to an unsupported functionality.
 
