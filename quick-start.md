@@ -36,7 +36,7 @@ $ vagrant plugin install vagrant-proxyconf
 
 ## Installing the OpenSwitch development environment
 
-1. Download and unzip the [Vagrant files](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
+1. Download and unzip the Vagrant Files from [here](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
 
 2. If you are behind a proxy, set the proxy `host:port` info in the `host/Vagrantfile`. The `host/Vagrantfile` is located in the workspace directory where you unzipped the Vagrant files.
 ```bash
@@ -66,7 +66,7 @@ bash-4.3# vtysh
 ```
 
 ## Build system and development environment
-After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files. For details on how to manage it, see the [Develop on OpenSwitch](develop-on-openswitch) guide.
+After following the above instructions, the newly created Ubuntu VM has been fully installed with the OpenSwith Build System and Development Environment. The OpenSwitch Build System creates and maintains a Git repository that is cloned to `~/ops-build`. The Git repository contains a subset of the project's source files.
 
 
 ## Developing for OpenSwitch resources
