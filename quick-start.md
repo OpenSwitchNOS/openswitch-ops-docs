@@ -11,7 +11,7 @@ This approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0
 - [Installing the OpenSwitch development environment](#installing-the-openswitch-development-environment)
 - [Connecting to the OpenSwitch instance](#connecting-to-the-openswitch-instance)
 - [Build system and development environment](#build-system-and-development-environment)
-- [Developing for OpenSwitch resources](#developing-for-openswitch-resources)
+- [Developing nfor OpenSwitch resources](#developing-for-openswitch-resources)
 
 ## Overview
 This guide shows you how to set up your development environment with the following components:
@@ -26,11 +26,11 @@ This guide shows you how to set up your development environment with the followi
 2. Download and install [Vagrant](https://www.vagrantup.com/).
 3. If you are behind a proxy, make sure that the http_proxy and https_proxy environment variables are set in the command prompt or shell from which the commands to install the vagrant plugins (steps 4 and 5 below) are executed.
 4. Install the required Vagrant plugins. Use the following command:
-``` bash
+```
 $ vagrant plugin install vagrant-reload
 ```
 5. If you are behind a proxy, install the `vagrant-proxyconf` plugin:
-```bash
+```
 $ vagrant plugin install vagrant-proxyconf
 ```
 
@@ -39,12 +39,12 @@ $ vagrant plugin install vagrant-proxyconf
 1. Download and unzip the Vagrant Files from [here](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
 
 2. If you are behind a proxy, set the proxy `host:port` info in the `host/Vagrantfile`. The `host/Vagrantfile` is located in the workspace directory where you unzipped the Vagrant files.
-```bash
+```
 config.proxy.http = "http://proxy.example.com:8080"
 config.proxy.https = "https://proxy.example.com:8080"
 ```
 3. Browse to your workspace directory and run `vagrant up`.
-```bash
+```
 $ cd openswitch-vagrant-master
 $ vagrant up
 ```
@@ -58,7 +58,7 @@ After following the steps above *"Installing the OpenSwitch development environm
 
 Example:
 
-```bash
+```
 vagrant@ops-host:~/ops-build$ docker exec -ti ops bash
 bash-4.3# vtysh
 2015-09-01T23:31:47Z|00001|reconnect|INFO|unix:/var/run/openvswitch/db.sock: connecting...
