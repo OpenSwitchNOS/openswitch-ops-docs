@@ -22,5 +22,5 @@ At least 30GB of disk available for each OpenSwitch build directory (usually tak
 ## Suggested Hardware
 
 * 4 cores
-* 8GB of memory
-* 50GB of hard disk
+* 8 GB of memory
+* 50 GB of hard disk

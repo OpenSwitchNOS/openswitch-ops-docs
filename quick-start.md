@@ -36,7 +36,7 @@ $ vagrant plugin install vagrant-proxyconf
 
 ## Installing the OpenSwitch development environment
 
-1. Download and unzip the Vagrant Files from [here](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
+1. Download and unzip the Vagrant files from [here](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
 
 2. If you are behind a proxy, set the proxy `host:port` info in the `host/Vagrantfile`. The `host/Vagrantfile` is located in the workspace directory where you unzipped the Vagrant files.
 ```
