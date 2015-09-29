@@ -15,7 +15,7 @@ Click a link below for a description of the various roles:
 |	openswitch/ops-build	|	OpenSwitch Build System	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|	 Diego Dompe, Jenna Hung 	|
 |	openswitch/ops-cfgd	|	OpenSwitch Configuration Daemon	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
 |	openswitch/ops-checkmk-agent	|	Check_mk Agent	|	Shad Ansari	|	Shad Ansari	|	Shad Ansari	|
-|	openswitch/ops-cli	|	OpenSwitch command line interface	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|	 ksebasti, Guru G J, Rahul Rajagopal, Madhulika  Celestian 	|
+|	openswitch/ops-cli	|	OpenSwitch command line interface	|	 Celestian K. Sebastian , Guru G J, Rahul Rajagopal, Madhulika Madishetty 	|	 Celestian K. Sebastian , Guru G J, Rahul Rajagopal, Madhulika Madishetty 	|	 Celestian K. Sebastian , Guru G J, Rahul Rajagopal, Madhulika Madishetty 	|
 |	openswitch/ops-config-as5712	|	Configuration files for AS5712 platform	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|	 Gary Evans, Dan Cripe  	|
 |	openswitch/ops-config-container	|	Configuration files for Simulator platform	| Sreedhar Papudippu | Sreedhar Papudippu | Sreedhar Papudippu |
 |	openswitch/ops-config-yaml	|	OpenSwitch Config Yaml	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|	 Dan Cripe, Gary Evans 	|
