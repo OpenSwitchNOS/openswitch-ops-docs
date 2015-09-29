@@ -1,9 +1,9 @@
 # Code Repositories
 
 Click a link below for a description of the various roles:
-[Maintainers](http://governance.openswitch.net/governance/maintainers.html)
-[Code Reviewers](http://governance.openswitch.net/governance/core-reviewers.html)
-[Bug Czar](http://governance.openswitch.net/governance/bug-czar.html)
+* [Maintainers](http://governance.openswitch.net/governance/maintainers.html)
+* [Code Reviewers](http://governance.openswitch.net/governance/core-reviewers.html)
+* [Bug Czar](http://governance.openswitch.net/governance/bug-czar.html)
 
 |	Repo Name	|	Description	|	Maintainers	|	Code Reviewers	|	Bug Czar	|
 |-----------|-------------|-------------|-----------------|-----------|
