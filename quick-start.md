@@ -1,6 +1,6 @@
 # Quick Start Guide using Vagrant
 
-The following guide describes an easy way to set up your development environment for the OpenSwitch project using  [VirtualBox](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com).  The Vagrant image includes an Ubuntu VM with Docker already installed. Docker is used to run the OpenSwitch project image on a Linux container.
+The following guide describes an easy way to set up your development environment for the OpenSwitch project using <a href="https://www.virtualbox.org/" target="_blank">VirtualBox</a>, <a href="https://www.vagrantup.com/" target="_blank">Vagrant</a> and <a href="https://www.docker.com" target="_blank">Docker</a>.  The Vagrant image includes an Ubuntu VM with Docker already installed. Docker is used to run the OpenSwitch project image on a Linux container.
 
 This approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0.
 
@@ -22,8 +22,8 @@ This guide shows you how to set up your development environment with the followi
 **Note:** The default username/password for the VM is vagrant/vagrant.
 
 ## Prerequisites
-1. Download and install [VirtualBox](https://www.virtualbox.org/).
-2. Download and install [Vagrant](https://www.vagrantup.com/).
+1. Download and install <a href="https://www.virtualbox.org/" target="_blank">VirtualBox</a>.
+2. Download and install <a href="https://www.vagrantup.com/" target="_blank">Vagrant</a>.
 3. If you are behind a proxy, make sure that the http_proxy and https_proxy environment variables are set in the command prompt or shell from which the commands to install the vagrant plugins (steps 4 and 5 below) are executed.
 4. Install the required Vagrant plugins. Use the following command:
 ``` bash
@@ -36,7 +36,7 @@ $ vagrant plugin install vagrant-proxyconf
 
 ## Installing the OpenSwitch development environment
 
-1. Download and unzip the Vagrant Files from [here](https://github.com/shadansari/openswitch-vagrant/archive/master.zip) into a workspace directory.
+1. Download and unzip the Vagrant Files from <a href="https://github.com/shadansari/openswitch-vagrant/archive/master.zip" target="_blank">&lt;here&gt;</a> into a workspace directory.
 
 2. If you are behind a proxy, set the proxy `host:port` info in the `host/Vagrantfile`. The `host/Vagrantfile` is located in the workspace directory where you unzipped the Vagrant files.
 ```bash
