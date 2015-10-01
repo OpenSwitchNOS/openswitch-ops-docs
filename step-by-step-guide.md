@@ -2,35 +2,30 @@
 OpenSwitch requires a Linux-based OS in order to build an image or contribute to the source code. For documentation purposes only, a Windows machine can be used (refer to the [How to contribute to the OpenSwitch documentation in Windows](./windows-setup) guide for instructions).
 
 ## Contents
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Step-by-Step Guide](#step-by-step-guide)
-	- [Contents](#contents)
-	- [Setting up the environment](#setting-up-the-environment)
-	- [Cloning OpenSwitch](#cloning-openswitch)
-	- [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system)
-	- [Configuring an OpenSwitch product](#configuring-an-openswitch-product)
-	- [Building the product](#building-the-product)
-	- [Deploying an image](#deploying-an-image)
-		- [Simulated switch image](#simulated-switch-image)
-	- [OpenSwitch Yocto `make` targets](#openswitch-yocto-make-targets)
-<!-- /TOC -->
-
-
+- [Setting up the environment](#setting-up-the-environment)
+- [Cloning OpenSwitch](#cloning-openswitch)
+- [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system)
+- [Configuring an OpenSwitch product](#configuring-an-openswitch-product)
+- [Building the product](#building-the-product)
+- [Deploying an image](#deploying-an-image)
+	- [Simulated switch image](#simulated-switch-image)
+- [Working with OpenSwitch](#working-with-openswitch)
 
 ## Setting up the environment
 
-- If you already followed the [Quick Start Guide](./quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
+- If you already followed the [Quick Start Guide](quick-start), you can skip the Cloning OpenSwitch section and move to [Introduction to the OpenSwitch build system](#introduction-to-the-openswitch-build-system) section
 - Follow the instructions in [Setting up a Linux machine for OpenSwitch Development](linux-setup) to install all the required packages before proceeding with this guide
 
 ## Cloning OpenSwitch
 The OpenSwitch source code is accessible in the [OpenSwitch Git Repository](https://git.openswitch.net/), where the source code is organized into several projects.  If you only plan to build OpenSwitch for the purpose of creating a software image, then you only need to clone the  [openswitch/ops-build](https://git.openswitch.net/cgit/openswitch/ops-build) project.
 
+Refer to the [How to contribute to OpenSwitch](contribute-code) guide for instructions on how to contribute to the OpenSwitch code.
+
 **Important Notes:**
 * NFS and encryptfs file systems are not supported.
 * Using directory paths containing whitespace or special characters is not supported.
 * In proxied environments the use of a DNS cache tool like `dnsmasq` is recommended.
-* Once the directory is configured it should not be moved.
+* Once the cloned directory is configured it should not be moved.
 
 To clone the OpenSwitch repository, use the following `git clone` command and URL. The use of `<directory>` is optional (if omitted, `<directory>` defaults to `ops-build`).
 ```
@@ -41,6 +36,8 @@ Once the repository is cloned, change the directory to the newly created reposit
 ```
 $ cd <directory>
 ```
+
+**Note:** This command clones the OpenSwitch development environment and build system which you can use to build an OpenSwitch image. The command does not automatically clone all of the OpenSwitch source code, although you can use the Development Environment commands (`make devenv_add`) to access the rest of the source code. See the [Changing OpenSwitch Code](changing-openswitch-code) documentation for more details.
 
 ## Introduction to the OpenSwitch build system
 The OpenSwitch build system is a GNU make-based wrapper around the [Yocto Project](https://www.yoctoproject.org). The make wrapper allows for easier common operations, and it is what a developer uses for typical image building and maintenance work.  Advanced interfaces through the make wrapper allows access to the underlying facilities that Yocto provides. These advanced features are not covered here.
@@ -64,18 +61,15 @@ $ make configure genericx86-64
 ```
 
 ## Building the product
-Each platform defines the default outputs produced by the build. Typically, all that is required to invoke the build is `make`:
+Each platform defines the default output produced by the build. Typically, all that is required to invoke the build is `make`:
 ```
 $ make
 ```
 
-The build output is found under the `images/` directory.
+The build output can be found under the `images/` directory.
 
 
 ## Deploying an image
-
-You can upload your image to a Simulated Switch in [Docker](http://docs.docker.com/) when you built a `genericx86-64` image.
-
 
 ### Simulated switch image
 If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
@@ -104,22 +98,27 @@ Or you can connect using ssh using the switch IP given by docker.
 ```
 ssh admin@<Switch-IP>
 ```
-**Note**: You can get the IP from the simulated switch with `docker inspect`. Search for the simulated switch ID with `docker ps`, then you can run `docker inspect [id]` and look for the IP address attribute.
+
+To get the IP from the simulated switch the following can be done:
+
+1. Run `docker ps` to get the simulated switch ID (CONTAINER ID)
+2. Run `docker inspect <id> | grep IPAddress`
+3. The IP address attribute is displayed.
+
 **For example:**
 ```
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 3ff6184474b9        openswitch          "/sbin/init"        About an hour ago   Up About an hour                        ops
-
 $ dock inspect 3ff6184474b9 | grep IPAddress
 
 "IPAddress": "172.17.0.1",
 
 "SecondaryIPAddresses": null,
+```
 
 
-
-## OpenSwitch Yocto `make` targets
+## Working with OpenSwitch
 OpenSwitch provides a set of `make` targets to simplify working with Yocto:
 
 | Command | Parameters | Description              |
@@ -141,4 +140,4 @@ $ make cleansstate RECIPE=virtual/kernel
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
-For information on developing for OpenSwitch, see the [How to contribute to the OpenSwitch Project Code](./changing-openswitch-code) and the [Develop on OpenSwitch](./changing-openswitch-code) documentation.
+For information on developing for OpenSwitch, see the [How to contribute to OpenSwitch](contribute-code) and the [Changing OpenSwitch Code](changing-openswitch-code) documentation.
