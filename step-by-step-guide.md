@@ -74,8 +74,29 @@ The build output is found under the `images/` directory.
 
 ## Deploying an image
 
-You can upload your image to a Simulated Switch in [Docker](http://docs.docker.com/) when you built a `genericx86-64` image.
+The image that was built for the genericx86-64 platform in the earlier step can run inside a [Docker](http://docs.docker.com) instance as a simulated switch.
+As a prerequisite, install the correct version of docker.
 
+### Install docker on host machine
+Since OpenSwitch is Ubuntu based, the default docker installation does not work for OpenSwitch. The steps below briefly mention the steps needed to setup docker for OpenSwitch
+
+Install docker:
+
+```
+$ wget -qO- https://get.docker.com/ | sh
+```
+Add user to the docker group
+```
+$ id
+```
+uid=1000(opsuser) gid=1000(opsuser) groups=1000(opsuser)
+```
+$ sudo usermod -aG docker opsuser
+```
+
+**Note**: Adding the user to the docker group is mandatory. Once the user is added to the docker group, logout and login for the changes to take effect.
+
+Complete documentation for docker on Ubuntu can be found at https://docs.docker.com/installation/ubuntulinux/
 
 ### Simulated switch image
 If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
@@ -117,6 +138,14 @@ $ dock inspect 3ff6184474b9 | grep IPAddress
 
 "SecondaryIPAddresses": null,
 
+### Mininet based testing
+OpenSwitch uses [Mininet](http://mininet.org/) to create custom topologies for testing. The minimum version required is 2.2.
+
+```
+$ git clone http://github.com/mininet/mininet
+$ cd mininet
+$ sudo python setup.py install
+```
 
 
 ## OpenSwitch Yocto `make` targets
