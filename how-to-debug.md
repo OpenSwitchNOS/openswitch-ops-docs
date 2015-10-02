@@ -8,29 +8,16 @@ OpenSwitch is built on top of the Yocto Project and offers extensive functionali
 
 ## Contents
 
-
-
-- [Debugging code](#debugging-code)
-
-	- [Pre-requisites for debugging](#pre-requisites-for-debugging)
-
-	- [On-target debugging](#on-target-debugging)
-
-		- [Setting up on-target debug](#setting-up-on-target-debug)
-
-		- [Using on-target debug](#using-on-target-debug)
-
-	- [Off-target debugging](#off-target-debugging)
-
-- [Using Eclipse as IDE](#using-eclipse-as-ide)
-
-	- [Installing Eclipse and dependencies](#installing-eclipse-and-dependencies)
-
-	- [Configuring Eclipse](#configuring-eclipse)
-
-
-
-
+- [Contents](#contents)
+	- [Debugging code](#debugging-code)
+		- [Prerequisites for debugging](#prerequisites-for-debugging)
+		- [On-target debugging](#on-target-debugging)
+			- [Setting up on-target debug](#setting-up-on-target-debug)
+			- [Using on-target debug](#using-on-target-debug)
+		- [Off-target debugging](#off-target-debugging)
+	- [Using Eclipse as an IDE](#using-eclipse-as-an-ide)
+		- [Installing Eclipse and dependencies](#installing-eclipse-and-dependencies)
+		- [Configuring Eclipse](#configuring-eclipse)
 
 ## Debugging code
 
@@ -80,7 +67,7 @@ In order to perform on-target debugging, you need to include the debug packages 
 
 
 
-``` bash
+```
 
 echo 'EXTRA_IMAGE_FEATURES="dbg-pkgs"' >> build/conf/local.conf
 
@@ -104,7 +91,7 @@ For example to debug the running vland instance, you could connect to the proces
 
 
 
-```bash
+```
 
 $ ps aux | grep vland # to find the PID of the running daemon, let's say was 266
 
@@ -126,13 +113,13 @@ Yocto provides integration with Eclipse as IDE for development and debugging of 
 
 
 
-1. Install Eclipse and all the components that the environment needs. For more information, see [Working using Eclipse as IDE](#working-using-eclipse-as-ide).
+1. Install Eclipse and all the components that the environment needs. For more information, see [Working using Eclipse as IDE](#using-eclipse-as-an-ide).
 
-1. Set up the developer environment.  For more information, see [Managing the Development Environment](#./development-environment.md).
+1. Set up the developer environment.  Make sure that your environment is up to the [Prerequisites](prerequisites), and follow the [Step by Step Guide](step-by-step-guide).
 
 1. Run the TCF Agent on the device, so that you can connect to it by telnet and run the following command `systemctl start tcf-agent`. The TCF agent is  run over the port 1534. If it is necessary to check the agent, run `netstat -nl` and you will see the following:
 
-``` bash
+```
 
 Active Internet connections (only servers)
 
@@ -200,7 +187,7 @@ You can skip this step if you are using a Vagrant-based OpenSwitch machine for d
 
 
 
-``` bash
+```
 
 $ wget http://ftp.osuosl.org/pub/eclipse//technology/epp/downloads/release/luna/SR2/eclipse-cpp-luna-SR2-linux-gtk-x86_64.tar.gz
 
@@ -252,12 +239,7 @@ $ sudo -E /opt/eclipse/eclipse -application org.eclipse.equinox.p2.director -noS
 
 1. In Cross Compiler Options select 'Build system derivated toolchain'. You are prompted to enter the toolchain root location, sysroot location, target architecture, and target options.
     - Toolchain Root Location: `</path/to/openSwitch/directory>/build`
-
     - Sysroot Location: `</path/to/openSwitch/directory>/build/tmp/sysroots/<machine name>`
-
     - Target Architecture: `auto-select`
-
     - Target Options:
-
       - 	External HW
-
