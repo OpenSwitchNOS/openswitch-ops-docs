@@ -1,0 +1,10 @@
+Verified+1: Zuul <zuul@lists.openswitch.net>
+Workflow+1: Rick Porter <rick.porter@hpe.com>
+Code-Review+2: Diego Dompe <dompe@hpe.com>
+Verified+2: Diego Dompe <dompe@hpe.com>
+Workflow+1: Diego Dompe <dompe@hpe.com>
+Submitted-by: Diego Dompe <dompe@hpe.com>
+Submitted-at: Fri, 02 Oct 2015 17:18:41 +0000
+Reviewed-on: https://review.openswitch.net/1754
+Project: openswitch/ops-docs
+Branch: refs/heads/master
