@@ -1,3 +1,3 @@
 # White Papers
 
-Content to be added later.
+Business and technical white papers to be available soon.
