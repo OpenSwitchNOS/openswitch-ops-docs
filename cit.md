@@ -5,7 +5,7 @@
 
 If you are a contributor, you must initially clone the repository you need to a local Git repository. Once you are satisfied with the changes made, the patch set is sent with the `git review` command to Gerrit for review and validation.
 
-The Gerrit user interface can be accessed via its link: https://review.openswitch.net/
+The Gerrit user interface can be accessed via the [Review page](https://review.openswitch.net/)
 
 ## Jenkins and Zuul
 [Jenkins](https://jenkins-ci.org/) and [Zuul](http://docs.openstack.org/infra/zuul/) are used as the Continuous Integration, Scheduling and Gating systems for OpenSwitch.
@@ -28,7 +28,7 @@ Using Gerrit:
 
 **NOTE**: For jobs that compile source code, only the source code needed for the job is compiled as opposed to the entire project.
 
-The Jenkins and Zuul user interfaces can be accessed by their respective links: https://jenkins.openswitch.net/ and http://zuul.openswitch.net/
+The following are the links for Opens [Jenkins]( https://jenkins.openswitch.net/) and [Zuul](http://zuul.openswitch.net/)
 
 ## CIT workflow
 

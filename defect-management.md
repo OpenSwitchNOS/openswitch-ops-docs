@@ -27,7 +27,7 @@ The detail on how to manage a defect in the OpenSwitch project will be explained
 
 ![Defect Management Flow](https://lh3.googleusercontent.com/-DYjRh0qJUoM/VgRZgOR1kXI/AAAAAAAAAL8/zTaAb404-uQ/s0/defect-workflow.jpg "defect-workflow.jpg")
 
-> Find below the description of each phase of the Defect Workflow.
+Find below the description of each phase of the Defect Workflow.
 
 ### 1. Defect Submission
 
