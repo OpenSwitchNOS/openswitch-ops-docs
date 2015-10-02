@@ -94,7 +94,7 @@ $ sudo usermod -aG docker opsuser
 
 **Note**: Adding the user to the docker group is mandatory. Once the user is added to the docker group, logout and login for the changes to take effect.
 
-Complete documentation for docker on Ubuntu can be found at https://docs.docker.com/installation/ubuntulinux/
+Complete documentation for docker on Ubuntu can be found  [here](https://docs.docker.com/installation/ubuntulinux)
 
 ### Simulated switch image
 If you build an image for `genericx86-64`, you can run a simulated switch image in [Docker](http://docs.docker.com/).
