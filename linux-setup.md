@@ -39,8 +39,7 @@ $ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  b
 ```
 ### Fedora
 ```bash
-$ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch diffutils diffstat git cpp gcc gcc-c++ \
-    glibc-devel texinfo chrpath ccache perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue SDL-devel xterm screen dtc
+$ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath ccache perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue SDL-devel xterm screen dtc redhat-lsb
 ```
 ### CentOS
 ```bash
