@@ -210,7 +210,7 @@ In OpenSwitch, a module is known as a component. Each component resides in a sep
 
 Adding a new component to OpenSwitch comes with responsibility to invest in ongoing maintenance of the component. To enable this, per the Governance document, identify individuals who are willing to take on the roles of [Maintainer](http://governance.openswitch.net/governance/maintainers.html), [Reviewer](http://governance.openswitch.net/governance/core-reviewers.html), and [Bug Czar](http://governance.openswitch.net/governance/bug-czar.html) for the component.
 
-Start by sending an email to the [infra-ops@lists.openswitch.net](mailto:infra-ops@lists.openswitch.net?subject=Request%20for%20new%20component%20repository) mailing list, with the Github IDs of the individuals identified for the above roles, and the name of the component/repository you would like to add. You will receive back a confirmation email including a new group, of the form `ops-<repo-name>-maintainers`, created for the above individuals that you can use in the steps below.
+Start by sending an email to the [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?subject=Request%20for%20new%20component%20repository) mailing list, with the Github IDs of the individuals identified for the above roles, and the name of the component/repository you would like to add. You will receive back a confirmation email including a new group, of the form `ops-<repo-name>-maintainers`, created for the above individuals that you can use in the steps below.
 
 Now you are ready to follow the following steps in creating a new component.
 

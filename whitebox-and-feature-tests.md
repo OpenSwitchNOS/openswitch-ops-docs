@@ -36,7 +36,7 @@ However, certain feature (or sometimes component) functionality will depend on e
 
 When developing such feature functionality, ensure that you have access to a test lab that hosts such hardware, against which these tests can be validated.
 
-OpenSwitch CIT infrastructure supports triggering test cases on RTLs (Remote Test Labs) where such hardware can be hosted. If you are a hardware vendor interested in supporting OpenSwitch on your platform, reach out on [infra-ops@lists.openswitch.net](mailto:infra-ops@lists.openswitch.net?subject=Support%20OpenSwitch%20on%20new%20hardware) mailer to learn how you can set up OpenSwitch to integrate with your RTL for validation of OpenSwitch functionality against your hardware.
+OpenSwitch CIT infrastructure supports triggering test cases on RTLs (Remote Test Labs) where such hardware can be hosted. If you are a hardware vendor interested in supporting OpenSwitch on your platform, reach out on [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?subject=Support%20OpenSwitch%20on%20new%20hardware) mailer to learn how you can set up OpenSwitch to integrate with your RTL for validation of OpenSwitch functionality against your hardware.
 
 ## CIT Tiers
 OpenSwitch CIT system has the following two tiers.
