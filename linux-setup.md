@@ -35,7 +35,7 @@ $ sudo aptitude install libsdl1.2-dev
 ```
 ### Debian
 ```bash
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler libsdl1.2-dev xterm gperf quilt
+$ sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath screen curl device-tree-compiler xterm gperf quilt cpio lsb-release
 ```
 ### Fedora
 ```bash
