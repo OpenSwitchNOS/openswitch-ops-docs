@@ -15,7 +15,7 @@ Writing Automated Feature Test Cases
 - [Helper / Utiilty Libraries](#helper-utiilty-libraries)
 
 ## Introduction
-This document will discuss how to write a feature test case for the OpenSwitch project.  Sections of the test case will be discussed initially.  Next we will discuss the opstestfw objects.  Finally we will list out available modules that area available fro all developers.
+This document will discuss how to write a feature test case for the OpenSwitch project.  Sections of the test case will be discussed initially.  Next we will discuss the opstestfw objects.  Finally we will list out available modules that are available for all developers.
 
 The opstestfw framework object oriented Python framework  The OpenSwitch project has standardized using the pytest module wen creating test cases.
 
