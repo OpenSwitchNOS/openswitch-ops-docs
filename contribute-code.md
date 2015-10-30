@@ -229,6 +229,10 @@ abandon = group Change Owner
 abandon = group ops-<repo-name>-maintainers
 label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
 label-Workflow = -1..+1 group Change Owner
+
+[submit]
+mergeContent = true
+action = rebase if necessary
 ```
 1. The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
 1. Modify `gerrit/projects.yaml` to add the repository.
