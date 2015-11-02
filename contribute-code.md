@@ -22,7 +22,7 @@ This guide assumes that you have:
 	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
 - [Adding a new component](#adding-a-new-component)
 	- [Adding a New Repository](#adding-a-new-repository)
-        - [Adding CI process for the component](#adding-ci-process-for-the-component)
+	- [Adding CI Process for the component](#adding-ci-process-for-the-component)
 	- [Adding a recipe for the component](#adding-a-recipe-for-the-component)
 	- [Adding CMake file for the component](#adding-cmake-file-for-the-component)
 	- [Adding top-level files and directories](#adding-top-level-files-and-directories)
@@ -257,7 +257,7 @@ git review
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
 
-1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
+2. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
 
 ```
 - job-template:
