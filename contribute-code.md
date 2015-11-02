@@ -25,7 +25,7 @@ This guide assumes that you have:
 	- [Adding a recipe for the component](#adding-a-recipe-for-the-component)
 	- [Adding CMake file for the component](#adding-cmake-file-for-the-component)
 	- [Adding top-level files and directories](#adding-top-level-files-and-directories)
-	- [Final steps](#final-steps)
+	- [Final steps](#Final-steps-in-adding-a-new-component)
 - [Adding a new feature](#adding-a-new-feature)
 	- [Feature Documentation](#feature-documentation)
 - [Documenting the code](#documenting-the-code)
@@ -88,7 +88,7 @@ If you get the error message, `Agent admitted failure to sign using the key.` as
 1. Paste the SSH public key (`id_rsa.pub`) contents in the input area to use with this site.
 1. Click `Add`.
 
-#### Verify that a username is assigned to Gerrit
+#### Verify that an username is assigned to Gerrit
 1. Log in to the [OpenSwitch Review](https://review.openswitch.net/) site by clicking on the top right `Sign in` link.
 1. Click `Settings` in the menu under the user's name in the upper right-hand corner.
 1. Click `Profile` on the left side.
@@ -252,7 +252,7 @@ git review
 ```
 
 
-###  Adding a recipe for the component
+### Adding a recipe for the component
 For your component work properly, you must have a recipe. This recipe should be placed in the `ops-build` repo, inside `yocto/openswitch/meta-distro-openswitch`.
 
 There are different directories for the recipes:

@@ -11,7 +11,7 @@ This approach has been tested on Windows 7 with Vagrant 1.7.4 and VirtualBox 5.0
 - [Installing the OpenSwitch development environment](#installing-the-openswitch-development-environment)
 - [Connecting to the OpenSwitch instance](#connecting-to-the-openswitch-instance)
 - [Build system and development environment](#build-system-and-development-environment)
-- [Developing nfor OpenSwitch resources](#developing-for-openswitch-resources)
+- [Developing for OpenSwitch resources](#developing-for-openswitch-resources)
 
 ## Overview
 This guide shows you how to set up your development environment with the following components:
