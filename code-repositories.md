@@ -7,7 +7,7 @@ Click a link below for a description of the various roles:
 
 | Repository Name | Repository Description | Module Maintainer | Code Reviewer | Bug czar |
 | --------------- | ---------------------- |:----------------- |:------------- |:-------- |
-| openswitch/governance | OpenSwitch Governance Documentation | Kyle Mestery | Kyle Mestery | Kyle Mestery |
+| openswitch/governance | OpenSwitch Governance Documentation | Michael Zayats | Michael Zayats | Michael Zayats |
 | openswitch/ops | OpenSwitch Global Repository | Michael Zayats (mzayats) | Michael Zayats (mzayats), Diego Dompe, Jenna Hung | Kuntal Daftary (kuntaldaftary) |
 | openswitch/ops-aaa-utils | OpenSwitch Authentication, Authorization and Accounting Utils | Gururaj P | Gururaj P | Sandeep N |
 | openswitch/ops-arpmgrd | OpenSwitch ARP Manager Daemon | Beeram | Beeram | Avinash |
@@ -31,9 +31,9 @@ Click a link below for a description of the various roles:
 | openswitch/ops-pmd | OpenSwitch Pluggable Module Daemon | Sundar Durairaj (sundar-d) | Sundar Durairaj (sundar-d), Kiran Vaddey | Sundar Durairaj (sundar-d) |
 | openswitch/ops-portd | OpenSwitch Port Manager Daemon | Naeem | Beeram, Naeem | Nirmalya |
 | openswitch/ops-powerd | OpenSwitch Power Daemon | Sundar Durairaj (sundar-d) | Sundar Durairaj (sundar-d), Kiran Vaddey | Sundar Durairaj (sundar-d) |
-| openswitch/ops-quagga | Quagga | Jia Chen(chjia), Ranga | Jia Chen(chjia), Maheshwari Sirigadi (sirigadi), Aslam Khan (aslammdkhan), Beeram, Naeem | Jia Chen(chjia), Naeem |
+| openswitch/ops-quagga | Quagga | Jia Chen(chjia), Ranga | Jia Chen(chjia), Maheshwari Sirigadi (sirigadi), Aslam Khan (aslammdkhan), Ranga, Beeram, Naeem | Jia Chen(chjia), Naeem |
 | openswitch/ops-restapi | OpenSwitch REST API rendering | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee) | Oleg Spirt (olegspirt) |
-| openswitch/ops-restd | OpenSwitch REST service daemon | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee) | Oleg Spirt (olegspirt) |
+| openswitch/ops-restd | OpenSwitch REST service daemon | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee), Sayali Mane | Oleg Spirt (olegspirt) |
 | openswitch/ops-switchd-container-plugin | OpenSwitch Simulator OVS plugin | Vivek Ramamoorthy (vivekramamoorthy) | Vivek Ramamoorthy (vivekramamoorthy), Ligeo George (ligeo-george) | Vivek Ramamoorthy (vivekramamoorthy) |
 | openswitch/ops-switchd-opennsl-plugin | OpenSwitch Broadcom OVS plugin | Vivek Ramamoorthy (vivekramamoorthy), Bhushan Kanekar (bhushan-kanekar) | Vivek Ramamoorthy (vivekramamoorthy), Ligeo George (ligeo-george), Bhushan Kanekar (bhushan-kanekar) | Vivek Ramamoorthy (vivekramamoorthy), Bhushan Kanekar (bhushan-kanekar) |
 | openswitch/ops-sysd | OpenSwitch System Daemon | Amir Shalit (amirshalit) | Cihangir Akyol (cakyol), Chinh Le (chinhtle) | Oleg Spirt (olegspirt) |
@@ -41,4 +41,4 @@ Click a link below for a description of the various roles:
 | openswitch/ops-utils | OpenSwitch Utils | Aslam Khan (aslammdkhan) | Aslam Khan (aslammdkhan), Ligeo George (ligeo-george) | Aslam Khan (aslammdkhan) |
 | openswitch/ops-vland | OpenSwitch VLAN Daemon | Mari | Mari | Mithun |
 | openswitch/ops-vsi | OpenSwitch Virtual Switch Image | Vince Mendoza | Vince Mendoza, Payal Upadhyaya | Vince Mendoza |
-| openswitch/ops-webui | OpenSwitch Web User Interface | Al Harrington | Al Harrington, Frank Wood | Al Harrington |
+| openswitch/ops-webui | OpenSwitch Web User Interface | Al Harrington | Al Harrington, Frank Wood, Kelsey Dedoshka | Al Harrington |
