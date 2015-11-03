@@ -26,7 +26,7 @@ This guide assumes that you have:
 	- [Adding a recipe for the component](#adding-a-recipe-for-the-component)
 	- [Adding CMake file for the component](#adding-cmake-file-for-the-component)
 	- [Adding top-level files and directories](#adding-top-level-files-and-directories)
-	- [Final steps](#Final-steps-in-adding-a-new-component)
+	- [Final steps](#final-steps-in-adding-a-new-component)
 - [Adding a new feature](#adding-a-new-feature)
 	- [Feature Documentation](#feature-documentation)
 - [Documenting the code](#documenting-the-code)
