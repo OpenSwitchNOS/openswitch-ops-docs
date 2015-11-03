@@ -258,47 +258,47 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
 1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
 
-```
-- job-template:
-    name: 'ops-myrepo-check-{platform}'
-    node: openswitch
+  ```
+  - job-template:
+      name: 'ops-myrepo-check-{platform}'
+      node: openswitch
 
-    wrappers:
-        - build-timeout:
-            timeout: 120
-        - timestamps
-        - ansicolor
+      wrappers:
+          - build-timeout:
+              timeout: 120
+          - timestamps
+          - ansicolor
 
-    builders:
-        - revoke-sudo
-        - module-build-branch:
-            module: 'ops-myrepo-config'
-            platform: '{platform}'
+      builders:
+          - revoke-sudo
+          - module-build-branch:
+              module: 'ops-myrepo-config'
+              platform: '{platform}'
 
-- job-template:
-    name: 'ops-myrepo-gate-{platform}'
-    node: openswitch
+  - job-template:
+      name: 'ops-myrepo-gate-{platform}'
+      node: openswitch
 
-    wrappers:
-        - build-timeout:
-            timeout: 120
-        - timestamps
-        - ansicolor
+      wrappers:
+          - build-timeout:
+              timeout: 120
+          - timestamps
+          - ansicolor
 
-    builders:
-        - revoke-sudo
-        - module-build-branch:
-            module: 'ops-myrepo'
-            platform: '{platform}'
+      builders:
+          - revoke-sudo
+          - module-build-branch:
+              module: 'ops-myrepo'
+              platform: '{platform}'
 
-- job-group:
-    name: 'ops-myrep-jobs'
-    jobs:
-      - 'ops-myrepo-check-{platform}'
-      - 'ops-myrepo-gate-{platform}'
-```
+  - job-group:
+      name: 'ops-myrep-jobs'
+      jobs:
+        - 'ops-myrepo-check-{platform}'
+        - 'ops-myrepo-gate-{platform}'
+  ```
 1. modify jenkins/jobs/projects.yaml to add the CI to Jenkins (Note: replace ops-myrepo with your repo name):
-```
+  ```
   - project:
       name: openswitch/ops-myrepo
       node: 'openswitch'
@@ -307,9 +307,9 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
         - genericx86-64
       jobs:
         - 'ops-myrepo-jobs'
-```
+  ```
 1. modify zuul/layout.yaml to add the CI to zuul (Note: replace ops-myrepo with your repo name):
-```
+  ```
   - name: openswitch/ops-myrepo
     template:
       - name: merge-check
@@ -319,13 +319,13 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
       - name: module-build
         module: ops-myrepo
         platform: as5712
-```
+  ```
 1. check in for review (Note: replace ops-myrepo with your repo name):
-```
-$ git add jenkins/jobs/ops-myrepo-jobs.yaml
-$ git commit jenkins/jobs/ops-myrepo-jobs.yaml jenkins/jobs/projects.yaml zuul/layout.yaml -m "initial CI for new repo"
-$ git review
-```
+  ```
+  $ git add jenkins/jobs/ops-myrepo-jobs.yaml
+  $ git commit jenkins/jobs/ops-myrepo-jobs.yaml jenkins/jobs/projects.yaml zuul/layout.yaml -m "initial CI for new repo"
+  $ git review
+  ```
 1. To later modify your repo to be gated with feature test cases. You will modify jenkins/jobs/ops-myrepo-jobs.yaml similar to http://git.openswitch.net/cgit/infra/project-config/tree/jenkins/jobs/ops-arpmgrd-jobs.yaml along with jenkins/jobs/projects.yaml and zuul/layout.yaml
 
 ### Adding a recipe for the component
