@@ -257,6 +257,7 @@ git review
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
 1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
+
 ```
 - job-template:
     name: 'ops-myrepo-check-{platform}'
