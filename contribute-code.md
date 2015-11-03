@@ -257,7 +257,7 @@ git review
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
 
-2. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
+1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
 
 ```
 - job-template:
@@ -299,7 +299,7 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
       - 'ops-myrepo-gate-{platform}'
 ```
 
-3. modify jenkins/jobs/projects.yaml to add the CI to Jenkins (Note: replace ops-myrepo with your repo name):
+1. modify jenkins/jobs/projects.yaml to add the CI to Jenkins (Note: replace ops-myrepo with your repo name):
 
 ```
   - project:
@@ -312,7 +312,7 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
         - 'ops-myrepo-jobs'
 ```
 
-4. modify zuul/layout.yaml to add the CI to zuul (Note: replace ops-myrepo with your repo name):
+1. modify zuul/layout.yaml to add the CI to zuul (Note: replace ops-myrepo with your repo name):
 
 ```
   - name: openswitch/ops-myrepo
@@ -326,7 +326,7 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
         platform: as5712
 ```
 
-5. check in for review (Note: replace ops-myrepo with your repo name):
+1. check in for review (Note: replace ops-myrepo with your repo name):
 
 ```
 $ git add jenkins/jobs/ops-myrepo-jobs.yaml
@@ -334,7 +334,7 @@ $ git commit jenkins/jobs/ops-myrepo-jobs.yaml jenkins/jobs/projects.yaml zuul/l
 $ git review
 ```
 
-6. To later modify your repo to be gated with feature test cases. You will modify jenkins/jobs/ops-myrepo-jobs.yaml similar to http://git.openswitch.net/cgit/infra/project-config/tree/jenkins/jobs/ops-arpmgrd-jobs.yaml along with jenkins/jobs/projects.yaml and zuul/layout.yaml
+1. To later modify your repo to be gated with feature test cases. You will modify jenkins/jobs/ops-myrepo-jobs.yaml similar to http://git.openswitch.net/cgit/infra/project-config/tree/jenkins/jobs/ops-arpmgrd-jobs.yaml along with jenkins/jobs/projects.yaml and zuul/layout.yaml
 
 
 ### Adding a recipe for the component
