@@ -23,7 +23,7 @@ Click a link below for a description of the various roles:
 | openswitch/ops-ft-framework | OpenSwitch Feature Test Framework | Vince Mendoza | Vince Mendoza, Payal Upadhyaya | Vince Mendoza |
 | openswitch/ops-hw-config | Configuration files repository for all the platforms | Siva Muthusamy (muthusas) | Siva Muthusamy (muthusas), Ganesh Iyer | Siva Muthusamy (muthusas) |
 | openswitch/ops-intfd | OpenSwitch Interface Daemon | Siva Muthusamy (muthusas) | Siva Muthusamy (muthusas), Ganesh Iyer | Siva Muthusamy (muthusas) |
-| openswitch/ops-lacpd | OpenSwitch LACP Daemon | Francisco Rojas (frojasf) | Andres Araya (andres-francisco-araya), Kattia Chaves (kchavesr) | Noel Delgado (noeldelgadoc) |
+| openswitch/ops-lacpd | OpenSwitch LACP Daemon | Francisco Rojas (frojasf) | Agustin Meneses (agustin-meneses-fuentes), Kattia Chaves (kchavesr) | Noel Delgado (noeldelgadoc) |
 | openswitch/ops-ledd | OpenSwitch LED Daemon | Sundar Durairaj (sundar-d) | Sundar Durairaj (sundar-d), Kiran Vaddey | Sundar Durairaj (sundar-d) |
 | openswitch/ops-lldpd | OpenSwitch LLDP Daemon | Beeram | Beeram | Beeram |
 | openswitch/ops-mgmt-intf | OpenSwitch Management Interface Daemon | Suganya | Suganya, Ranga | Ezhilan |
