@@ -33,7 +33,7 @@ Click a link below for a description of the various roles:
 | openswitch/ops-powerd | OpenSwitch Power Daemon | Sundar Durairaj (sundar-d) | Sundar Durairaj (sundar-d), Kiran Vaddey | Sundar Durairaj (sundar-d) |
 | openswitch/ops-quagga | Quagga | Jia Chen(chjia), Ranga | Jia Chen(chjia), Maheshwari Sirigadi (sirigadi), Aslam Khan (aslammdkhan), Ranga, Beeram, Naeem | Jia Chen(chjia), Naeem |
 | openswitch/ops-restapi | OpenSwitch REST API rendering | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee) | Oleg Spirt (olegspirt) |
-| openswitch/ops-restd | OpenSwitch REST service daemon | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee), Sayali Mane | Oleg Spirt (olegspirt) |
+| openswitch/ops-restd | OpenSwitch REST service daemon | Joshua Zhao (joshzhao) | Mir Ali (mirmali), Neeta Bhat (bhatnee), Sayali Mane (sayalimane), Joshua Zhao (joshzhao) | Oleg Spirt (olegspirt) |
 | openswitch/ops-switchd-container-plugin | OpenSwitch Simulator OVS plugin | Vivek Ramamoorthy (vivekramamoorthy) | Vivek Ramamoorthy (vivekramamoorthy), Ligeo George (ligeo-george) | Vivek Ramamoorthy (vivekramamoorthy) |
 | openswitch/ops-switchd-opennsl-plugin | OpenSwitch Broadcom OVS plugin | Vivek Ramamoorthy (vivekramamoorthy), Bhushan Kanekar (bhushan-kanekar) | Vivek Ramamoorthy (vivekramamoorthy), Ligeo George (ligeo-george), Bhushan Kanekar (bhushan-kanekar) | Vivek Ramamoorthy (vivekramamoorthy), Bhushan Kanekar (bhushan-kanekar) |
 | openswitch/ops-sysd | OpenSwitch System Daemon | Amir Shalit (amirshalit) | Cihangir Akyol (cakyol), Chinh Le (chinhtle) | Oleg Spirt (olegspirt) |
