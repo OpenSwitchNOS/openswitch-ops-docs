@@ -1,7 +1,7 @@
-﻿High level design of FEATURE
+High level design of FEATURE
 ============================
 
-High level description of a FEATURE design. 
+High level description of a FEATURE design.
 
 If the feature is essentially composed out of a single daemon (don’t count OVSDB-Server and management interfaces, unless they have some very special role in the feature design), then just reference to a DESIGN.md document of the repo that contains the daemon. Otherwise continue to the next sections.
 

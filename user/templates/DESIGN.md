@@ -1,10 +1,9 @@
-﻿High level design of OPS-FOO
+High level design of OPS-FOO
 ============================
+High level description of OPS-FOO design.
 
-High level description of OPS-FOO design. 
-
-Reponsibilities
----------------
+Responsibilities
+----------------
 Discuss module responsibilities
 
 Design choices
@@ -20,13 +19,21 @@ You can use http://asciiflow.com/ or any other tool to generate the diagram.
 {% endditaa %}
 Provide detailed description of relationships and interactions.
 
+```ditaa
++---------------+            +---------------+             +---------------+
+|               |            |               |             |               |
+|   ops-[xxx]   <----------->+     OVSDB     <-------------+   ops-[xxx]   |
+|               |            |               |             |               |
++---------------+            +---------------+             +---------------+
+```
+
 OVSDB-Schema
 ------------
 Discuss which tables/columns this module is interested in. Where it gets the configuration, exports statuses and statistics. Anything else which is relevant to the data model of the module.
 
 Internal structure
 ------------------
-Put diagrams and text explaining major modules, threads, data structures, timers etc. 
+Put diagrams and text explaining major modules, threads, data structures, timers etc.
 
 Any other sections that are relevant for the module
 ---------------------------------------------------
