@@ -15,7 +15,7 @@ Click a link below for a description of the various roles:
 | openswitch/ops-build | OpenSwitch Build System | Diego Dompe | Diego Dompe, Jenna Hung | Diego Dompe |
 | openswitch/ops-cfgd | OpenSwitch Configuration Daemon | Ranga | Beeram | Chandru |
 | openswitch/ops-checkmk-agent | Check_mk Agent | Shad Ansari | Shad Ansari, Ganesh Iyer | Shad Ansari |
-| openswitch/ops-cli | OpenSwitch command line interface | Celestian | Celestian, Guru P | Satchit |
+| openswitch/ops-cli | OpenSwitch command line interface | Celestian | Celestian, Andres Araya, Ezhilan, Roopashree Bommaganahalli, Jia Chen | Satchit |
 | openswitch/ops-config-yaml | OpenSwitch Config Yaml | Siva Muthusamy (muthusas) | Siva Muthusamy (muthusas), Varun Vijayakumar(vijavaru) | Siva Muthusamy (muthusas) |
 | openswitch/ops-dhcp-tftp | Python daemon to integrate DHCP and TFTP to OVSDB | Siva Muthusamy (muthusas) | Siva Muthusamy (muthusas), Varun Vijayakumar(vijavaru) | Siva Muthusamy (muthusas) |
 | openswitch/ops-docs | OpenSwitch Documentation | Diego Dompe | Diego Dompe | Diego Dompe |
