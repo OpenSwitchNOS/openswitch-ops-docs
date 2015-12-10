@@ -5,7 +5,7 @@
 
 If you are a contributor, you must initially clone the repository you need to a local Git repository. Once you are satisfied with the changes made, the patch set is sent with the `git review` command to Gerrit for review and validation.
 
-The Gerrit user interface can be accessed via its link: https://review.openswitch.net/
+The Gerrit user interface can be accessed via this [link](https://review.openswitch.net/)
 
 ## Jenkins and Zuul
 [Jenkins](https://jenkins-ci.org/) and [Zuul](http://docs.openstack.org/infra/zuul/) are used as the Continuous Integration, Scheduling and Gating systems for OpenSwitch.
@@ -14,21 +14,21 @@ Zuul manages pipelines. A pipeline is configured to run a series of tests. Zuul 
 
 Currently the pipelines configured are:
 
-* `Check`: Newly uploaded patch sets enter this pipeline to receive an initial **+/-1** `Verified` vote from Jenkins. The  pipeline includes actions like compiling the changes and making sure that the image does not crash.
-* `Gate`: Changes approved by core developers are queued in order in this pipeline, and if they pass tests in Jenkins, will be merged. The pipeline includes regression testing.
+* `Check`: Newly uploaded patch sets enter this pipeline to receive an initial **+/-1** `Verified` vote from Jenkins. This pipeline make sure the new changes compile.
+* `Gate`: Changes approved by core developers are queued in order in this pipeline, and if they pass tests in Jenkins, will be merged. The test run for this pipeline depends on each module.
 * `Periodic`: Jobs in this queue are triggered on a timer. The pipeline consists on a complete set of test that run regularly to assure the repository is stable.
 
 If the tests do not pass, the CIT system adds a **-1** vote with a comment to the change review. If you want the tests to run again, do one of the following to make Zuul re-schedule the tests:
 
-Using `git`:
+**Using `git`:**
 * Make the changes needed and commit them with the `--amend` switch (`git commit --amend`) so that they're added to the same change review. The new changes shows up as a second (or more) patch set under the same Change Review in Gerrit.
 
-Using Gerrit:
+**Using Gerrit:**
 * If you want the tests to be run again without making any modifications to the patch set (for example, the failure was not with the code but with Zuul or something else that was fixed separately), you might want to simply add a comment to the patch set with the word `recheck` in it.
 
 **NOTE**: For jobs that compile source code, only the source code needed for the job is compiled as opposed to the entire project.
 
-The Jenkins and Zuul user interfaces can be accessed by their respective links: https://jenkins.openswitch.net/ and http://zuul.openswitch.net/
+The Jenkins and Zuul user interfaces can be accessed by their respective links: [Jenkins](https://jenkins.openswitch.net/) and [Zuul](http://zuul.openswitch.net/)
 
 ## CIT workflow
 
