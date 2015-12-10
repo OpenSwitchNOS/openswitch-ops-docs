@@ -11,6 +11,7 @@ Click a link below for a description of the various roles:
 | openswitch/ops | OpenSwitch Global Repository | Michael Zayats (mzayats) | Michael Zayats (mzayats), Diego Dompe, Jenna Hung | Kuntal Daftary (kuntaldaftary) |
 | openswitch/ops-aaa-utils | OpenSwitch Authentication, Authorization and Accounting Utils | Gururaj P | Gururaj P | Sandeep N |
 | openswitch/ops-arpmgrd | OpenSwitch ARP Manager Daemon | Beeram | Beeram | Avinash |
+| openswitch/ops-ansible | OpenSwitch Ansible playbook/module | Kei Nohguchi (keinohguchi) | Peter Sprygada (privateip) | Rahul Rajagopal |
 | openswitch/ops-bufmond | OpenvSwitch Buffer Monitor Daemon | Mari | Mari, Mithun | Mithun |
 | openswitch/ops-build | OpenSwitch Build System | Diego Dompe | Diego Dompe, Jenna Hung | Diego Dompe |
 | openswitch/ops-cfgd | OpenSwitch Configuration Daemon | Ranga | Beeram | Chandru |
