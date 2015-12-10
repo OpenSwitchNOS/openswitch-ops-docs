@@ -10,6 +10,7 @@ Click a link below for a description of the various roles:
 | openswitch/governance | OpenSwitch Governance Documentation | Michael Zayats | [governance-maintainers](https://review.openswitch.net/#/admin/groups/54,members) | Michael Zayats |
 | openswitch/ops | OpenSwitch Global Repository | Michael Zayats (mzayats) | [ops-maintainers](https://review.openswitch.net/#/admin/groups/52,members) | Kuntal Daftary (kuntaldaftary) |
 | openswitch/ops-aaa-utils | OpenSwitch Authentication, Authorization and Accounting Utils | Gururaj P | [ops-aaa-utils-maintainers](https://review.openswitch.net/#/admin/groups/42,members) | Sandeep N |
+| openswitch/ops-ansible | OpenSwitch Ansible playbook/module | Kei Nohguchi (keinohguchi) | [ops-ansible-maintainers](https://review.openswitch.net/#/admin/groups/67,members)| Kei Nohguchi (keinohguchi) |
 | openswitch/ops-arpmgrd | OpenSwitch ARP Manager Daemon | Beeram | [ops-arpmgrd-maintainers](https://review.openswitch.net/#/admin/groups/39,members) | Avinash |
 | openswitch/ops-bufmond | OpenvSwitch Buffer Monitor Daemon | Mari | [ops-bufmond-maintainers](https://review.openswitch.net/#/admin/groups/26,members) | Mithun |
 | openswitch/ops-build | OpenSwitch Build System | Diego Dompe | [ops-build-maintainers](https://review.openswitch.net/#/admin/groups/16,members) | Diego Dompe |
