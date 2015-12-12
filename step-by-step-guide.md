@@ -173,4 +173,10 @@ $ make cleansstate RECIPE=virtual/kernel
 
 **Hint**: In Yocto, the 'virtual' recipes are aliases to whatever version of the package is selected for the current platform.
 
+You can also pass multiple arguments to `bitbake` through RECIPE environment variable.  Here is the example to invoke `bitbake -c clean libyaml` through `make` command:
+
+```
+$ make bake RECIPE="-c clean libyaml"
+```
+
 For information on developing for OpenSwitch, see the [How to contribute to OpenSwitch](contribute-code) and the [Changing OpenSwitch Code](changing-openswitch-code) documentation.
