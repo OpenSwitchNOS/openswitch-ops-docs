@@ -20,6 +20,7 @@ This guide assumes that you have:
 	- [Sending changes for review](#sending-changes-for-review)
 	- [Resubmitting a set of changes](#resubmitting-a-set-of-changes)
 	- [After changes have been approved by Reviewers](#after-changes-have-been-approved-by-reviewers)
+  - [Updating recipe files](#updating-recipe-files)
 - [Adding a new component](#adding-a-new-component)
 	- [Adding a New Repository](#adding-a-new-repository)
 	- [Adding CI Process for the component](#adding-ci-process-for-the-component)
@@ -204,6 +205,18 @@ To cancel the changes, click **Abandon Change** in the web interface from Gerrit
 1. Log in to the change review URL using the link provided by the `git-review` command output.
 2. Click on the `Review` button and give the change a `+1 Approved` rate in the `Workflow` section.
 This initiates the process of merging your change with the main product.
+
+### Updating recipe files
+Each component recipe file is pointing to a fixed SHA ID at which point the component was deemed stable.
+In each recipe file, this is indicated as follows:
+
+Example: https://git.openswitch.net/cgit/openswitch/ops-build/tree/yocto/openswitch/meta-distro-openswitch/recipes-ops/l2/ops-arpmgrd.bb
+```
+SRCREV = "a358e75a97d9eb58ba89fe42473ac6ab8c481218"
+```
+This ensures that your local sandbox is guarded by other changes being committed since all the recipe files are fixed to a stable SHA across components.
+Once your review is tested, verified and merged to master, update the corresponding recipe file's SRCREV field with the recently merged code review commitID SHA.
+This is the “Commit-Id” in the “Commit Log” section of the code review.
 
 ## Adding a new component
 
