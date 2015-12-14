@@ -141,6 +141,12 @@ $ git config --global gitreview.username <gerrit-user>
 $ git config --global user.email <email>
 $ git config --global user.name <name>
 ```
+To contribute to OpenSwitch, every member must sign a [DCO] (http://developercertificate.org/).
+Follow the simple steps below to sign the DCO agreement:
+1. Log in to [OpenSwitch Reveiw] (https://review.openswitch.net/).
+1. At the top right, click "Settings" under your name.
+1. In the menu on the left, click **Agreements** and then click on `New Contributor Agreement`.
+1. Select **DCO** and after carefully reviewing the content, sign at the bottom.
 
 ### Installing git-review
 `git-review` is used to contribute changes back to the OpenSwitch project.
