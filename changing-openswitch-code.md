@@ -120,6 +120,11 @@ make devenv_ct_test
 ```
 **Note**: This will run all scripts that have the format: `test_xxx.py`.
 
+* You can run the indivisual test case by specifying it on the command line:
+```
+make devenv_ct_test src/ops/tests/bgp/test_bgp_ft_basic_bgp_route_advertise.py
+```
+
 #### Reconfigure to a different platform
 1. Configure the platform.
 ```
