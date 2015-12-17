@@ -18,6 +18,8 @@ About markdown
 Important
 * After you have added your text, remove the comments within the template. Some tools display comments and all HTML tags as text in its output.
 
+* The subject is the test case. Explain the actions as if the "test case" is doing them. For example, "Test case configures the IPv4 address on one of the switch interfaces". Avoid the use of first (I) or second person. Explain the instructions in context of the test case doing them.
+
 Formatting guidelines
 
 Diagrams:
@@ -48,10 +50,7 @@ A space must be proceeded after:
 
 -->
 
-# High level design of FEATURE
-High level description of a FEATURE design.
-
-If the feature is essentially composed out of a single daemon (dont count OVSDB-Server and management interfaces, unless they have some very special role in the feature design), then just reference to a DESIGN.md document of the repo that contains the daemon. Otherwise continue to the next sections.
+# [Feature|Component] Test Cases
 
 ## Contents
 <--
@@ -65,28 +64,58 @@ Suggestions for generating the Table of Contents
 7. Use http://StackEdit.io to determine if the TOC links work properly.
 -->
 
-## Design choices
-Discuss any design choices that were made. Consider adding future extensions, limitations/constraints, not supported items and assumptions.
+##  [Title for First Test Case]
 
-## Participating modules
+### Objective
+<!--Describe the objective of the test such that any user would be able ascertain what the test case is attempting to validate -->
 
-``` ditaa
-Put ascii block diagram in the format of http://ditaa.sourceforge.net/
-include relationships of all participating modules including OVSDB-Server.
-You can use http://asciiflow.com/ or any other tool to generate the diagram.
-```
+### Requirements
+The requirements for this test case are:
+<!-- list as bulleted items of the equipment needed, software versions required, etc. -->
+ - [item]
+ - [item]
 
-Explain all interactions between the modules that sum up to the feature functionality. Add flow diagrams as appropriate.
+### Setup
+<!--Describe the topologies and equipment needed to perform this test case. This includes, but is not limited to -->
 
-## OVSDB-Schema
-Discuss which tables/columns this feature interacts with. Where it gets the configuration, exports statuses and statistics. Reference specific modules DESIGN.md documents for further information on the schema.
+#### Topology Diagram
 
-## Any other sections that are relevant for the module
+#### Test Setup
 
-## References
+### Description
+<!--Describe the testing scenario which must be executed by the tester. Include enough detail such that the flow and scope of the test is clear. Reference standards or attachments if additional details are required. -->
 
-* [Reference 1](http://www.openswitch.net/docs/redest1)
-* ...
+### Test Result Criteria
+<!--    Explain the criteria that clearly identifies under whch conditions would the test be considered as pass or fail. Also if the test case can exit with any other result, explain that result and similarly the relevant criteria. -->
 
-Include references to DESIGN.md of any module that participates in the feature.
-Include reference to user guide of the feature.
+#### Test Pass Criteria
+
+#### Test Fail Criteria
+
+##  [Title for Second Test Case]
+
+### Objective
+<!--Describe the objective of the test such that any user would be able ascertain what the test case is attempting to validate -->
+
+### Requirements
+The requirements for this test case are:
+<!-- list as bulleted items of the equipment needed, software versions required, etc. -->
+ - [item]
+ - [item]
+
+### Setup
+<!--Describe the topologies and equipment needed to perform this test case. This includes, but is not limited to -->
+
+#### Topology Diagram
+
+#### Test Setup
+
+### Description
+<!--Describe the testing scenario which must be executed by the tester. Include enough detail such that the flow and scope of the test is clear. Reference standards or attachments if additional details are required. -->
+
+### Test Result Criteria
+<!--    Explain the criteria that clearly identifies under whch conditions would the test be considered as pass or fail. Also if the test case can exit with any other result, explain that result and similarly the relevant criteria. -->
+
+#### Test Pass Criteria
+
+#### Test Fail Criteria
