@@ -7,10 +7,11 @@ to do by using the imperative mood, for example, Press Enter to view the next sc
 * See https://en.wikipedia.org/wiki/Wikipedia%3aManual_of_Style for an online style guide.
  -->
 
-[Feature|Component] Test Cases
-==============================
+# [Feature|Component] Test Cases #
+
 
 [TOC]
+<!-- Remove the TOC tag and replace with an actual table of contents -->
 
 ##  [Title for First Test Case] ##
 
