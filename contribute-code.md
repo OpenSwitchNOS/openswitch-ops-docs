@@ -6,7 +6,7 @@ This guide assumes that you have:
  - Made changes to source code that you want to contribute to OpenSwitch
 
 For individual contributions, please sign the [DCO](#configuring-git-and-gerrit)
-For corporate engagements, please send an email to **cla_admin@lists.openswitch.net**
+For corporate engagements, please send an email to cla_admin@lists.openswitch.net
 
 ## Contents
 
