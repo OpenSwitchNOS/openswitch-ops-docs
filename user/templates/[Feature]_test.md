@@ -3,14 +3,16 @@ Here are a few suggestions in regards to style and grammar:
 * Use active voice. With active voice, the subject is the doer of the action. Tell the reader what
 to do by using the imperative mood, for example, Press Enter to view the next screen. See https://en.wikipedia.org/wiki/Active_voice for more information about the active voice.
 * Use present tense. See https://en.wikipedia.org/wiki/Present_tense for more information about using the present tense.
+* Avoid the use of I or third person. Address your instructions to the user. In text, refer to the reader as you (second person) rather than as the user (third person). The exception to not using the third-person is when the documentation is for an administrator. In that case, *the user* is someone the reader interacts with, for example, teach your users how to back up their laptop.
 * The subject is the test case. Explain the actions as if the "test case" is doing them. For example, "Test case configures the IPv4 address on one of the switch interfaces". Avoid the use of first (I) or second person. Explain the instructions in context of the test case doing them.
 * See https://en.wikipedia.org/wiki/Wikipedia%3aManual_of_Style for an online style guide.
  -->
 
-[Feature|Component] Test Cases
-==============================
+# [Feature|Component] Test Cases #
+
 
 [TOC]
+<!-- Remove the TOC tag and replace with an actual table of contents -->
 
 ##  [Title for First Test Case] ##
 
