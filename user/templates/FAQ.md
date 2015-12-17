@@ -1,8 +1,6 @@
-Frequently Asked Questions
-==========================
+# Frequently Asked Questions
 
-General Questions
------------------
+## General Questions
 
 ### Q: What is [ops-foo]?
 
@@ -16,10 +14,8 @@ A: [Answer 2]
 
 A: [Answer 3]
 
-Other Info
-----------
+## Other Info
 [Any info of interest, if applicable]
 
-Contact Info
-------------
+## Contact Info
 [Any contact info, if applicable]
