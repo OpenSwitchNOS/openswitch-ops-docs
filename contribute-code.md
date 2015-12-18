@@ -5,8 +5,6 @@ This guide assumes that you have:
  - Set up your environment to build and run OpenSwitch, and
  - Made changes to source code that you want to contribute to OpenSwitch
 
-For individual contributions, please sign the [DCO](#configuring-git-and-gerrit)
-
 ## Contents
 
 - [Preparing to contribute changes](#preparing-to-contribute-changes)
