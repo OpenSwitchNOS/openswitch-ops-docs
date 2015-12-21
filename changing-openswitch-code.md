@@ -121,15 +121,14 @@ make devenv_ct_test
 **Note**: This will run all scripts that have the format: `test_xxx.py`.
 
 #### Reconfigure to a different platform
-1. Configure the platform.
+1. Configure the new platform.
 ```
-make configure genericx86-64
+make switch-platform genericx86-64
 ```
-1. Build for a new platform.
+1. Build the new platform.
 ```
-make distclean
+make
 ```
-**Note**: The above step removes all the existing configuration, builds and adds the previously added source code from the sandbox. Configure the platform again using the command from step 1.
 
 ### Development commands
 This section provides a complete list for all the development commands you can use while contributing with code to the OpenSwitch project.
