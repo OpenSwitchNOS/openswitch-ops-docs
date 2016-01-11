@@ -371,7 +371,8 @@ Gerrit stating that you don't have enough permissions, you can check the
 access page and make sure that "Create Reference" is listed under
 `Reference: refs/heads/feature/*`.
 
-For example, to create a branch `foo` on the project `sysd`, use the following commands:
+### Creating a branch in your repository
+Assume you are creating a branch `foo` on the project `sysd`, you would use the following commands:
 
 ```
 make devenv_add sysd
@@ -397,6 +398,13 @@ git review feature/foo # send the review for this branch
 ```
 
 To merge a branch (source) with another branch (target):
+=======
+Do not forget the branch name after `git review`. It is _not_ enough to
+have a local branch named the same as the branch that you want to
+publish the changes to, it is _necessary_ to indicate this when you
+create the code review.
+
+If you are a developer planning to merge your branch (source) to another branch (target):
 
 ```
 make devenv_add sysd
@@ -407,6 +415,54 @@ git merge --no-ff <source> # merge the source branch changes to the target
 git commit -s --amend # this will modify the commit message to include a ChangeId. Without the ChangeID, commits will not go through
 git review <target> # send the review for target branch. The review for merge will not have any code as this is only a merge
 ```
+
+### Updating ops-build to use your new branch
+
+When you publish a new review, the CIT infrastructure will automatically
+try to build the new code. If followed the above procedure to publish
+your code to a branch, what will happen is that a fresh copy of
+`ops-build` is cloned and it's used to build your new commit. If there's
+a branch in `ops-build` with the exact same name as your target branch,
+then it's used for building, otherwise `master` is used.
+
+The above generally works if your branch coexists happily with the rest
+of the code. If on the other hand you have closely related changes in
+two or more different repositories (e.g. your repository and the schema;
+your repository and CLI; etc) then you will need to create a branch in
+`ops-build` in order to express your dependencies.
+
+Open the recipe file (the `.bb` or `.bbappend` file) for your component.
+There you should find a line like the following:
+
+```
+SRC_URI=git://git.openswitch.net/openswitch/ops-quagga;protocol=http
+```
+
+Append `;branch=feature/foo` to the SRC_URI, like this:
+
+```
+SRC_URI=git://git.openswitch.net/openswitch/ops-quagga;protocol=http;branch=feature/foo
+```
+
+You also want to change the `SRCREV` variable so that instead of commit
+hash, it tracks `HEAD` in your branch:
+
+```
+SRCREV="${AUTOREV}"
+```
+
+Commit these changes and publish the code review:
+
+```
+git review feature/foo
+```
+
+When you are ready to merge your branch back to `master` please keep in
+mind that if you don't have any other changes in your recipe, you don't
+need to merge this branch back to `master`, it's enough to update the
+`SRCREV` of the corresponding recipes. If you _do_ have other changes
+that you need to preserve, please remember to undo these changes before
+merging.
 
 ## Setting up an NFS root environment for development
 The OpenSwitch build environment supports working with an NFS Root Setup, which speeds up development workflows. This section provides instructions to set it up.
