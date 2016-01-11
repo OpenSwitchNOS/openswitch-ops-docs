@@ -363,7 +363,13 @@ If enough disk space is available, modify the file `/etc/sysctl.d/30-tracker.con
 
 
 ## Working with branches
-All gerrit registered users have permission to create new feature branches, and these branches are restricted to have the prefix `feature/`.
+All registered users can create _feature branches_. The only requirement
+is that these branches are named `feature/{name}`, where `{name}` is
+chosen by you. If you try to create a branch and you get an error from
+Gerrit stating that you don't have enough permissions, you can check the
+[All Projects](https://review.openswitch.net/#/admin/projects/All-Projects,access)
+access page and make sure that "Create Reference" is listed under
+`Reference: refs/heads/feature/*`.
 
 For example, to create a branch `foo` on the project `sysd`, use the following commands:
 
