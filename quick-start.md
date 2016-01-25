@@ -55,6 +55,7 @@ After following the steps above *"Installing the OpenSwitch development environm
 
 1. Run a shell on the Docker instance with `docker exec -ti ops bash`
 2. Run `vtysh` to start the OpenSwitch  CLI.
+3. `vtysh` session times out if session is idle for session timeout period. Session timeout can be configured using cli command `session-timeout <value>` in configure terminal mode (Default: 30 minutes).
 
 Example:
 
