@@ -276,6 +276,9 @@ action = rebase if necessary
 ```
 git review
 ```
+1. The following people have code review +2 permission to approve the new repo creation:
+
+   [System Architects](https://review.openswitch.net/#/admin/groups/80,members)
 
 ### Adding CI Process for the component
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
