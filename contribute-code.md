@@ -280,7 +280,7 @@ git review
 ### Adding CI Process for the component
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
-1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents (Note: replace ops-myrepo with your repo name):
+1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents, change the content according to your needs (Note: replace ops-myrepo with your repo name):
 
   ```
   - job-template:

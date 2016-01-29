@@ -360,7 +360,7 @@ If enough disk space is available, modify the file `/etc/sysctl.d/30-tracker.con
 
 
 ## Working with branches
-Usually only owners of the respective git repo (project owners), or the members of certain privileged user groups, can create new feature branches, and these branches are restricted to have the prefix `feature/`.
+All gerrit registered users have permission to create new feature branches, and these branches are restricted to have the prefix `feature/`.
 
 For example, to create a branch `foo` on the project `sysd`, use the following commands:
 
