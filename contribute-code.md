@@ -276,7 +276,18 @@ action = rebase if necessary
 ```
 git review
 ```
-
+1. The following people have code review +2 permission to approve the new repo creation:
+```
+Brian Krelle (brian.krelle@hpe.com)
+David Corrales (david.corrales@hpe.com)
+Francisco Rojas (francisco.rojas@hpe.com)
+Frank Reichstein (frank.reichstein@hpe.com)
+Jorge Sauma (jorge.sauma@hpe.com)
+Lisa Pinio (lisa.pinio@hpe.com)
+Mohan Ram Bhadravati (mohan-ram.r.bhadravati@hpe.com)
+Nehal Petel (nehal@hpe.com)
+Rangaprasad Sampath (rangaprasad.sampath@hpe.com)
+```
 ### Adding CI Process for the component
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
