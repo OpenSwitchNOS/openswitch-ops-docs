@@ -3,7 +3,7 @@
 ## Contents
 
 - [Guidelines for CLI help strings](#guidelines-for-cli-help-strings)
-- [Guidelines for show command output](#guidelines-for-show-commands-output)
+- [Guidelines for show command output](#guidelines-for-show-command-output)
 - [Guidelines for log messages](#guidelines-for-log-messages)
 
 This document provides guidelines to follow while developing user-facing interfaces.
