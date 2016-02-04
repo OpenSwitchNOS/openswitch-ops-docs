@@ -237,6 +237,12 @@ Adding a new component to OpenSwitch comes with responsibility to invest in ongo
 
 Start by sending an email to the [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?subject=Request%20for%20new%20component%20repository) mailing list, with the Github IDs of the individuals identified for the above roles, and the name of the component/repository you would like to add. You will receive back a confirmation email including a new group, of the form `ops-<repo-name>-maintainers`, created for the above individuals that you can use in the steps below.
 
+Once these individuals have been identified and the maintainers group created, the website needs to be update with this information.
+```
+git clone https://git.openswitch.net/openswitch/ops-docs
+```
+Update the code-repositories.md file and send out for review.
+
 Now you are ready to follow the following steps in creating a new component.
 
 ### Adding a New Repository
@@ -281,7 +287,7 @@ git review
    [System Architects](https://review.openswitch.net/#/admin/groups/80,members)
 
 ### Adding CI Process for the component
-Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files 
+Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files
 1. Git clone project infra: git clone https://review.openswitch.net/infra/project-config
 1. Create a new file jenkins/jobs/ops-myrepo-jobs.yaml with following contents, change the content according to your needs (Note: replace ops-myrepo with your repo name):
 
