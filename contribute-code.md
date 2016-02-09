@@ -287,15 +287,15 @@ git review
 
 #### Submit the review request for updating maintainers group
 
-1. Contact Infra team [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?Subject=Request%20for%20new%20maintainers%20group) to create the maintainers group <repo-name>-maintainers in gerrit. In the email, specify the full name for the users in `Git Hub` that you want to add as maintainers of this repository.
+1. Contact Infra team [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?Subject=Request%20for%20new%20maintainers%20group) to create the maintainers group `ops-<repo-name>-maintainers` in gerrit. In the email, specify the full name and email address for the users in `GitHub` that you want to add as maintainers of this repository.
 1. To update the website with information about the new repository, update the code-repositories.md file in the ops-docs repository:
 ```
 git clone https://review.openswitch.net/openswitch/ops-docs
 ```
 1. Modify `code-repositories.md` to add the new maintainers group.
-      ```
-      [openswitch/<repo-name>](http://git.openswitch.net/cgit/openswitch/<repo-name>/tree/) | <Repository Description> | <Module Maintainer> | [<repo-name>-maintainers](https://review.openswitch.net/#/admin/groups/##,members) | <Bug czar> |
-      ```
+```
+[openswitch/<repo-name>](http://git.openswitch.net/cgit/openswitch/<repo-name>/tree/) | <Repository Description> | <Module Maintainer> | [ops-<repo-name>-maintainers](https://review.openswitch.net/#/admin/groups/<##>,members) | <Bug czar> |
+```
 1. Commit the changes with the following command:
    ```
    git commit --signoff
