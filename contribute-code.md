@@ -248,33 +248,32 @@ Now you are ready to follow the following steps in creating a new component.
 ### Adding a New Repository
 To add a new repository to the OpenSwitch project (referred to as `<repo-name>`):
 
+#### Submit the review request for new repo creation
+
 1. Clone the project with the following command:
 ```
 git clone https://review.openswitch.net/infra/project-config
 ```
 1. Create a file `gerrit/acls/openswitch/ops-<repo-name>.config` with the following contents:
-**Note:** The code review and abandon group name should be `ops-<repo-name>-maintainers` that you received n the earlier step, as shown in this example below.
 
-```
-[access "refs/heads/*"]
-abandon = group Change Owner
-abandon = group ops-<repo-name>-maintainers
-label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
-label-Workflow = -1..+1 group Change Owner
+   **Note:** The code review and abandon group name should be `ops-<repo-name>-maintainers` that you received n the earlier step, as shown in this example below.
+   ```
+   [access "refs/heads/*"]
+   abandon = group Change Owner
+   abandon = group ops-<repo-name>-maintainers
+   label-Code-Review = -2..+2 group ops-<repo-name>-maintainers
+   label-Workflow = -1..+1 group Change Owner
 
-[submit]
-mergeContent = true
-action = rebase if necessary
-```
-1. The `ops-<repo-name>-maintainers` group for your repo is created by the `project-config-maintainers` when they approve the code review.
+   [submit]
+   mergeContent = true
+   action = rebase if necessary
+   ```
 1. Modify `gerrit/projects.yaml` to add the repository.
       ```
       - project: openswitch/<repo-name>
         description: <Repo Description>
       ```
 1. Commit the changes with the following command:
-
-   **Note:** In the commit message, specify the full name for the two users in `Git Hub` that you want to add as maintainers of this repository.
    ```
    git commit --signoff
    ```
@@ -285,6 +284,30 @@ git review
 1. The following people have code review +2 permission to approve the new repo creation:
 
    [System Architects](https://review.openswitch.net/#/admin/groups/80,members)
+
+#### Submit the review request for updating maintainers group
+
+1. Contact Infra team [infra@lists.openswitch.net](mailto:infra@lists.openswitch.net?Subject=Request%20for%20new%20maintainers%20group) to create the maintainers group <repo-name>-maintainers in gerrit. In the email, specify the full name for the users in `Git Hub` that you want to add as maintainers of this repository.
+1. To update the website with information about the new repository, update the code-repositories.md file in the ops-docs repository:
+```
+git clone https://review.openswitch.net/openswitch/ops-docs
+```
+1. Modify `code-repositories.md` to add the new maintainers group.
+      ```
+      [openswitch/<repo-name>](http://git.openswitch.net/cgit/openswitch/<repo-name>/tree/) | <Repository Description> | <Module Maintainer> | [<repo-name>-maintainers](https://review.openswitch.net/#/admin/groups/##,members) | <Bug czar> |
+      ```
+1. Commit the changes with the following command:
+   ```
+   git commit --signoff
+   ```
+1. Review the changes with the following command:
+```
+git review
+```
+1. The following people have code review +2 permission to approve the request for updating code-repositories.md:
+
+   [ops-docs-maintainers](https://review.openswitch.net/#/admin/groups/46,members)
+1. The exsiting members in the <repo-name>-maintainers group have permission to add more people in the same group.
 
 ### Adding CI Process for the component
 Every repository is gated by at least two jenkins(CI) jobs. To create a set of basic jenkins(CI) jobs using yaml files
