@@ -8,6 +8,7 @@
 	- [Workflows](#workflows)
 		- [Working with one repository](#working-with-one-repository)
 		- [Component Testing](#component-testing)
+		- [A note on the new testing framework](#a-note-on-the-new-testing-framework)
 		- [Reconfigure to a different platform](#reconfigure-to-a-different-platform)
 	- [Development commands](#development-commands)
 		- [devenv_init](#devenv_init)
@@ -22,6 +23,13 @@
 		- [devenv_patch_recipe](#devenv_patch_recipe)
 		- [devenv_refresh](#devenv_refresh)
 		- [git_pull](#git_pull)
+	- [Testing commands](#testing-commands)
+		- [testenv_init](#testenv_init)
+		- [testenv_run](#testenv_run)
+		- [testenv_rerun](#testenv_rerun)
+		- [testenv_suite_list](#testenv_suite_list)
+		- [testenv_suite_run](#testenv_suite_run)
+		- [testenv_suite_rerun](#testenv_suite_rerun)
 - [Build system infrastructure](#build-system-infrastructure)
 - [Working with modified packages](#working-with-modified-packages)
 	- [Building and cleaning](#building-and-cleaning)
@@ -110,25 +118,35 @@ make devenv_rm ops-vland
 ```
 
 #### Component Testing
-Component tests are run using `pytest`.
-* Export the docker image:
-```
-make export_docker_image
-```
+Component tests are run using `pytest` and the `topology modular framework`.
 * Set up the sandbox for running tests:
 ```
-make devenv_ct_init
+make testenv_init
 ```
-* Run all tests inside the repositories in the `src/` directory:
-```
-make devenv_ct_test
-```
-**Note**: This runs all scripts that have the format: `test_xxx.py`.
+This will install all necessary components and verifies the system is ready to run tests
+**Note**: While performing this you may be prompted to input your sudo password this is a one time only requirement.
 
-* To run an individual test case, specify it on the command line:
+* Creating a build and running a testsuite against a particular component:
 ```
-make devenv_ct_test src/ops/tests/bgp/test_bgp_ft_basic_bgp_route_advertise.py
+make testenv_run feature ops-cli
 ```
+**Note**: This command will always build an image.
+
+* To run without generating a new build:
+```
+make testenv_rerun feature ops-cli
+```
+
+#### A note on the new testing framework
+
+* There are two frameworks currently in place, legacy and modular
+* To run legacy test cases use 'legacy' as the testsuite to run:
+```
+make testenv_rerun legacy ops-cli
+```
+
+The build system will recognize the legacy test suite and will invoke the legacy framework. 
+**Note**: Legacy test cases are looked for in the 'test/' directory, while modular framework test cases must live in the 'ops-test/' directory
 
 #### Reconfigure to a different platform
 1. Configure the new platform.
@@ -249,6 +267,59 @@ This command performs a `git pull --rebase` in the base Git repository and the o
 ```
 $  make git_pull
 ```
+### Testing commands
+This section provides a complete list of all the testing commands that can be used when contributing code to the OpenSwitch project.
+
+#### testenv_init
+Initiates the testing environment.
+```
+$ make testenv_init
+```
+This will verify the system is ready to run tests
+**Note**: While performing this you may be prompted to input your sudo password this is a one time only requirement.
+
+#### testenv_run
+Builds an image and runs a test suite against one or multiple components.
+```
+$ make testenv_run feature ops-cli
+```
+The framework will look for test cases under the `ops-test/<testsuite>` directory.
+**Note**: This command will always build the image again. If you don't require this please look at the `rerun` command.
+
+#### testenv_rerun
+Runs a provided test suite against one or multiple components without building a new image
+```
+$ make testenv_rerun feature ops-cli
+```
+The framework will look for test cases under the `ops-test/<testsuite>` directory.
+**Note**: This command will not rebuild an image. If you need to build an image with your changes please look at the `run` command.
+
+#### testenv_suite_list
+Provides a list of available test suites on all Yocto layers.
+```
+$ make testenv_suite_list
+```
+
+#### testenv_suite_list_component
+Provides a list of available test suites for a specific component.
+```
+$ make testenv_suite_list_components ops-cli
+```
+
+#### testenv_suite_run
+Builds an image and runs a test suite against multiple components.
+```
+$ make testenv_suite_run feature
+```
+**Note**: This command will look for a testsuite_<testsuite>.conf file in each component (i.e. ops-cli/testsuite_feature.conf)
+
+#### testenv_suite_rerun
+Runs a test suite against multiple components.
+```
+$ make testenv_suite_rerun feature
+```
+**Note**: This command will look for a testsuite_<testsuite>.conf file in each component (i.e. ops-cli/testsuite_feature.conf)
+
 
 ## Build system infrastructure
 
