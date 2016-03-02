@@ -110,7 +110,10 @@ make devenv_rm ops-vland
 ```
 
 #### Component Testing
-Component tests are run using `pytest`.
+[Component tests](whitebox-and-feature-tests#component-testing) are part
+of the [first tier](whitebox-and-feature-tests#cit-tiers) of tests and
+are run using the `pytest` command.
+
 * Export the docker image:
 ```
 make export_docker_image
