@@ -75,6 +75,7 @@ $ make
 
 The build output can be found under the `images/` directory.
 
+Please note that building as the root user is not supported.
 
 ## Deploying an image
 
