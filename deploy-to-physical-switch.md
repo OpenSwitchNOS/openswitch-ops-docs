@@ -66,8 +66,7 @@ Prerequisites:
    x after COM will vary based on the USB port to which it is connected.
 4. Copy the onie installer openswitch-onie-installer-x86_64-as5712_54x-<>
    (eg.openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718)
-   to a USB device.  This can be downloaded from
-   https://archive.openswitch.net/artifacts/periodic/master/<version>/as5712/
+   to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/&lt;version&gt;/as5712/
 
 Follow these steps:
 
