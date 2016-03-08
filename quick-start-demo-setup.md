@@ -13,10 +13,12 @@ a. Download the OPS image at https://archive.openswitch.net/artifacts/periodic/m
 b. If you have networking setup on your AS5712 and an accessible tftp server
    1. Copy the downloaded OPS image into the tftp directory with the name ops_as5712
    2. Telnet to the switch, reboot, get the switch into ONIE Rescue OS mode and enter these commands
+        ```
         1. tftp –g –r ops_as5712 –l ops_5712 <tftp_server>
         2. chmod +x ops_as5712
         3. export OPS_CLEAN_INSTALL=true
         4. ./ops_5712
+        ```
    3. Reboot and OPS will be booted up
 
 c. If you don’t have networking setup, follow the below steps
@@ -139,7 +141,7 @@ d. Now that you have the switch booting to OpenSwitch:
    2. Type “show”
    3. Try the following sample config for simple networking:
       1. conf t
-      2. ip route <destination> <nexthop | interface> [<distance>]
+      2. ip route &lt;destination&gt; &lt;nexthop | interface&gt; [&lt;distance&gt;]
       3. detailed reference can be found at http://openswitch.net/use/usehome
 
 ## Installing OpenSwitch virtual appliance on virtual box
