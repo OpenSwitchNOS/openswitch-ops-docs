@@ -24,46 +24,37 @@ b. If you have networking setup on your AS5712 and an accessible tftp server
 c. If you don’t have networking setup, follow the below steps
      (for the below steps, Windows laptop running Windows 7 Enterprise is used)
 
-1. USB to Serial adapter should be used.  For this case, Belkin Serial Adapter,
-       model F5U257 is used.  The corresponding driver for Windows 7 Enterprise can
-       be found at http://www.belkin.com/us/support-article?articleNum=4644
-2. Connect the USB to serial adapter to the Windows laptop
-       and install the driver.
-3. Make sure the new device shows up in Device Manager under
-       Ports (COM & LPT) as Belkin USB-to-Serial-Adapter(COMx)
-       x after COM will vary based on the USB port to which it is connected.
-4. Copy the onie installer openswitch-onie-installer-x86_64-as5712_54x-<>
-       (eg.openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718)
-       to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/&lt;version&gt;/as5712/
- 5. Connect the windows laptop to 5712 switch using the USB to Serial adapter
-6. Using putty, choose below:
-       Serial line : COM4
-       Speed : 115200
+1. USB to Serial adapter should be used.  For this case, Belkin Serial Adapter, model F5U257 is used.  The corresponding driver for Windows 7 Enterprise can be found at http://www.belkin.com/us/support-article?articleNum=4644
+2. Connect the USB to serial adapter to the Windows laptop and install the driver.
+3. Make sure the new device shows up in Device Manager under Ports (COM & LPT) as Belkin USB-to-Serial-Adapter(COMx) x after COM will vary based on the USB port to which it is connected.
+4. Copy the onie installer openswitch-onie-installer-x86_64-as5712_54x-<> (eg.openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718) to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/&lt;version&gt;/as5712/
+5. Connect the windows laptop to 5712 switch using the USB to Serial adapter
+6. Using putty, choose Serial line as COM<> and Speed as 115200
 7. Once connected to the switch, reboot the switch
 
 8. Wait for the menu
     ```bash
-    +----------------------------------------------------------------------------+
-    | OpenSwitch Primary Image                                                   |
-    | OpenSwitch Secondary Image                                                 |
-    | OpenSwitch Development -- NFS root                                         |
-    |*ONIE                                                                       |
-    | DIAG: Accton Diagnostic                                                    |
-    |                                                                            |
-    +----------------------------------------------------------------------------+
+    +----------------------------------------------------------+
+    | OpenSwitch Primary Image                                 |
+    | OpenSwitch Secondary Image                               |
+    | OpenSwitch Development -- NFS root                       |
+    |*ONIE                                                     |
+    | DIAG: Accton Diagnostic                                  |
+    |                                                          |
+    +----------------------------------------------------------+
     ```
 
-    Select ONIE, then ONIE: Rescue
+      Select ONIE, then ONIE: Rescue
 
     ```bash
-    +----------------------------------------------------------------------------+
-    | ONIE: Install OS                                                           |
-    |*ONIE: Rescue                                                               |
-    | ONIE: Uninstall OS                                                         |                                                                            | ONIE: Update ONIE                                                          |
-    | ONIE: Embed ONIE                                                           |
-    |                                                                            |
-    |                                                                            |
-    +----------------------------------------------------------------------------+
+    +---------------------------------------------------------+
+    | ONIE: Install OS                                        |
+    |*ONIE: Rescue                                            |
+    | ONIE: Uninstall OS                                      |
+    | ONIE: Embed ONIE                                        |
+    |                                                         |
+    |                                                         |
+    +---------------------------------------------------------+
     ```
     In the ONIE prompt, run fdisk -l as below
 
