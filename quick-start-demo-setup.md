@@ -2,13 +2,11 @@
 - [Installing OpenSwitch on an AS5712](#installing-openswitch-on-an-as5712)
 - [Installing OpenSwitch virtual appliance on virtual box](#installing-openswitch-virtual-appliance-on-virtual-box)
 
-
 ## Installing OpenSwitch on an AS5712
 
-OpenSwitch supports other switches as well – please see the hardware compatibility list
-and follow the more detailed installation guide here.
+This guide will use AS5712 as an example. Please see [hw compatible](http://openswitch.net/documents/user/hardware-compatibility) guide for other platforms.
 
-a. Download the OPS image at https://archive.openswitch.net/artifacts/periodic/master/latest/as5712/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030812
+a. Download the OPS onie installer image (eg. openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030812) at https://archive.openswitch.net/artifacts/periodic/master/latest/as5712/
 
 b. If you have networking setup on your AS5712 and an accessible tftp server
    1. Copy the downloaded OPS image into the tftp directory with the name ops_as5712
@@ -27,8 +25,8 @@ c. If you don’t have networking setup, follow the below steps
 1. USB to Serial adapter should be used.  For this case, Belkin Serial Adapter, model F5U257 is used.  The corresponding driver for Windows 7 Enterprise can be found at http://www.belkin.com/us/support-article?articleNum=4644
 2. Connect the USB to serial adapter to the Windows laptop and install the driver.
 3. Make sure the new device shows up in Device Manager under Ports (COM & LPT) as Belkin USB-to-Serial-Adapter(COMx) x after COM will vary based on the USB port to which it is connected.
-4. Copy the onie installer openswitch-onie-installer-x86_64-as5712_54x-<> (eg.openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718) to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/&lt;version&gt;/as5712/
-5. Connect the windows laptop to 5712 switch using the USB to Serial adapter
+4. Copy the OPS onie installer image to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/latest/as5712/
+5. Connect the windows laptop to AS5712 switch using the USB to Serial adapter
 6. Using putty, choose Serial line as COM<> and Speed as 115200
 7. Once connected to the switch, reboot the switch
 
@@ -154,4 +152,3 @@ d. Now that you have the switch booting to OpenSwitch:
    8. Enter "configure terminal" and you should be in the configuration mode where you can try out different
       configurations like configuring OSPF/BGP/NTP etc. User guides for different features can be found here
       http://openswitch.net/use/usehome
-
