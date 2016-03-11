@@ -1,14 +1,24 @@
 # Demo Setup Quick Start
+- [Pick a stable OpenSwitch Image](#pick-a-stable-openswitch-build)
 - [Installing OpenSwitch on an AS5712](#installing-openswitch-on-an-as5712)
 - [Installing OpenSwitch virtual appliance on virtual box](#installing-openswitch-virtual-appliance-on-virtual-box)
 
+## Pick a stable OpenSwitch Image
+
+a. Before you begin, you'll want to locate a stable build. This can be from a release branch or master branch. Refer to [versioning_in_ops](http://www.openswitch.net/documents/dev/version-control)
+   If you want to pick a stable image from master branch where new features are actively developed, follow steps below: 
+     1. We'll use the [test_results_analyzer](https://jenkins.openswitch.net/job/ops-periodic-genericx86-64/test_results_analyzer/) to get information on a stable build.
+     2. Click on "Get Build Report" and "Select chart type" -> "bar". This shows at a glance, which builds are most stable and have run maximum number of passed testcases.
+     3. Pick the build number which you'll like to use, for eg: 823 is the most stable build at the time of writing.
+     4. Now use this build number and go to https://jenkins.openswitch.net/job/ops-periodic-genericx86-64/<build_number>/testResults. This testResults page displays all the tests which were run on this periodic build. For example: [build_823_test_results](https://jenkins.openswitch.net/job/ops-periodic-genericx86-64/823/testResults)
+     5. Use testResults information you get a clear idea of which features are tested with this periodic build. If this build does not satisfy your requirements, please choose another build and repeat all of the above steps.
+     6. Note the timestamp of the periodic build you've chosen from https://jenkins.openswitch.net/job/ops-periodic-genericx86-64/<build_number>/. You'll need this info to continue Install on AS5712 or using it as a virtual appliance.
 
 ## Installing OpenSwitch on an AS5712
 
-OpenSwitch supports other switches as well – please see the hardware compatibility list
-and follow the more detailed installation guide here.
+This guide will use AS5712 as an example. Please see [hw compatible](http://openswitch.net/documents/user/hardware-compatibility) guide for other platforms.
 
-a. Download the OPS image at https://archive.openswitch.net/artifacts/periodic/master/latest/as5712/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030812
+a. After choosing a stable build, using the timestamp you've noted from step a. download the OPS ONIE installer image from https://archive.openswitch.net/artifacts/periodic/master/0.3.0+<YYYYMMDDHH>/as5712/. For example: [build_823_onie_installer](https://archive.openswitch.net/artifacts/periodic/master/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100)
 
 b. If you have networking setup on your AS5712 and an accessible tftp server
    1. Copy the downloaded OPS image into the tftp directory with the name ops_as5712
@@ -27,8 +37,8 @@ c. If you don’t have networking setup, follow the below steps
 1. USB to Serial adapter should be used.  For this case, Belkin Serial Adapter, model F5U257 is used.  The corresponding driver for Windows 7 Enterprise can be found at http://www.belkin.com/us/support-article?articleNum=4644
 2. Connect the USB to serial adapter to the Windows laptop and install the driver.
 3. Make sure the new device shows up in Device Manager under Ports (COM & LPT) as Belkin USB-to-Serial-Adapter(COMx) x after COM will vary based on the USB port to which it is connected.
-4. Copy the onie installer openswitch-onie-installer-x86_64-as5712_54x-<> (eg.openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718) to a USB device.  This can be downloaded from https://archive.openswitch.net/artifacts/periodic/master/&lt;version&gt;/as5712/
-5. Connect the windows laptop to 5712 switch using the USB to Serial adapter
+4. Copy the OPS onie installer image to a USB device.  Use the installer you've identified in Step a.
+5. Connect the windows laptop to AS5712 switch using the USB to Serial adapter
 6. Using putty, choose Serial line as COM<> and Speed as 115200
 7. Once connected to the switch, reboot the switch
 
@@ -90,17 +100,17 @@ c. If you don’t have networking setup, follow the below steps
     Copy the onie installer file to a folder
     ```bash
     ONIE:/ # ls /mnt/usb_drive_mount_point/
-    openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718
+    openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100
 
     mkdir /onie-installer/
-    cp  /mnt/usb_drive_mount_point/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016030718 /onie-installer/
+    cp  /mnt/usb_drive_mount_point/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100 /onie-installer/
     ```
 
     Run the installer:
     ```bash
-    ONIE:/onie-installer # ./openswitch-onie-installer-x86_64-as5712_54x-0.3.0\+2016030718
+    ONIE:/onie-installer # ./openswitch-onie-installer-x86_64-as5712_54x-0.3.0\+2016031100
 
-    ONIE:/onie-installer # ./openswitch-onie-installer-x86_64-as5712_54x-0.3.0\+2016030718
+    ONIE:/onie-installer # ./openswitch-onie-installer-x86_64-as5712_54x-0.3.0\+2016031100
 
     OpenSwitch ONIE installer (version 1.0) for Accton AS5712 54x
 
@@ -120,7 +130,7 @@ c. If you don’t have networking setup, follow the below steps
     ```bash
     root@switch:~# vtysh
     switch# show version
-    OpenSwitch 0.3.0 (Build: 0.3.0+2016030718-0.3.0-20160307180748-dev)
+    OpenSwitch 0.3.0 (Build: 0.3.0+20160311008-0.3.0-20160311001048-dev)
     switch#
     ```
 
@@ -128,8 +138,9 @@ c. If you don’t have networking setup, follow the below steps
 
 d. Now that you have the switch booting to OpenSwitch:
 
-   1. Telnet to the switch with these username/password
-   2. Type “show”
+   1. Telnet to the switch and login as root.
+   2. You will notice a bash prompt. Now enter "vtysh"
+   2. After entering vtysh, type "show ?". You should be able to see a bunch of familiar show commands for different features.
    3. Try the following sample config for simple networking:
       1. conf t
       2. ip route &lt;destination&gt; &lt;nexthop | interface&gt; [&lt;distance&gt;]
@@ -140,8 +151,7 @@ d. Now that you have the switch booting to OpenSwitch:
    1. You can use an OpenSwitch virtual appliance to demo the control-plane features of OpenSwitch.
       While it is possible to get networking done through an OVA, it is beyond the scope of this manual to get the
       required network driver mapping to work.
-   2. Download the OVA image from
-      https://archive.openswitch.net/artifacts/periodic/master/latest/appliance/openswitch-appliance-image-appliance-0.3.0+2016030818.ova
+   2. After you've selected a stable OpenSwitch image. Please use https://archive.openswitch.net/artifacts/periodic/master/0.3.0+<YYYYMMDDHH>/appliance/openswitch-appliance-image-appliance-0.3.0+<YYYYMMDDHH>.ova. For example:  [build_823_appliance](https://archive.openswitch.net/artifacts/periodic/master/0.3.0+2016031100/appliance/openswitch-appliance-image-appliance-0.3.0+2016031100.ova)
    3. On the VirtualBox, click on File > "Import Appliance" and select the OVA file downloaded above
    4. Click "Continue" and then "Import". This completes the importing of OVA file into your VirtualBox.
    5. Click on the VM instance you've just imported. It should show up as "OpenSwitch-0.3.0 Appliance".
@@ -154,4 +164,4 @@ d. Now that you have the switch booting to OpenSwitch:
    8. Enter "configure terminal" and you should be in the configuration mode where you can try out different
       configurations like configuring OSPF/BGP/NTP etc. User guides for different features can be found here
       http://openswitch.net/use/usehome
-
+For more details on OpenSwitch virtual appliance, refer to http://openswitch.net/documents/dev/use-virtual-appliance
