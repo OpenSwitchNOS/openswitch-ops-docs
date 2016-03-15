@@ -1,13 +1,11 @@
-# Demo Setup Quick Start
-- [Pick a stable OpenSwitch Image](#pick-a-stable-openswitch-image)
+# Quick Start Guide to install OpenSwitch
+
+- [Finding an OpenSwitch Image](#finding-an-openswitch-image)
 - [Installing OpenSwitch on an AS5712](#installing-openswitch-on-an-as5712)
-- [Installing OpenSwitch virtual appliance on virtual box](#installing-openswitch-virtual-appliance-on-virtual-box)
 
-## Pick a stable OpenSwitch Image
+## Finding an OpenSwitch Image
 
-Before you begin, you'll want to locate a stable build. This can be from a release branch or master branch. Refer to [versioning_in_ops](http://www.openswitch.net/documents/dev/version-control).
-
-For using latest release image, use ONIE installer and image from [this workspace](https://archive.openswitch.net/artifacts/periodic/release/latest/as5712/).  
+For using latest release image, use ONIE installer and image from [this workspace](https://archive.openswitch.net/artifacts/periodic/release/latest/as5712/).
 
 For using latest image from master branch, follow the following steps: (Note: Only do if you're interested in the newer features which are actively developed in master branch)
    1. We'll use the [test_results_analyzer](https://jenkins.openswitch.net/job/ops-periodic-genericx86-64/test_results_analyzer/) to get information on a stable build.
@@ -19,9 +17,9 @@ For using latest image from master branch, follow the following steps: (Note: On
 
 ## Installing OpenSwitch on an AS5712
 
-This guide will use AS5712 as an example. Please see [hw compatible](http://openswitch.net/documents/user/hardware-compatibility) guide for other platforms.
+This guide will use AS5712 as an example. Please see [hw compatible](documents/user/hardware-compatibility) guide for other platforms.
 
-a. Using the timestamp you've noted from "Pick a stable OpenSwitch Image" step, download the OPS ONIE installer image from [periodic_artifacts](https://archive.openswitch.net/artifacts/periodic/master/) from the 0.3.0+<YYYYMMDDHH>/as5712/ folder. For example: [download_build_823_onie_installer](https://archive.openswitch.net/artifacts/periodic/master//0.3.0+2016031100/as5712/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100)
+a. Using the timestamp you've noted from "Finding an OpenSwitch Image" step, download the OPS ONIE installer image from [periodic_artifacts](https://archive.openswitch.net/artifacts/periodic/master/) from the 0.3.0+&lt;YYYYMMDDHH&gt;/as5712/ folder. For example: [download_build_823_onie_installer](https://archive.openswitch.net/artifacts/periodic/master//0.3.0+2016031100/as5712/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100)
 
 b. If you have networking setup on your AS5712 and an accessible tftp server
    1. Copy the downloaded OPS image into the tftp directory with the name ops_as5712
@@ -148,31 +146,9 @@ d. Now that you have the switch booting to OpenSwitch:
       1. conf t
       2. ip route &lt;destination&gt; &lt;nexthop | interface&gt; [&lt;distance&gt;]
       3. detailed reference can be found at http://openswitch.net/use/usehome
-   5. Configure mgmt interface using step-by-step config guide of [mgmt-intf](http://openswitch.net/documents/user/mgmt_intf_cli)
-   6. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](http://openswitch.net/documents/user/webui_user_guide) for accessing web-ui.
+   5. Configure mgmt interface using step-by-step config guide of [mgmt-intf](documents/user/mgmt_intf_cli)
+   6. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](documents/user/webui_user_guide) for accessing web-ui.
    7. Login for web-ui can be done using username:root and no password.
-
-## Installing OpenSwitch virtual appliance on virtual box
-
-   1. You can use an OpenSwitch virtual appliance to demo the control-plane features of OpenSwitch.
-      While it is possible to get networking done through an OVA, it is beyond the scope of this manual to get the
-      required network driver mapping to work.
-   2. After you've selected a stable OpenSwitch image. Please use [periodic_appliance](https://archive.openswitch.net/artifacts/periodic/master/) and locate 0.3.0+<YYYYMMDDHH>/appliance/openswitch-appliance-image-appliance-0.3.0+<YYYYMMDDHH>.ova file. For example:  [download_build_823_appliance](https://archive.openswitch.net/artifacts/periodic/master/0.3.0+2016031100/appliance/openswitch-appliance-image-appliance-0.3.0+2016031100.ova)
-   3. On the VirtualBox, click on File > "Import Appliance" and select the OVA file downloaded above
-   4. Click "Continue" and then "Import". This completes the importing of OVA file into your VirtualBox.
-   5. Click on the VM instance you've just imported. It should show up as "OpenSwitch-0.3.0 Appliance".
-      Click "Start > 'Normal Start' ".
-      This will open a GUI window where you will notice that the OpenSwitch instance is booting up and launching.
-   6. Once it has launched it would show you a prompt "switch login:". This is the switch login prompt.
-      Please enter 'root' and you should be able to see a bash prompt.
-   7. Enter 'vtysh' and it should take you to the switch prompt. Here you can access all the privilege mode
-      commands and would be able to issue all the 'show' commands.
-   8. Enter "configure terminal" and you should be in the configuration mode where you can try out different
-      configurations like configuring OSPF/BGP/NTP etc. User guides for different features can be found here
-      http://openswitch.net/use/usehome
-   9. Get ipaddress from the switch by issuing 'ifconfig' on bash prompt and finding IP Addresses used on eth0 interface.
-   10. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](http://openswitch.net/documents/user/webui_user_guide) for accessing web-ui.
-   11. Login for web-ui can be done using username:root and no password.
 
   Using REST:
   ===========
@@ -185,6 +161,9 @@ d. Now that you have the switch booting to OpenSwitch:
           2. REST documentation is hosted by OpenSwitch instance. So its very useful and easy to find it by going to http://IPAddress:8091/api/index.html. In this example: http://192.168.2.19:8091/api/index.html gives you the complete REST documentation.
           3. Using this portal you can try out different REST GET/PUT/POST calls. It would work directly by posting/getting information from the OVSDB. For more details refer to usage guides.
 
-  
+  Using WebUI:
+  ============
+  The webUI service on the switch is running on the standard port 80. Once the management interface is configured and has a valid IP address, point your web browser to this IP address.
 
-For more details on OpenSwitch virtual appliance, refer to http://openswitch.net/documents/dev/use-virtual-appliance
+
+For more details on installing OpenSwitch on physical hardware, refer to [Installing and Booting OpenSwitch](documents/dev/deploy-to-physical-switch)
