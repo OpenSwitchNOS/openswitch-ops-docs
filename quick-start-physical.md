@@ -17,7 +17,7 @@ For using latest image from master branch, follow the following steps: (Note: On
 
 ## Installing OpenSwitch on an AS5712
 
-This guide will use AS5712 as an example. Please see [hw compatible](documents/user/hardware-compatibility) guide for other platforms.
+This guide will use AS5712 as an example. Please see [hw compatible](/documents/user/hardware-compatibility) guide for other platforms.
 
 a. Using the timestamp you've noted from "Finding an OpenSwitch Image" step, download the OPS ONIE installer image from [periodic_artifacts](https://archive.openswitch.net/artifacts/periodic/master/) from the 0.3.0+&lt;YYYYMMDDHH&gt;/as5712/ folder. For example: [download_build_823_onie_installer](https://archive.openswitch.net/artifacts/periodic/master//0.3.0+2016031100/as5712/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100)
 
@@ -146,8 +146,8 @@ d. Now that you have the switch booting to OpenSwitch:
       1. conf t
       2. ip route &lt;destination&gt; &lt;nexthop | interface&gt; [&lt;distance&gt;]
       3. detailed reference can be found at http://openswitch.net/use/usehome
-   5. Configure mgmt interface using step-by-step config guide of [mgmt-intf](documents/user/mgmt_intf_cli)
-   6. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](documents/user/webui_user_guide) for accessing web-ui.
+   5. Configure mgmt interface using step-by-step config guide of [mgmt-intf](/documents/user/mgmt_intf_cli)
+   6. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](/documents/user/webui_user_guide) for accessing web-ui.
    7. Login for web-ui can be done using username:root and no password.
 
   Using REST:
@@ -166,4 +166,4 @@ d. Now that you have the switch booting to OpenSwitch:
   The webUI service on the switch is running on the standard port 80. Once the management interface is configured and has a valid IP address, point your web browser to this IP address.
 
 
-For more details on installing OpenSwitch on physical hardware, refer to [Installing and Booting OpenSwitch](documents/dev/deploy-to-physical-switch)
+For more details on installing OpenSwitch on physical hardware, refer to [Installing and Booting OpenSwitch](deploy-to-physical-switch)

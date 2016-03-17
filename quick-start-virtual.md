@@ -38,7 +38,7 @@ Then proceed to download an OpenSwitch Appliance image (the lastest build from m
       configurations like configuring OSPF/BGP/NTP etc. User guides for different features can be found here
       http://openswitch.net/use/usehome
    9. Get ipaddress from the switch by issuing 'ifconfig' on bash prompt and finding IP Addresses used on eth0 interface.
-   10. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](documents/user/webui_user_guide) for accessing web-ui.
+   10. You should be able to login through the web-ui by using ip address obtained from step 9. Open a browser and type that ip address and press enter. Fore more details refer [here](/documents/user/webui_user_guide) for accessing web-ui.
    11. Login for web-ui can be done using username:root and no password.
 
 ## Networking Setup:
