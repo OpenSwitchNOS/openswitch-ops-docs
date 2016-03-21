@@ -53,12 +53,13 @@ After the setup is complete, powering the virtual machine should start a working
   ===========
   Before moving forward to this section, confirm that the OpenSwitch instance is UP and Running through the VirtualBox dashboard. Also confirm 'ifconfig' output from the bash prompt within the OpenSwitch instance that it has valid IP address. If this criteria is not met, then please refer to troubleshooting guide for more info.
   1. Login to the switch and note the IPAddress of the switch. By issuing 'ifconfig' in the bash prompt you should see an output like this:
-  root@switch:# ifconfig
-  eth0  Link encap:Ethernet HWaddr 08:12:24:12:14:84
-      inet addr:192.168.2.19 Bcast:192.168.2.255 Mask:255.255.255.0
-          .....
-          2. REST documentation is hosted by OpenSwitch instance. So its very useful and easy to find it by going to http://IPAddress:8091/api/index.html. In this example: http://192.168.2.19:8091/api/index.html gives you the complete REST documentation.
-          3. Using this portal you can try out different REST GET/PUT/POST calls. It would work directly by posting/getting information from the OVSDB. For more details refer to usage guides.
+    ```
+    root@switch:# ifconfig
+    eth0  Link encap:Ethernet HWaddr 08:12:24:12:14:84
+          inet addr:192.168.2.19 Bcast:192.168.2.255 Mask:255.255.255.0
+    ```
+  2. REST documentation is hosted by OpenSwitch instance. So its very useful and easy to find it by going to http://IPAddress:8091/api/index.html. In this example: http://192.168.2.19:8091/api/index.html gives you the complete REST documentation.
+  3. Using this portal you can try out different REST GET/PUT/POST calls. It would work directly by posting/getting information from the OVSDB. For more details refer to usage guides.
 
   Using WebUI:
   ============
