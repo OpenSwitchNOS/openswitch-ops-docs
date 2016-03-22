@@ -4,6 +4,7 @@
 - [OpenSwitch Installer Architecture](#openswitch-installer-architecture)
 	- [Image Partitions](#image-partitions)
 	- [Configuration Partition](#configuration-partition)
+	- [Diagnostics Partition](#diagnostics-partition)
 - [Installing](#Installing)
 	- [Installing using ONIE provisioning mechanisms](#installing-using-onie-provisioning-mechanisms)
 	- [Installing manually from ONIE](#installing-manually-from-onie)
@@ -25,6 +26,10 @@ The ONIE specification leaves it up to the NOS to define the layout of the parti
 |                    |
 +--------------------+
 |                    |
+|  OpenSwitch Diags  |  Diagnostics Partition
+|                    |
++--------------------+
+|                    |
 |  OpenSwitch 1      |  Primary Image Partition
 |                    |
 +--------------------+
@@ -41,6 +46,9 @@ The two image partitions are used for dual-image boot purposes. During the initi
 
 ### Configuration Partition
 The configuration partition stores the permanent configuration of the switch and will be preserved across image installations. It also stores the grubenv file that notifies the installed grub about which is the _active_ image partition.
+
+### Diagnostics Partition
+The diagnostics partition stores the crash dumps and logs which will be preserver across reboots and image installations.
 
 ## Installing
 There are several ways to install OpenSwitch (described below).
@@ -95,7 +103,8 @@ Select ONIE, then ONIE: Rescue
 +----------------------------------------------------------------------------+
 | ONIE: Install OS                                                           |
 |*ONIE: Rescue                                                               |
-| ONIE: Uninstall OS                                                         |                                                                            | ONIE: Update ONIE                                                          |
+| ONIE: Uninstall OS                                                         |
+| ONIE: Update ONIE                                                          |
 | ONIE: Embed ONIE                                                           |
 |                                                                            |
 |                                                                            |
@@ -174,7 +183,7 @@ Follow these steps:
 
 1. Boot your Switch into **ONIE Rescue OS** mode.
 2. Copy the OpenSwitch ONIE installer file to your TFTP directory.
-4. Enter the following commands:
+3. Enter the following commands:
 ```bash
 tftp -g -r <onie-installer-file> -l <onie-installer-file> <tftp-server>
 chmod +x <onie-installer-file>
@@ -198,3 +207,84 @@ In this scenario the switch won't reboot automatically and you have to reboot ma
 ```bash
 systemctl isolate onie-install
 ```
+
+### Troubleshooting installation issues
+1. After using "onie-install" if you see the following error message:
+    "Detected incorrect number of partitions, please clean your ONIE installation or perform an OPS clean install"
+    This error message dictates that you've been using an Openswitch image which has lesser number of partitions than needed
+    by the newer OpenSwitch image. This is because the older OpenSwitch image might not have had the Diagnostics partition
+    whereas the newer OpenSwitch image supports it. You'll need to do a clean install on your switch:
+    Follow these steps:
+
+    1. Type "reboot" and the switch should reboot.
+
+    2. Wait for the menu
+
+    ```bash
+    +----------------------------------------------------------------------------+
+    | OpenSwitch Primary Image                                                   |
+    | OpenSwitch Secondary Image                                                 |
+    | OpenSwitch Development -- NFS root                                         |
+    |*ONIE                                                                       |
+    | DIAG: Accton Diagnostic                                                    |
+    |                                                                            |
+    +----------------------------------------------------------------------------+
+    ```
+
+    3. Select ONIE, then ONIE: Uninstall OS
+
+    ```bash
+    +----------------------------------------------------------------------------+
+    | ONIE: Install OS                                                           |
+    | ONIE: Rescue                                                               |
+    |*ONIE: Uninstall OS                                                         |
+    | ONIE: Update ONIE                                                          |
+    | ONIE: Embed ONIE                                                           |
+    |                                                                            |
+    |                                                                            |
+    +----------------------------------------------------------------------------+
+    ```
+    You will see the following messages:
+    ```
+    scsi 6:0:0:0: Direct-Access     ATP      ATP IG eUSB      1100 PQ: 0 ANSI: 6 B2
+    sd 6:0:0:0: [sda] 15720448 512-byte logical blocks: (8.04 GB/7.49 GiB)
+    sd 6:0:0:0: [sda] Write Protect is off
+    sd 6:0:0:0: [sda] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+    sd 6:0:0:0: [sda] Attached SCSI disk
+    Info: Mounting LABEL=ONIE-BOOT on /mnt/onie-boot ...
+    Info: Using eth0 MAC address: 48:0f:cf:af:c3:b4
+    Info: eth0:  Checking link... up.
+    Info: Trying DHCPv4 on interface: eth0
+    ONIE: Using DHCPv4 addr: eth0: 120.91.29.245 / 255.255.255.128
+    Starting: dropbear ssh daemon... done.
+    Starting: telnetd... done.
+    discover: Uninstall mode detected.  Running uninstaller.
+    Erasing internal mass storage device: /dev/sda4 (128MB)
+      Percent complete: 100%
+    Erase complete.
+    Deleting partition 4 from /dev/sda
+    Erasing internal mass storage device: /dev/sda5 (1024MB)
+      Percent complete: 100%
+    Erase complete.
+    Deleting partition 5 from /dev/sda
+    Erasing internal mass storage device: /dev/sda6 (2048MB)
+      Percent complete: 100%
+    Erase complete.
+    Deleting partition 6 from /dev/sda
+    Erasing internal mass storage device: /dev/sda7 (2048MB)
+      Percent complete: 100%
+    Erase complete.
+    Deleting partition 7 from /dev/sda
+    Installing for i386-pc platform.
+    Installation finished. No error reported.
+    Uninstall complete.  Rebooting...
+    umount: can't remount rootfs read-only
+    The system is going down NOW!
+    Sent SIGTERM to all processes
+    Sent SIGKILL to all processes
+    Requesting system reboot
+    Restarting system.
+    machine restart
+    ```
+    4. You will be at the ONIE prompt, now either follow the steps mentioned in Using tftp
+       or manually boot the switch using the onie installer.
