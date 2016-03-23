@@ -58,3 +58,4 @@ Click a link below for a description of the various roles:
 | [openswitch/ops-vland](http://git.openswitch.net/cgit/openswitch/ops-vland/tree/) | OpenSwitch VLAN Daemon | Mari | [ops-vland-maintainers](https://review.openswitch.net/#/admin/groups/34,members) | Mithun |
 | [openswitch/ops-vsi](http://git.openswitch.net/cgit/openswitch/ops-vsi/tree/) | OpenSwitch Virtual Switch Image | Vince Mendoza | [ops-vsi-maintainers](https://review.openswitch.net/#/admin/groups/44,members) | Vince Mendoza |
 | [openswitch/ops-webui](http://git.openswitch.net/cgit/openswitch/ops-webui/tree/) | OpenSwitch Web User Interface | Al Harrington | [ops-webui-maintainers](https://review.openswitch.net/#/admin/groups/49,members) | Al Harrington |
+| [openswitch/ops-snmpd](http://git.openswitch.net/cgit/openswitch/ops-snmpd/tree/) | OpenSwitch SNMP Service Daemon | Pooja kulkarni | [ops-snmpd-maintainers](https://review.openswitch.net/#/admin/groups/92,members) | Avinash Varma |
