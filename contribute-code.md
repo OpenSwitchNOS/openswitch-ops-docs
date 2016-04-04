@@ -559,6 +559,12 @@ The following table lists the type of documents, the  target locations, and the 
 | Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  | Details of how the various components come together to deliver feature functionality to end user |
 | Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  | Document each test case from corresponding [feature]_test.py test script |
 
+The website is compiled periodically to include any new additions and changes. All changes to existing content on the website can be verified on the [staging area](egats.openswitch.net).
+For any new document, since it is not already linked on the website, the webpage can be verified by manually entering the URL.
+For the above set of documents, the URL is in the following format:  http://egats.openswitch.net/documents/user/&lt;document-name&gt; (NOTE: Document name is without .md)
+Once a week, the content moves from the staging area to the production website.
+Once the documents are ready and merged into the repositories, send an email to infra@lists.openswitch.net to add a link to the website to link the document.
+
 ## Documenting the code
 
 The OpenSwitch project uses the Markdown markup language to generate its documentation. All documentation that is contributed to the project needs to be written in this format so that it can be built into the project. You can leverage the following tools to generate the markdown documentation.
