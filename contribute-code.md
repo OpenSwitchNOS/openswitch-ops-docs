@@ -559,11 +559,28 @@ The following table lists the type of documents, the  target locations, and the 
 | Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  | Details of how the various components come together to deliver feature functionality to end user |
 | Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  | Document each test case from corresponding [feature]_test.py test script |
 
+A [staging website](http://egats.openswitch.net) is compiled every hour to include new and modified content across all the repositories. All content changes can be verified on the [staging area](http://egats.openswitch.net) before it makes it to http://openswitch.net.
+For any new document, since it is not already linked on the website, the webpage can be verified by manually entering the URL.
+For the above set of documents, the URL is in the following format:
+```
+http://egats.openswitch.net/documents/user/<document-name>
+```
+(NOTE: Document name is without .md)
+Once the content is verified on the staging area, content contributors must send an email to <mailto:infra@lists.openswitch.net>. In the email:
+ - Explain the content changes.
+ - For new documents requiring links, provide:
+    * The section to where you need to add the link.
+    * The text of the link.
+    * The location of the file to be linked.
+    For example, "In Feature Design, add text 'BGP' and link it to http://git.openswitch.net/cgit/openswitch/ops/tree/docs/BGP_feature_design.md".
+Weekly the content is pushed from the staging area to the production website when the infrastructure team receives email in that week.
+If there are no changes, the weekly push from staging site to the production site is skipped.
+
 ## Documenting the code
 
 The OpenSwitch project uses the Markdown markup language to generate its documentation. All documentation that is contributed to the project needs to be written in this format so that it can be built into the project. You can leverage the following tools to generate the markdown documentation.
 
- - WYSIWYG-like markdown editor [stackedit](https://stackedit.io/editor) or install [Atom](atom.io)
+ - WYSIWYG-like markdown editor [stackedit](https://stackedit.io/editor) or install [Atom](https://atom.io)
  - Build ASCII-based block and flow diagrams to embed in markdown documents using [asciiflow](http://asciiflow.com/)
 
 
