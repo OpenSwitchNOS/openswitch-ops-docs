@@ -1,6 +1,6 @@
 # Process Isolation How-To
 
-## Contents:
+## Contents
 
 1. [Introduction](#introduction)
 2. [Considerations and Warnings](#considerations-and-warnings)
@@ -46,7 +46,7 @@ The following steps will guide you through assessing the system requirements of 
 
 ## Considerations and Warnings
 
-- Using a non-root user and **combining seccomp filtering and enabling Capabilities** through **setcap** will not work correctly. Seccomp will block the elevated capabilities privileges and the program will not be able to use them. ++It is preferred to enable capabilities and not use seccomp, when running as non-root user++. Root users can combine both.
+- Using a non-root user and **combining seccomp filtering and enabling Capabilities** through **setcap** will not work correctly. Seccomp will block the elevated capabilities privileges and the program will not be able to use them. ++It is preferred to enable capabilities and not use seccomp, when running as a non-root user++. Root users can combine both.
 
 - To launch a Firejail inside of another sandbox you must use the **-\-force** option. Be aware that **Docker is a sandbox**, you will need this option if you want to try Firejail with Docker.  It is recommended you always supply this option.
 
@@ -54,13 +54,13 @@ The following steps will guide you through assessing the system requirements of 
 
 - **System calls** for processes can differ from kernel versions, and from platforms to other platforms. Please note that when whitelisting system calls there is no guarantee that they all have been covered.  Updating any library might add a new system call and the program can crash when it calls it. **Whitelisting should be used carefully.**
 
-- If docker is using the storage driver **AUFS** and the kernel does not have the **CONFIG_AUFS_XATTR=y** Linux Capabilities can't be set on a file. The workarounds are:
+- If docker is using the storage driver **AUFS** and the kernel does not have the **CONFIG_AUFS_XATTR=y** Linux Capabilities can't be set on a file.  **The OPS docker images use the AUFS driver and Linux capabilities therefore do not work.**  The workarounds are:
 	- Use the **BTRFS** storage driver.
 	- Recompile the Kernel with the **CONFIG_AUFS_XATTR=y** option.
 
 - When testing with Firejail be aware of the **kernel versions** you want to target and what you are testing against.  The set of system calls vary between different kernel versions.  It is recommended to use similar kernel versions.
 
-- For cases where firejail has to be enabled for given user login (as for netop user which schedules /usr/bin/vtysh). You'll need to use a wrapper user_init.sh which is added as the startup script for that user login. For example:
+- For cases where firejail has to be enabled for a given user login (as for netop user which schedules /usr/bin/vtysh). You'll need to use a wrapper user_init.sh which is added as the startup script for that user login. For example:
 
 		$ usermod -s $USER_HOME/user_init.sh $USER
 
@@ -122,7 +122,7 @@ Whitelisting system calls can be tricky because knowing the full array of calls 
 
 
 
-- Run a complete set of tests against the process to be able to execute all the possible path the process makes. This is an iterative process, come up with an initial set and revise it after running feature specific tests.
+- Run a complete set of tests against the process to be able to execute all the possible paths the process makes. This may be possible on simple daemons, but will be impractical on more complex daemons.  This is a judgement call on whether between analysis and tests, you can develop a comprehensive list of system calls for a white list, or whether a black list should be developed.  This is an iterative process to come up with an initial set and revise it after running feature specific tests.
 
 
 
@@ -133,8 +133,6 @@ Whitelisting system calls can be tricky because knowing the full array of calls 
 ```
 
 % time     seconds  usecs/call     calls    errors syscall
-
-
 
 ------ ----------- ----------- --------- --------- ----------------
 
@@ -218,7 +216,7 @@ Apr 6 10:47:01 debian kernel: [12255.533062] audit: type=1326 audit(1428331621.1
 ## Step 2: Review Capabilities
 
 
-When a process runs as **root** it will by default have enabled all **"Linux Capabilities"**.  It is important to block all "Linux Capabilities" an ops-process is not going to use, to prevent unwanted access to a resource in the system. To see the full list of "Linux Capabilities" and their use take a look at this [link.](http://man7.org/linux/man-pages/man7/capabilities.7.html)
+When a process runs as **root** it will by default have enabled all **"Linux Capabilities"**.  It is important to block all "Linux Capabilities" an ops-process is not going to use, to prevent unwanted access to a resource in the system. To see the full list of "Linux Capabilities" and their use, consult the [capabilities man page](http://man7.org/linux/man-pages/man7/capabilities.7.html).
 
 
 
@@ -230,7 +228,7 @@ It is recommended that the process be made to run as a non-root user.  In order 
 
 
 
-To test that the process is running with the correct minimal subset of capabilities we are going to use the **setcap** and **getcap** commands to modify and check the capabilities set on a process. For more information please look at this [link.](https://wiki.archlinux.org/index.php/Capabilities)
+To test that the process is running with the correct minimal subset of capabilities we are going to use the **setcap** and **getcap** commands to modify and check the capabilities set on a process. Additional information on Linux capabilities can be found at [https://wiki.archlinux.org/index.php/Capabilities](https://wiki.archlinux.org/index.php/Capabilities).
 
 
 
@@ -357,122 +355,102 @@ Use the following template to create the profile (a '#' can be used as the start
 ```
 
 #############################################
-
-#Basic Filtering
-
+# Basic Filtering
 
 
-#Run program directly without user shell
+# Run program directly without user shell
 
 shell none
 
 
 
-#Use to join a firejail session to debug
+# Use to join a firejail session to debug
 
 name <process name>
 
 
-
-#Enable protocol filter.
+# Enable protocol filter.
 
 protocol <protocol1>,<protocol2>,…,<protocoln>
 
 
-
 #############################################
+# System Call Filtering
 
-#System Call Filtering
-
-#Choose one of the following (seccomp) and delete the rest
-
+# Choose one of the following (seccomp) and delete the rest
 
 
-#Default System Calls blacklist, please see [Firjeail Man.](https://firejail.wordpress.com/features-3/man-firejail/ as reference)
+# Default System Calls blacklist, please see [Firjeail Man.](https://firejail.wordpress.com/features-3/man-firejail/ as reference)
 
 seccomp
 
 
-
-#Add to default blacklist
+# Add to default blacklist
 
 seccomp <system call #1>,<system call #2>,…,<system call #n>
 
 
-
-#Whitelist System calls
+# Whitelist System calls
 
 seccomp.keep <system call #1>,<system call #2>,…,<system call #n>
 
 
-
-#Blacklist System Calls
+# Blacklist System Calls
 
 seccomp.drop <system call #1>,<system call #2>,…,<system call #n>
 
 
-
 #############################################
+# Linux Capability Filtering
 
-#Linux Capability Filtering
+# Choose one of the following (caps) and delete the rest.
 
-#Choose one of the following (caps) and delete the rest.
-
-#One of the following options must be in the profile
-
+# One of the following options must be in the profile
 
 
-#Drops all of the Linux capabilities if none are need
+# Drops all of the Linux capabilities if none are need
 
 caps.drop all
 
 
-
-#Blacklist Capabilities
+# Blacklist Capabilities
 
 caps.drop <caps #1>,<caps #2>,…,<caps #N>
 
 
-
-#Whitelist Capabilities
+# Whitelist Capabilities
 
 caps.keep <caps #1>,<caps #2>,…,<caps #N>
 
 
-
 #############################################
+# Filesystem Filters
 
-#Filesystem Filters
-
-#The following are recommended settings, each process owner must see if they apply to their process and modify them as needed
-
+# The following are recommended settings, each process owner must see if they apply to their process and modify them as needed
 
 
-#Keep /bin private and only allow
+# Keep /bin private and only allow
 
 private-bin bash,ls,cat,sed
 
 
-
-#Keep /tmp private
+# Keep /tmp private
 
 private-tmp
 
 
-
-#Keep /dev private
+# Keep /dev private
 
 private-dev
 
 
-
-#Keep /etc private
+# Keep /etc private
 
 private-etc group,hostname,localtime,nsswitch.conf,passwd,resolv.conf
 
 
 
-#Set files to Read Only
+# Set files to Read Only
 
 read-only <file #1>
 
@@ -483,8 +461,7 @@ read-only …
 read-only <file #N>
 
 
-
-#Blacklist Files
+# Blacklist Files
 
 blacklist <file #1>
 
@@ -495,8 +472,7 @@ blacklist …
 blacklist <file #N>
 
 
-
-#Whitelist Files
+# Whitelist Files
 
 whitelist ${HOME}/ <file #1>
 
@@ -510,7 +486,7 @@ whitelist …
 
 
 
-**Note**: For more information about profiles please look at [here.](https://firejail.wordpress.com/features-3/man-firejail-profile/)
+**Note**: For more information about profiles please see [https://firejail.wordpress.com/features-3/man-firejail-profile/](https://firejail.wordpress.com/features-3/man-firejail-profile/).
 
 
 ## Step 6: Modify the service file 'OPS daemons only'
@@ -539,7 +515,7 @@ The **-\-force** option will force launching the Firejail sandbox inside another
 
 
 
-If the process needs a set of capabilities you will need to add a line. The service file can have multiple "ExecSrartPre" lines.  Each will be executed serially.  **Note:** **"=-"** means ignore failures.
+If the process needs a set of capabilities you will need to add a line. The service file can have multiple "ExecStartPre" lines.  Each will be executed serially.  **Note:** **"=-"** means ignore failures.
 
 
 
@@ -736,7 +712,7 @@ Two engineers were working simultaneously on this prototype.  One tackled gettin
 
 - Then a **systemctl restart restd** command was issued.  As expected the restd service failed to start.  Looking at the /var/log/messages file showed that restd received a "Permission denied" error when trying to create the /var/run/persistent_cookie_secret file. **Note:** `systemctl daemon-reload` needs to run everytime the `.service` file is changed.
 
-- Looking at the permissions for /var/run/ which is a link to the /run directory shows that it is only writable by root.  Reverse engineering the source code shows that the cookiesecret.py file in the ops-aaa-utils repo creates the file.
+- Looking at the permissions for /var/run/ which is a link to the /run directory shows that it is only writable by root.  Reverse engineering the source code shows that the *cookiesecret.py* file in the ops-aaa-utils repo creates the file.
 
 Here is a case of a file operation requiring root privileges that required a work around.  To work around this issue, the following changes needed to be made.  Modify the cookiesecret.py file to create the file in the /var/run/aaa/ directory instead of the /var/run/ directory.  Modify the aaautils.service file and add the following two lines:
 
