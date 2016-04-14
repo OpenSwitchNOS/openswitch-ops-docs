@@ -337,7 +337,7 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
       builders:
           - revoke-sudo
           - module-build-branch:
-              module: 'ops-myrepo-config'
+              module: 'ops-myrepo'
               platform: '{platform}'
 
   - job-template:
