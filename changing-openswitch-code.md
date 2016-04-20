@@ -286,6 +286,11 @@ $ make testenv_run feature ops-cli
 The framework will look for test cases under the `ops-test/<testsuite>` directory.
 **Note**: This command will always build the image again. If you don't require this please look at the `rerun` command.
 
+The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory a random number of times between 3 to 15. 
+```
+$ make testenv_run component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure
+```
+
 #### testenv_rerun
 Runs a provided test suite against one or multiple components without building a new image
 ```
@@ -293,6 +298,11 @@ $ make testenv_rerun feature ops-cli
 ```
 The framework will look for test cases under the `ops-test/<testsuite>` directory.
 **Note**: This command will not rebuild an image. If you need to build an image with your changes please look at the `run` command.
+
+The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory a random number of times between 3 to 15. 
+```
+$ make testenv_rerun component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure
+```
 
 #### testenv_suite_list
 Provides a list of available test suites on all Yocto layers.
