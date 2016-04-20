@@ -286,9 +286,11 @@ $ make testenv_run feature ops-cli
 The framework will look for test cases under the `ops-test/<testsuite>` directory.
 **Note**: This command will always build the image again. If you don't require this please look at the `rerun` command.
 
-The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory a random number of times between 3 to 15. 
+The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory. 
+Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
+Otherwise the `TESTENV_STRESS` will execute the test a random number (bewtween 3 and 15) of times. 
 ```
-$ make testenv_run component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure
+$ make testenv_run component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure TESTENV_ITERATIONS=25
 ```
 
 #### testenv_rerun
@@ -299,9 +301,11 @@ $ make testenv_rerun feature ops-cli
 The framework will look for test cases under the `ops-test/<testsuite>` directory.
 **Note**: This command will not rebuild an image. If you need to build an image with your changes please look at the `run` command.
 
-The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory a random number of times between 3 to 15. 
+The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory. 
+Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
+Otherwise the `TESTENV_STRESS` will execute the test a random number (bewtween 3 and 15) of times. 
 ```
-$ make testenv_rerun component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure
+$ make testenv_rerun component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure  TESTENV_ITERATIONS=25
 ```
 
 #### testenv_suite_list
