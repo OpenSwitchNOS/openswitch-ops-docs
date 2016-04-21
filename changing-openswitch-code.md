@@ -30,6 +30,8 @@
 		- [testenv_suite_list](#testenv_suite_list)
 		- [testenv_suite_run](#testenv_suite_run)
 		- [testenv_suite_rerun](#testenv_suite_rerun)
+	- [Coverage commands](#coverage-commands)
+		- [generate_coverage_report](#generate_coverage_report)
 - [Build system infrastructure](#build-system-infrastructure)
 - [Working with modified packages](#working-with-modified-packages)
 	- [Building and cleaning](#building-and-cleaning)
@@ -334,6 +336,78 @@ $ make testenv_suite_rerun feature
 ```
 **Note**: This command will look for a testsuite_<testsuite>.conf file in each component (i.e. ops-cli/testsuite_feature.conf)
 
+### Coverage commands
+The coverage command creates a coverage report for the Feature and Component tests (FT/CTs).
+
+#### generate_coverage_report
+
+##### Requirements
+The `generate_coverage_report` is a make target that exists for all repos that have been added to the devenv. This make target uses the `testenv_run` target internally to run the FT/CTs that produce the coverage data. Therefore is is required to initialize the testenv prior to running the coverage target, i.e.:
+```
+make testenv_init
+```
+
+Additionally, the `generate_coverare_report` target uses the [LCOV](http://ltp.sourceforge.net/coverage/lcov.php) tool to produce the HTML coverage report. Make sure to install LCOV on your host before invoking the coverage target, e.g.:
+```
+sudo apt-get install lcov
+```
+
+##### Running the coverage report
+The `generate_coverage_report` make target is available for repos that have been added to the devenv and can be invoked by appending `-generate_coverage_report` to the recipe name, e.g.:
+```
+$ make ops-myrepo-generate_coverage_report
+```
+
+##### Expected results
+The `generate_coverage_report` command will perform the following tasks:
+1. Compile your repo with coverage flags
+1. Create a new Docker image
+1. Export the image to Docker
+1. Run the FT/CTs
+1. Capture the coverage data from the Docker containers
+1. Create an HTML report at `coverage/html/index.html`
+1. Output a summary to the stdout, e.g:
+
+```
+**** Configuration and result info: ****
+
+The configured coverage threshold is: 80
+The configured FT/CT code coverage exclude pattern is: *openvswitch* *CMake* *ovs/*
+The actual reported coverage is:   58
+The location of the FT/CT code coverage report is: coverage/html
+```
+
+##### Configuration
+The `generate_coverage_report` checks for the existence of a file named `ft_ct_coverage` at the root of the repo being tested. If this file does not exist, the tests are not run and the report is not produced.
+
+The configuration file `ft_ct_coverage` accepts the following two options:
+1. Minimum_coverage
+1. Exclude_pattern
+
+If the file exists but is empty, the coverage will still run with a default value of -1 for `Minimun_coverage` and no value for `Exclude_pattern`.
+
+Refer to the example file below which documents the options:
+```
+# Specify the minimum coverage percentage to be accepted for this repo in the following form
+#Minimum_coverage=80
+Minimum_coverage=65
+# Specify the code coverage exclude patterns (if any) using wild-cards and separated by spaces
+# Example, to exclude files and directories that contain gtest or openvswitch use the following
+# Exclude_pattern=*gtest* *openvswitch*
+Exclude_pattern=*openvswitch* *CMake* *ovs/*
+```
+
+##### Limitations
+This first implementation only supports virtualized environments (with Docker containers) and C/C++ code.
+
+##### Production code requirements
+In order to produce the coverage data, the binary is compiled with [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) coverage flags. This tool keeps the coverage data in memory and dumps it to disk on process exit. Therefore, it is required that the process is able to exit cleanly (exit(0) or return from main) for the coverage data to be captured.
+
+##### Test code requirements
+The process under test writes the coverage data to disk on exit, therefore it is required that after the run of each test the process is instructed to exit. The way that this can be achieved varies depending on the binary and the test. In general for OpenSwitch daemons that are started as SystemD services, the following can be executed during the test tear-down:
+```
+systemctl stop ops-myrepo
+```
 
 ## Build system infrastructure
 
