@@ -357,7 +357,7 @@ Every repository is gated by at least two jenkins(CI) jobs. To create a set of b
               platform: '{platform}'
 
   - job-group:
-      name: 'ops-myrep-jobs'
+      name: 'ops-myrepo-jobs'
       jobs:
         - 'ops-myrepo-check-{platform}'
         - 'ops-myrepo-gate-{platform}'
