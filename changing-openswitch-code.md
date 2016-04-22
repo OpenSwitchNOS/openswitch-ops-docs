@@ -409,6 +409,22 @@ The process under test writes the coverage data to disk on exit, therefore it is
 systemctl stop ops-myrepo
 ```
 
+##### Troubleshooting
+```
+WARNING: No coverage notes file was generated during module compilation. Exiting now with no coverage report
+```
+
+Suggested steps:
+1. Make sure that the module under test is C/C++
+1. Try removing and re-adding the repo to the devenv (`make devenv_[rm|add]`)
+
+```
+WARNING: No coverage data was generated during test run. Exiting now with no coverage report
+```
+
+Suggested steps:
+1. Make sure that after the test runs, the daemon is exiting cleanly as the coverage data is dumped only during process exit
+
 ## Build system infrastructure
 
 The build system is based in the [Yocto Project](https://www.yoctoproject.org/about). This document does not cover how Yocto works, but does include some important aspects related to OpenSwitch.
