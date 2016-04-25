@@ -26,25 +26,25 @@ The packages required vary depending on the Linux distributions. Run the install
 
 ### Ubuntu
 ```bash
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler libsdl1.2-dev xterm
+$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler libsdl1.2-dev xterm libfontconfig1
 ```
 If you encounter an error using `libsdl1.2`, the following commands can be used instead:
 ```bash
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler xterm aptitude
+$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib  build-essential chrpath screen curl device-tree-compiler xterm libfontconfig1 aptitude
 $ sudo aptitude install libsdl1.2-dev
 ```
 ### Debian
 ```bash
-$ sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath screen curl device-tree-compiler xterm gperf quilt cpio lsb-release
+$ sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath screen curl device-tree-compiler xterm gperf quilt cpio lsb-release libfontconfig1
 ```
 ### Fedora
 ```bash
-$ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath ccache perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue SDL-devel xterm screen dtc redhat-lsb
+$ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath ccache perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue SDL-devel xterm screen dtc redhat-lsb fontconfig
 ```
 ### CentOS
 ```bash
 $ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch \
-     diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath SDL-devel xterm glibc-devel.i686 screen dtc
+     diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath SDL-devel xterm glibc-devel.i686 screen dtc fontconfig
 ```
 Some CentOS distributions ship Python 2.6.6 (or older) which is incompatible with Yocto. Several system utilities, such as `yum`, break if the default Python interpreter is upgraded. To avoid this situation do the following:
 1. Install a pre-built standalone Python for Yocto with the following commands:
