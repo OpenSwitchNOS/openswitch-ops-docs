@@ -281,34 +281,64 @@ This will verify the system is ready to run tests
 **Note**: While performing this you may be prompted to input your sudo password this is a one time only requirement.
 
 #### testenv_run
-Builds an image and runs a test suite against one or multiple components.
+This command can be used to run a test in legacy as well as the modular framework. It builds an image and runs a test suite against one or multiple components.
+```
+$ make testenv_run <type> <module> <optional-parameters>
+```
+where,
+**type** = feature (run feature tests from modular framework, `ops-tests/feature`), component (run component tests from modular framework, `ops-tests/component`) or legacy (run feature or component tests from legacy framework, `< module-name >/tests`)
+**module** = repository for which the tests are to be run
+**optional parameters** = If these parameters are not provided, entire test suit for the selected types and modules will run. The optional parameters can be `TESTENV_STRESS` and `TESTENV_ITERATIONS`
+`TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory.
+Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
+Otherwise the `TESTENV_STRESS` will execute the test a random number (between 3 and 15) of times.
+
+**Examples**:
 ```
 $ make testenv_run feature ops-cli
 ```
-The framework will look for test cases under the `ops-test/<testsuite>` directory.
-**Note**: This command will always build the image again. If you don't require this please look at the `rerun` command.
+This will run all the feature tests written in modular-framework (`ops-cli/ops-tests/feature`) for ops-cli module.
+**Note**: This command will always build the image again. If you don't require this please look at the `testenv_rerun` command.
 
-The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory. 
-Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
-Otherwise the `TESTENV_STRESS` will execute the test a random number (bewtween 3 and 15) of times. 
+```
+$ make testenv_run component ops-cli
+```
+This command will run all the component tests written in modular-framework (`ops-cli/ops-tests/component`) for ops-cli module.
+
+```
+$ make testenv_run legacy ops-cli
+```
+This command will run all the component tests written in legacy-framework (`ops-cli/tests/`) for ops-cli module.
+
+```
+$ make testenv_run legacy ops
+```
+Since for the legacy framework all the tests are under ops/tests, this command will run all the feature tests written in legacy-framework (`ops/tests/`).
+
 ```
 $ make testenv_run component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure TESTENV_ITERATIONS=25
 ```
+This command will build the image and only run the **test_arpmgrd_ct_transaction** component test written in modular framework from ops-arpmgrd module 25 times.
+**NOTE**:This command is very useful to stress the tests and should be used by all developers locally; before uploading any test for review
 
 #### testenv_rerun
-Runs a provided test suite against one or multiple components without building a new image
+Runs a provided test suite against one or multiple components without building a new image. The only difference between testenv_run and this command is that, this one does not build the image. Everything else is the same and thus, all the examples shown above can be used with this command in the exact same manner.
+Developers should use testenv_run once and testenv_rerun should be used for subsequent runs.
+
+**One example for reference**
 ```
 $ make testenv_rerun feature ops-cli
 ```
-The framework will look for test cases under the `ops-test/<testsuite>` directory.
+The above command will look for test cases under the `ops-cli/ops-tests/feature` directory.
 **Note**: This command will not rebuild an image. If you need to build an image with your changes please look at the `run` command.
 
-The optional `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory. 
-Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
-Otherwise the `TESTENV_STRESS` will execute the test a random number (bewtween 3 and 15) of times. 
+The optional parameters `TESTENV_STRESS` and `TESTENV_ITERATIONS` too works in the exact same way as for the testenv_run command.
 ```
 $ make testenv_rerun component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transaction_failure  TESTENV_ITERATIONS=25
 ```
+This command will only run the **test_arpmgrd_ct_transaction** component test written in modular framework from ops-arpmgrd module 25 times.
+**NOTE**: This command is very useful to stress the tests and should be used by all developers locally; before uploading any test for review
+
 
 #### testenv_suite_list
 Provides a list of available test suites on all Yocto layers.
@@ -688,4 +718,5 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 In platforms that use grub as the bootloader, select the menu entry labeled `Switch Development -- NFS root` to boot the hardware in NFS root mode.
 
 As previously explained, the bootloader that was flashed with the last installation, sets up this entry to point to the IP address of the developer's machine and the path to the development directory. These values can be manually changed by using the editor for the entry on the grub menu, if required.
+
 
