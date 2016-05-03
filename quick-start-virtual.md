@@ -59,8 +59,8 @@ Using REST:
     eth0  Link encap:Ethernet HWaddr 08:12:24:12:14:84
           inet addr:192.168.2.19 Bcast:192.168.2.255 Mask:255.255.255.0
     ```
-  2. REST documentation is hosted by OpenSwitch instance. So its very useful and easy to find it by going to http://IPAddress:8091/api/index.html. In this example: http://192.168.2.19:8091/api/index.html gives you the complete REST documentation.
-  3. Using this portal you can try out different REST GET/PUT/POST calls. It would work directly by posting/getting information from the OVSDB. For more details refer to usage guides.
+  2. REST documentation is hosted by OpenSwitch instance. So its very useful and easy to find it by going to https://IPAddress/api/index.html. In this example: https://192.168.2.19/api/index.html gives you the complete REST documentation.
+  3. Using this portal you can try out different REST GET/PUT/POST calls. Login to the switch webUI (https://IPAddress/) before executing REST calls. It would work directly by posting/getting information from the OVSDB. For more details refer to usage guides.
 
 Using WebUI:
 ============
