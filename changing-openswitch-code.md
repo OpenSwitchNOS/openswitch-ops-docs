@@ -288,10 +288,11 @@ $ make testenv_run <type> <module> <optional-parameters>
 where,
 **type** = feature (run feature tests from modular framework, `ops-tests/feature`), component (run component tests from modular framework, `ops-tests/component`) or legacy (run feature or component tests from legacy framework, `< module-name >/tests`)
 **module** = repository for which the tests are to be run
-**optional parameters** = If these parameters are not provided, entire test suit for the selected types and modules will run. The optional parameters can be `TESTENV_STRESS` and `TESTENV_ITERATIONS`
+**optional parameters** = If these parameters are not provided, entire test suit for the selected types and modules will run. The optional parameters can be `TESTENV_ABORT_IF_NOT_FOUND`, `TESTENV_STRESS` and `TESTENV_ITERATIONS`.
 `TESTENV_STRESS` parameter will execute one test case instead of all the test cases under the directory.
 Using the optional `TESTENV_ITERATIONS` in conjunction with `TESTENV_STRESS` will allow you to indicate the number of times the test will be executed.
 Otherwise the `TESTENV_STRESS` will execute the test a random number (between 3 and 15) of times.
+`TESTENV_ABORT_IF_NOT_FOUND` parameter will skip repositories without test (component/feature) in a list.
 
 **Examples**:
 ```
@@ -320,6 +321,11 @@ $ make testenv_run component ops-arpmgrd TESTENV_STRESS=test_arpmgrd_ct_transact
 ```
 This command will build the image and only run the **test_arpmgrd_ct_transaction** component test written in modular framework from ops-arpmgrd module 25 times.
 **NOTE**:This command is very useful to stress the tests and should be used by all developers locally; before uploading any test for review
+
+```
+$ testenv_run component ops-aaa-utils ops-fand TESTENV_ABORT_IF_NOT_FOUND=false
+```
+This command will run all the component tests written in modular-framework (`<module-name>/ops-tests/component`). if you set TESTENV_ABORT_IF_NOT_FOUND in false, the command is going to skip any repository without ops-test. The default value is true, in this option the command will check <module-name>/ops-tests/ if the repository does not have the folder it will fails.
 
 #### testenv_rerun
 Runs a provided test suite against one or multiple components without building a new image. The only difference between testenv_run and this command is that, this one does not build the image. Everything else is the same and thus, all the examples shown above can be used with this command in the exact same manner.
@@ -718,5 +724,3 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 In platforms that use grub as the bootloader, select the menu entry labeled `Switch Development -- NFS root` to boot the hardware in NFS root mode.
 
 As previously explained, the bootloader that was flashed with the last installation, sets up this entry to point to the IP address of the developer's machine and the path to the development directory. These values can be manually changed by using the editor for the entry on the grub menu, if required.
-
-
