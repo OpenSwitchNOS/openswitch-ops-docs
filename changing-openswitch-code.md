@@ -445,6 +445,8 @@ The process under test writes the coverage data to disk on exit, therefore it is
 systemctl stop ops-myrepo
 ```
 
+An example can be seen on [this review](https://review.openswitch.net/#/c/7299/)
+
 ##### Troubleshooting
 ```
 WARNING: No coverage notes file was generated during module compilation. Exiting now with no coverage report
