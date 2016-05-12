@@ -16,9 +16,9 @@ This document can be used by platform vendors to port a new platform to OpenSwit
 
 ## Add a configuration for a device
 1. Before building OpenSwitch, the new target platform needs to be added to the ops-build:
-   Create a new directory for the new platform target with the name `meta-platform-openswitch-<platform_name>` where '<platform_name>' is the name of the new platform. This directory should be created in the openswitch workspace: $ <work_dir>/yocto/openswitch.
+   Create a new directory for the new platform target with the name `meta-platform-openswitch-<platform_name>` where `<platform_name>` is the name of the new platform. This directory should be created in the openswitch workspace: $ <work_dir>/yocto/openswitch.
 2. To configure the target platform use following command:
-	`make configure <platform_name>`
+	$ `make configure <platform_name>`
 
 ### References
 Refer to the following files in the OpenSwitch sandbox:
