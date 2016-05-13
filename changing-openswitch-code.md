@@ -435,6 +435,7 @@ Exclude_pattern=*openvswitch* *CMake* *ovs/*
 
 ##### Limitations
 This first implementation only supports virtualized environments (with Docker containers) and C/C++ code.
+Coverage for CLI (plugins) is not getting generated. This is being investigated.
 
 ##### Production code requirements
 In order to produce the coverage data, the binary is compiled with [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) coverage flags. This tool keeps the coverage data in memory and dumps it to disk on process exit. Therefore, it is required that the process is able to exit cleanly (exit(0) or return from main) for the coverage data to be captured.
