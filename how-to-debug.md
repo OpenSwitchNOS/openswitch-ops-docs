@@ -14,6 +14,7 @@ OpenSwitch is built on top of the Yocto Project and offers extensive functionali
         - [Setting up on-target debug](#setting-up-on-target-debug)
         - [Using on-target debug](#using-on-target-debug)
     - [Off-target debugging](#off-target-debugging)
+- [Debugging periodic builds] (#debugging-periodic-builds)
 - [Using Eclipse as an IDE](#using-eclipse-as-an-ide)
     - [Installing Eclipse and dependencies](#installing-eclipse-and-dependencies)
     - [Configuring Eclipse](#configuring-eclipse)
@@ -168,6 +169,65 @@ Select the project:
 
 1. Select Go to Project-> Build All
 
+
+
+## Debugging periodic builds
+In order to make debugging easier for developers, debugging symbols are part of periodic builds and available as a tarball. This means that the developer need not build a separate image with debugging symbols and the periodic image is debug-ready in itself.
+
+Periodic images can be downloaded from https://archive.openswitch.net/artifacts/periodic/.
+
+For example, to debug the latest genericx86-64 build from master branch:
+1. Go to https://archive.openswitch.net/artifacts/periodic/master/latest/genericx86-64/.
+2. Download two .tar.gz files. The tarballs would be named similar to:
+   openswitch-disk-image-genericx86-64.dbg-ops-0.4.0-master+2016051618.tar.gz - The tarball with dbg as part of its name contains the debug symbols.
+   openswitch-disk-image-genericx86-64-ops-0.4.0-master+2016051618.tar.gz - The tarball without dbg as part of its name is the Openswitch image.
+3. Untar the downloaded tarballs into a single folder.
+```
+   debug_ops$ tar -xvzf openswitch-disk-image-genericx86-64.dbg-ops-0.4.0-master+2016051618.tar.gz
+   debug_ops$ tar -xvzf openswitch-disk-image-genericx86-64-ops-0.4.0-master+2016051618.tar.gz
+```
+
+Deploy the same Openswitch image on the Target. Find the Process ID(PID) of the daemon you want to debug and launch a gdb-server on the Target.
+1. gdbserver <IP of Target>:<Free port> --atach <pid>
+   For example,
+```
+   bash-4.3# gdbserver 172.17.0.2:5959  --attach `pidof ops-sysd` &
+   [1] 17502
+   bash-4.3# Attached; pid = 293
+   Listening on port 5959
+```
+
+Now remote debug from the host where the debug symbols and periodic image is extracted.
+1. Start gdb from the directory that consists of debug symbols and periodic image. This will launch the gdb prompt.
+```
+   debug_ops$gdb
+```
+
+2. From the gdb prompt, connect to the gdbserver started on the Target.
+```
+   gdb>target remote 172.17.0.2:5959
+```
+   On the target, you will notice `Remote debugging from host 172.17.0.1`.
+
+3. Set the path to the debug symbols of the daemon you want to debug. In the case of ops-sysd,
+```
+   gdb>file /ws/madhavab/debug_ops/usr/lib/debug/usr/bin/ops-sysd.debug
+```
+
+4. Set the path for libraries.
+```
+   gdb>set solib-search-path /ws/madhavab/debug_ops
+```
+
+5. Now gdb has the necessary debug symbols and can issue gdb commands like backtrace.
+```
+   gdb>bt
+   #0  0x00007f0195537bb0 in __poll_nocancel () at ../sysdeps/unix/syscall-template.S:81
+   #1  0x00007f019656313b in time_poll () from /ws/madhavab/debug_ops/usr/lib/libovscommon.so.1.0.0
+   #2  0x00007f0196558ddc in poll_block () from /ws/madhavab/debug_ops/usr/lib/libovscommon.so.1.0.0
+   #3  0x00000000004067a2 in main (argc=<optimized out>, argv=<optimized out>)
+    at /usr/src/debug/ops-sysd/gitAUTOINC+6a5b7684f3-r0/git/src/sysd.c:503
+```
 
 
 ## Using Eclipse as an IDE
