@@ -2,6 +2,7 @@
 
 - [Finding an OpenSwitch image](#finding-an-openswitch-image)
 - [Installing OpenSwitch](#installing-openswitch)
+- [REST and the web UI](#rest-and-the-web-ui)
 
 ## Finding an OpenSwitch image
 
@@ -79,7 +80,7 @@ The following steps were tested on a Windows laptop running Windows 7 Enterprise
     +----------------------------------------------------------+
     ```
 
-10. Select **ONIE**, then **ONIE: Rescue**.
+9. Select **ONIE**, then **ONIE: Rescue**.
 
     ```bash
     +---------------------------------------------------------+
@@ -92,7 +93,7 @@ The following steps were tested on a Windows laptop running Windows 7 Enterprise
     +---------------------------------------------------------+
     ```
 
-11. In the ONIE prompt, run `fdisk -l`:
+10. In the ONIE prompt, run `fdisk -l`:
 
     ```bash
 
@@ -117,13 +118,13 @@ The following steps were tested on a Windows laptop running Windows 7 Enterprise
          phys=(30, 254, 63) logical=(31, 124, 29)
     ```
 
-12. Pick the partition that has the flash drive inserted (/dev/sdb1 in this case) and mount it:
+11. Pick the partition that has the flash drive inserted (/dev/sdb1 in this case) and mount it:
     ```bash
     ONIE:/ # mkdir /mnt/usb_drive_mount_point
     ONIE:/ # mount /dev/sdb1 /mnt/usb_drive_mount_point/
     ```
 
-13. Copy the ONIE installer file to a folder:
+12. Copy the ONIE installer file to a folder:
     ```bash
     ONIE:/ # ls /mnt/usb_drive_mount_point/
     openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100
@@ -132,7 +133,7 @@ The following steps were tested on a Windows laptop running Windows 7 Enterprise
     cp  /mnt/usb_drive_mount_point/openswitch-onie-installer-x86_64-as5712_54x-0.3.0+2016031100 /onie-installer/
     ```
 
-14. Run the installer:
+13. Run the installer:
     ```bash
     ONIE:/onie-installer # ./openswitch-onie-installer-x86_64-as5712_54x-0.3.0\+2016031100
 
@@ -151,7 +152,7 @@ The following steps were tested on a Windows laptop running Windows 7 Enterprise
 
     Rebooting...
     ```
-15. Once the switch is rebooted, login as root and check the version. It should match with the one that was installed:
+14. Once the switch is rebooted, login as root and check the version. It should match with the one that was installed:
 
     ```bash
     root@switch:~# vtysh
@@ -184,7 +185,7 @@ IP address details can now be configured for Telnet access to the switch. See [C
 6. You should be able to log in through the web-UI by using the IP address obtained from step 9. Open a browser and type that IP address and press enter. For more details refer to the [Web UI User Guide](/documents/user/webui_user_guide) for accessing the web-UI.
 7. Log into web-UI by using username:root and no password.
 
-## REST and the WebUI
+## REST and the web UI
 
 ### Prerequistes
 * Confirm that the OpenSwitch instance is up and running by using the VirtualBox dashboard.
@@ -205,7 +206,7 @@ eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
   1. The REST documentation is hosted by the OpenSwitch instance. To find the documentation for REST, use the URL `https://<IPAddress>/api/index.html`. For example, `https://192.168.2.19/api/index.html`
   2. Using this portal you can try out different REST GET/PUT/POST calls. Login to the switch webUI (https://IPAddress/) before executing REST calls. It works directly by posting/getting information from the OVSDB. For more details, refer to usage guides.
 
-### Using the web UI:
+### Using the web UI
   The web UI service on the switch is running on the standard port 80. Once the management interface is configured and it has a valid IP address, point your web browser to this IP address.
 
 For more details on installing OpenSwitch on physical hardware, refer to [Installing and Booting OpenSwitch](deploy-to-physical-switch)
