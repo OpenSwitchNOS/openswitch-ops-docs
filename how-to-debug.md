@@ -15,6 +15,9 @@ OpenSwitch is built on top of the Yocto Project and offers extensive functionali
         - [Using on-target debug](#using-on-target-debug)
     - [Off-target debugging](#off-target-debugging)
 - [Debugging periodic builds](#debugging-periodic-builds)
+- [Analysing coredumps] (#analysing-coredumps)
+    - [Coredumps on target] (#coredumps-on-target)
+    - [Coredumps on periodic images] (#coredumps-on-periodic-images)
 - [Using Eclipse as an IDE](#using-eclipse-as-an-ide)
     - [Installing Eclipse and dependencies](#installing-eclipse-and-dependencies)
     - [Configuring Eclipse](#configuring-eclipse)
@@ -169,7 +172,46 @@ Select the project:
 
 1. Select Go to Project-> Build All
 
+The second method of off-target debugging is through gdb. If you have done a `make devenv_add` for the repos of your interest, they will be ready for debugging.
 
+1. Find the IP address of the Target using `ifconfig`.
+```
+bash-4.3# ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:25
+          inet addr:172.17.0.2  Bcast:0.0.0.0  Mask:255.255.0.0
+
+
+# Here my ip is 172.17.0.2
+```
+2. Find the Process ID(PID) for the daemon to be debugged, and launch a gdb-server on the target.
+   gdbserver <IP of Target>:<Free port> --atach <pid> &
+   For example:
+```
+   bash-4.3# gdbserver 172.17.0.2:5959  --attach `pidof ops-sysd` &
+   [1] 17502
+   bash-4.3# Attached; pid = 293
+   Listening on port 5959
+```
+3. From "ops-build" directory on your VM, start gdb with the debuggable binary.
+```
+gdb build/tmp/work/core2-64-openswitch-linux/ops-sysd/git999-r0/image/usr/bin/ops-sysd
+```
+4. From the gdb prompt on the VM, connect to the gdbserver.
+```
+gdb> target remote <IP>:<Port>
+For example:
+gdb> target remote 172.17.0.2:5959
+```
+5. Set sysroot to pick up the debug symbols.
+```
+gdb> set sysroot /ws/madhavab/master_05_04/ops-build/build/tmp/sysroots/genericx86-64
+gdb> bt
+ #0  0x00007fc9a90ecbb0 in __poll_nocancel () at ../sysdeps/unix/syscall-template.S:81
+ #1  0x00007fc9aa11713b in time_poll (pollfds=pollfds@entry=0x1595ab0, n_pollfds=3, handles=handles@entry=0x0, timeout_when=9223372036854775807, elapsed=elapsed@entry=0x7ffda642114c)
+    at /mnt/jenkins/workspace/ops-periodic-genericx86-64/build/tmp/work/core2-64-openswitch-linux/ops-openvswitch/gitAUTOINC+a01fdf45b7-r0/git/lib/timeval.c:302
+ #2  0x00007fc9aa10cddc in poll_block () at /mnt/jenkins/workspace/ops-periodic-genericx86-64/build/tmp/work/core2-64-openswitch-linux/ops-openvswitch/gitAUTOINC+a01fdf45b7-r0/git/lib/poll-loop.c:377
+ #3  0x0000000000407054 in main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/ops-sysd/git999-r0/src/sysd.c:503
+```
 
 ## Debugging periodic builds
 In order to make debugging easier, debugging symbols are part of periodic builds and available as a tarball. The developer does not need to build a separate image with debugging symbols since the periodic image is debug-ready.
@@ -188,7 +230,7 @@ For example, to debug the latest genericx86-64 build from the master branch:
 ```
 
 Deploy the same Openswitch image on the target. Find the Process ID(PID) for the daemon to be debugged, and launch a gdb-server on the target.
-1. gdbserver <IP of Target>:<Free port> --atach <pid>
+1. gdbserver <IP of Target>:<Free port> --atach <pid> &
    For example:
 ```
    bash-4.3# gdbserver 172.17.0.2:5959  --attach `pidof ops-sysd` &
@@ -200,7 +242,7 @@ Deploy the same Openswitch image on the target. Find the Process ID(PID) for the
 Remote debug from the host where the debug symbols and periodic image is extracted.
 1. Start gdb from the directory that constains the debug symbols and periodic image. This launches the gdb prompt.
 ```
-   debug_ops$gdb
+   debug_ops$ sudo gdb
 ```
 
 2. From the gdb prompt, connect to the gdbserver started on the target.
@@ -229,6 +271,51 @@ Remote debug from the host where the debug symbols and periodic image is extract
     at /usr/src/debug/ops-sysd/gitAUTOINC+6a5b7684f3-r0/git/src/sysd.c:503
 ```
 
+
+
+## Analysing coredumps
+
+Coredumps are stored in /var/diagnostics/coredump in .xz format.
+
+### Coredumps on target
+
+If the image loaded on target is pre-built with debug symbols, use "coredumpctl" command to analyze the coredump.
+
+```
+root@switch:/var/diagnostics/coredump# ls
+core.vtysh.0.515c4d7ce7184c578e5f67ae20d3e6e5.928.1461694120000000.xz
+processed_core_files.cfl
+
+root@switch: coredumpctl gdb
+```
+This command invokes gnu debugger on the last coredump matching specified characteristics. Run "bt"(backtrace) on the gdb prompt to analyze the coredump.
+
+### Coredumps on periodic images
+
+To analyze a coredump generated from a periodic image, developer can leverage the debug symbols which are part of the periodic builds.
+1. Download the coredump file and extract it.
+2. Download the tar ball of the periodic image and untar it.
+3. Download the tar ball of the debug symbols in the periodic image and untar it.
+4. Place contents obtained from step 1-3 in a single folder.
+5. From this folder, launch gdb specifying the binary and the coredump file. For example
+```
+analyse_dump$ sudo gdb usr/lib/debug/usr/bin/vtysh.debug --core=core.vtysh.0.96a458a6a3f8417d9f232bcffdf9ef55.2540.1461695410000000
+
+```
+6. Set search path for loading non-absolute shared library symbol files.
+```
+gdb> set solib-search-path /ws/madhavab/analyse_dump
+```
+7. Backtrace to analyze the coredump
+```
+gdb> bt
+
+ #0  0x00007f2bec73b11a in cli_system_get_psu () from /ws/madhavab/coredump/usr/lib/cli/plugins/libpower_cli.so
+ #1  0x00007f2bf0efa4b4 in ?? () from /ws/madhavab/coredump/usr/lib/libops-cli.so.0
+ #2  0x00007f2bf0efa710 in cmd_execute_command () from /ws/madhavab/coredump/usr/lib/libops-cli.so.0
+ #3  0x000000000041ce0f in vtysh_execute_func (line=0xc6bf00 "show system power-supply ", pager=<error reading variable: can't compute CFA for this frame>)
+    at /usr/src/debug/ops-cli/gitAUTOINC+57ad6ccc8d-r0/git/vtysh/vtysh.c:403
+```
 
 ## Using Eclipse as an IDE
 
