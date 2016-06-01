@@ -200,7 +200,8 @@ remote:
 remote: New Changes:
 remote:   https://review.openswitch.net/1148
 ```
-Use the URL in the `git-review`output to login to the Review Site and add the list of reviewers.
+Use the URL in the `git-review` output to login to the Review Site and add reviewers as needed.
+The reviewers with +2 permissions are automatically added for reviews on the master and release branches.
 
 ### Creating cross repository dependency
 If you are submitting changes to multiple repositories and the changes are required to merge in a specific order, create dependencies among them. To create dependency among changes across different repositories use the "Depends-on" tag in the commit message.
