@@ -24,7 +24,7 @@ Then proceed to download an OpenSwitch Appliance image (the lastest build from m
    1. You can use an OpenSwitch virtual appliance to demo the control-plane features of OpenSwitch.
       While it is possible to get networking done through an OVA, it is beyond the scope of this manual to get the
       required network driver mapping to work.
-   2. After you've selected a stable OpenSwitch image. Please use [periodic_appliance](https://archive.openswitch.net/artifacts/periodic/master/) and locate 0.3.0+&lt;YYYYMMDDHH&gt;/appliance/openswitch-appliance-image-appliance-0.3.0+&lt;YYYYMMDDHH&gt;.ova file. For example:  [download_build_823_appliance](https://archive.openswitch.net/artifacts/periodic/master/0.3.0+2016031100/appliance/openswitch-appliance-image-appliance-0.3.0+2016031100.ova)
+   2. After you've selected a stable OpenSwitch image. Please use [periodic_appliance](https://archive.openswitch.net/artifacts/periodic/master/) and locate 0.3.0+&lt;YYYYMMDDHH&gt;/appliance/openswitch-appliance-image-appliance-0.3.0+&lt;YYYYMMDDHH&gt;.ova file. For example:  [download_latest_appliance](https://archive.openswitch.net/artifacts/periodic/master/latest/)
    3. On the VirtualBox, click on File > "Import Appliance" and select the OVA file downloaded above
    4. Click "Continue" and then "Import". This completes the importing of OVA file into your VirtualBox.
    5. Click on the VM instance you've just imported. It should show up as "OpenSwitch-0.3.0 Appliance".
