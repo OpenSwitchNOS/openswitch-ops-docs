@@ -8,7 +8,7 @@
         - [Community Release Ready](#community-release)
 - [Release Management](#release-management)
     - [Versioning Strategy](#versioning-strategy)
-    - [OpenSwitch Release Branch Management](#openswitch-release-branch-management]
+    - [OpenSwitch Release Branch Management](#openswitch-release-branch-management)
     - [Module Maintainer Responsibilities](#module-maintainer-responsibilities)
     - [Repository Release Readiness](#repository-release-readiness)
     - [Working With Feature Branches](#working-with-feature-branches)
