@@ -83,7 +83,7 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
      - This is needed to make sure that your branch is protected from active work on master branches
  4. Update the SRC_URI to pick changes from the feature branch:
      - Example: ``` SRC_URI = "git://git.openswitch.net/openswitch/ops;protocol=https;branch=feature/versioning"```
- 5. Optionally in the ops-build feature branch, change the recipe files of all the identified repositories to have the SRCREV=${AUTOREV}.
+ 5. Optionally in the ops-build feature branch, change the recipe files of all the identified repositories to have the ```SRCREV=${AUTOREV}```
      - This will make sure that for your feature branch, the make will always pick the latest changes from your branch.
 
 ## Criteria For Completeness
