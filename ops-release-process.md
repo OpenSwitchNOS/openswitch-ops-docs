@@ -15,7 +15,7 @@
 - [Criteria For Completeness](#criteria-for-completeness)
     - [Criteria to Submit code to Master Branch](#criteria-to-submit-code-to-master)
     - [Criteria for inclusion in Release Branch (Feature Completeness)](#criteria-for-inclusion-in-release-branch)
-    - [Templates and Examples](#templates-and-examples)
+    - [Templates](#templates)
     - [Checklist to enable smoothest documentation Gerrit review](#checklist-to-enable-smoothest-documentation-gerrit-review)
 
 
@@ -116,7 +116,7 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 - All Critical and High defects resolved
 - If a feature is incomplete at the time of release branch creation, the feature lead will discuss with release manager what may need to be disabled or backed out. Example: CLI commands committed but corresponding feature not ready – might need to unregister those commands in release branch.
 
-### Templates and Examples
+### Templates
 
 - Feature Design doc:  http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature]_design.md
 - Component Design doc: http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/DESIGN.md
