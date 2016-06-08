@@ -20,7 +20,7 @@
 
 
 ## Overview
-OpenSwitch (OPS) uses a time-based release model, operating on ~ a 13 week cycle target. The dates for the milestones and final release in a given development cycle are defined by the Release Management team, and communicated before the new development cycle starts. There is a single release branch where a release is supported by the community until the next release is triggered. Only Critical and High severity defects are permitted to be fixed in the release branch to minimize rate of change during the release. Medium and low severity defect fixes are to be fixed on the master branch for inclusion in the next release.
+OpenSwitch (OPS) uses a time-based release model, operating on ~ a 13 week cycle target. The dates for the milestones and final release in a given development cycle are defined by the Release Management team, and communicated before the new development cycle starts. At any gven time a single release branch is supported by the community until the next release is triggered. Only Critical and High severity defects are permitted to be fixed in the release branch to minimize rate of change during the release. Medium and low severity defect fixes are to be fixed on the master branch for inclusion in the next release.
 
 ### OPS Release Cycle Timeline Targets
 #### Release cycle start
@@ -29,7 +29,7 @@ ops-build repository master branch is open for commits and defect fixes and the 
 #### Readiness Review
 Release cycle start + 11 weeks
 
-The release manager will review readiness for all planned features with the feature owners at this time. Ahead of the Readiness Review, feature owners should review their approved proposals and for any items not considered ready for this review, proactively move those items into a future release window. Community members will identify those features that meet the full "Criteria for Completeness" (see below) and are ready for inclusion in the current release. Feature leads and repo owners must make sure that all the modified repos for a given feature are in a state where the completed and approved features for a given release can be clearly marked for inclusion in the release branch.
+The release manager will review readiness for all planned features with the feature owners at this time. Community members need to communicate the extent to which they meet the "Criteria for Completeness" and the estimated time to address the remaining gaps. The base expectation is that all gaps are addressed before the branch pull is triggered or the feature is likely to be moved to the next release cycle. Feature leads and repo owners must make sure that all the modified repos for a given feature are in a state where the completed and approved features for a given release can be clearly marked for inclusion in the release branch.
 
 #### Release Branch Pull
 Release cycle start + 13 weeks
@@ -39,7 +39,7 @@ The release branch is pulled every ~ 13 weeks for each repository on OpenSwitch 
 #### Release Branch Quality Checkpoint
 Release Branch Pull + 2 weeks (release branch):
 
-For the release to occur, all Critical and High severity defects identified as critical to the release must be fixed for supported features. Potential new release critical & high severity issues are first to get fixed on the release branch, and then are to be merged to the master branch. Periodic builds and release candidate builds on the release branch and additional quality checkpoints will be used if necessary to achieve the required quality.
+For the release to occur, all Critical and High severity defects identified as critical to the release ("release stoppers") must be fixed for supported features. Release critical & high severity issues are first to be fixed on the release branch, and then are to be merged to the master branch. Periodic builds and release candidate builds on the release branch and additional quality checkpoints will be used if necessary to achieve the required quality.
 
 #### Community Release Ready
 Successful Quality Checkpoint + 1 week (release branch)
