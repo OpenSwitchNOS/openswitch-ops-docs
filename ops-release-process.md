@@ -113,9 +113,6 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
     - Note that this is a new requirement in place of the separate User Guide and Command References
 - Feature and Component Test Plan: http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature-Component]_test.md
 
-- User Guide: http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature]_user_guide.md
-- Command Reference: http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature]_cli.md
-
 ### Checklist to enable smoothest documentation Gerrit review
 There are several things that contributors can do ahead of their document submittal to help ensure the fastest successful review and posting of their documents to the OPS web site. Recommendations here can also help ensure the documentation is clear and well understood.
 
