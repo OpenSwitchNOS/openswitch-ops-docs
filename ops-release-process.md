@@ -11,7 +11,6 @@
     - [OpenSwitch Release Branch Management](#openswitch-release-branch-management)
     - [Module Maintainer Responsibilities](#module-maintainer-responsibilities)
     - [Repository Release Readiness](#repository-release-readiness)
-    - [Working With Feature Branches](#working-with-feature-branches)
 - [Criteria For Completeness](#criteria-for-completeness)
     - [Criteria to Submit code to Master Branch](#criteria-to-submit-code-to-master)
     - [Criteria for inclusion in Release Branch (Feature Completeness)](#criteria-for-inclusion-in-release-branch)
@@ -75,16 +74,6 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 - Every repo should be able to identify a SHA (ChangeID) in their master branch git log which will have only completed features and no partial features.
 - The above SHA will be used for subsequent release branch.
 - Feature leads should work with module maintainers to plan this out so that all the repositories that were modified are in a “release-ready” state
-
-### Working With Feature Branches
- 1. Identify all the repositories that will be modified for feature development
- 2. Create feature branch with the same name on all these repositories
- 3. Additionally create feature branch with the same name for ops-build and ops repositories.
-     - This is needed to make sure that your branch is protected from active work on master branches
- 4. Update the SRC_URI to pick changes from the feature branch:
-     - Example: ``` SRC_URI = "git://git.openswitch.net/openswitch/ops;protocol=https;branch=feature/versioning"```
- 5. Optionally in the ops-build feature branch, change the recipe files of all the identified repositories to have the SRCREV udpated to AUTOREV
-     - This will make sure that for your feature branch, the make will always pick the latest changes from your branch.
 
 ## Criteria For Completeness
 ### Criteria to Submit code to Master Branch
