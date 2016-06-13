@@ -107,11 +107,11 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 
 ### Templates
 
-- [Feature Design doc](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature]_design.md)
+- [Feature Design doc](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/%5BFeature%5D_design.md)
 - [Component Design doc](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/DESIGN.md)
-- [Functionality Guide](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Functionality-Guide].md)
+- [Functionality Guide](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/%5BFunctionality-Guide%5D.md)
     - Note that this is a new requirement in place of the separate User Guide and Command References
-- [Feature and Component Test Plan](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/[Feature-Component]_test.md)
+- [Feature and Component Test Plan](http://git.openswitch.net/cgit/openswitch/ops-docs/tree/user/templates/%5BFeature-Component%5D_test.md)
 
 ### Checklist to enable smoothest documentation Gerrit review
 There are several things that contributors can do ahead of their document submittal to help ensure the fastest successful review and posting of their documents to the OPS web site. Recommendations here can also help ensure the documentation is clear and well understood.
