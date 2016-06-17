@@ -58,8 +58,17 @@ The following votes needs to be given to the change before it is attempted to be
 * A green checkmark in Gerrit indicates that the change has met the review requirements for that category.
 
 ### Merge process
-1. Once the change has been approved, Zuul schedules the `Gate` pipeline before merging.
-2. If the tests pass, the change gets merged into the project, if the `Gate` tests fail, a message is left by Jenkins and the contributor needs to take action.
+ - Once the change has been approved, Zuul schedules the `Gate` pipeline before merging.
+ - If the tests pass, the change gets merged into the project, if the `Gate` tests fail, a message is left by Jenkins and the contributor needs to take action.
+ - The developer can click on the links of gate jobs which failed as shown below.
+![Update on the review by Zuul](/img/Zuul-review-update.png "Update on the review by Zuul")
+ - This will redirect the developer to the Jenkins job page.
+![Jenkins gate job](/img/Jenkins-gate-job.png "Jenkins gate job")
+ - This page has a lot of information to identify the reason for failure:
+	-  Console Output - Shows the detailed log of the gate job
+	-  Test Result - Shows the results of the test cases that passed or failed
+	-  Build Artifacts - Shows the test case logs and other information to help debug the failure
+
 
 ### Process feedback
 If the tests failed or feedback is received from the community or the Core Reviewers, the contributor should have followed the process described in the [How to contribute](contribute-code) guide to amend the changes and re-submit them for review. In a nutshell:
