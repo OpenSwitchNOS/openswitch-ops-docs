@@ -555,8 +555,7 @@ The following table lists the type of documents, the  target locations, and the 
 
 | Doc Type                	| Repo                     	 | Directory 	| File Name               	  | Purpose |
 |-------------------------	|--------------------------	 |-----------	|-------------------------	  |
-| User Guides            	  | openswitch/ops           	 | /docs     	| [feature]_user_guide.md 	  | Detailed walkthrough on how to use this feature |
-| Command References      	| openswitch/ops           	 | /docs     	| [feature]_cli.md        	  | Details of all various commands and corresponding arguments for this feature |
+| Functionality Guide       | openswitch/ops           	 | /docs     	| [functionality]_guide.md    | Details on the functionality and its corresponding CLIs |
 | Feature Designs         	| openswitch/ops           	 | /docs     	| [feature]_design.md     	  | Details of how the various components come together to deliver feature functionality to end user |
 | Feature Test Plans      	| openswitch/ops           	 | /tests    	| [feature]_test.md       	  | Document each test case from corresponding [feature]_test.py test script |
 
