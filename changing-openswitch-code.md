@@ -462,6 +462,46 @@ WARNING: No coverage data was generated during test run. Exiting now with no cov
 Suggested steps:
 1. Make sure that after the test runs, the daemon is exiting cleanly as the coverage data is dumped only during process exit
 
+```
+Console messages show coverage data was generated. However no report is present at coverage/html/index.html
+
+For example: Lines similar to the following are seen but report is missing -
+Summary coverage rate: lines......: 0.1% (50 of 35559 lines) functions..: 0.5% (14 of 2882 functions) branches...: no data found.
+Creating HTML report
+```
+
+Suggested steps:
+1. We have seen this occur sometimes when the report generating tool (genhtml) fails as it is unable to find the file "dirs.c.in" in the library path.
+   A simple workaround is to copy this file to /lib.
+   It is not needed to add ops-openvswitch repo to your sandbox. Simply copying this file to /lib is good enough.
+```
+   sudo cp src/ops-openvswitch/lib/dirs.c.in /lib/
+```
+
+```
+Not receiving good coverage numbers though a test case with "systemctl stop <ops-myrepo>" is being executed as the last test-case
+```
+
+Suggested steps:
+1. Make sure that after the test runs, the daemon is exiting cleanly as the coverage data is dumped only during process exit.
+2. In many cases, the daemons have handlers for unixctl exit commands wherein it does a clean exit (with exit(0)).
+   In such cases, use "ovs-appctl -t <daemon> exit" to hit this code-path.
+   In short, make sure that the daemon does a clean exit in the code-path hit after triggering the daemon exit command.
+
+```
+Not getting coverage for directories contributing towards plugins
+```
+Few directories in a repo contribute towards a plugin that is loaded by a different daemon.
+For example, code under src/cli contributes towards a .so plugin loaded by vtysh.
+Or code under ops-classifierd/src/acl/switchd-plugin contributes towards a .so plugin loaded by the ops-switchd daemon.
+Plugins run within the context of the daemon that loads them.
+Hence one needs to make sure that this daemon exits cleanly to get coverage numbers for these directories.
+In above cases, vtysh or ops-switchd need to exit to get coverage numbers under src/cli or under ops-classifierd/src/acl/switchd-plugin respectively.
+
+Suggested steps:
+1. The test-framework will force a vtysh exit at the end of the test script. This is in works.
+2. Make sure the daemon loading the plugins exits cleanly.
+
 ## Build system infrastructure
 
 The build system is based in the [Yocto Project](https://www.yoctoproject.org/about). This document does not cover how Yocto works, but does include some important aspects related to OpenSwitch.
