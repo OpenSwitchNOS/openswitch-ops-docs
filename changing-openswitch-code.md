@@ -31,7 +31,8 @@
 		- [testenv_suite_run](#testenv_suite_run)
 		- [testenv_suite_rerun](#testenv_suite_rerun)
 	- [Coverage commands](#coverage-commands)
-		- [generate_coverage_report](#generate_coverage_report)
+        - [Generate coverage report for C-based code](#Generate%20coverage%20report%20for%20C-based%20code)
+        - [Generate coverage report for Python-based code](Generate%20coverage%20report%20for%20Python-based%20code)
 - [Build system infrastructure](#build-system-infrastructure)
 - [Working with modified packages](#working-with-modified-packages)
 	- [Building and cleaning](#building-and-cleaning)
@@ -375,7 +376,7 @@ $ make testenv_suite_rerun feature
 ### Coverage commands
 The coverage command creates a coverage report for the Feature and Component tests (FT/CTs).
 
-#### generate_coverage_report
+#### Generate coverage report for C-based code
 
 ##### Requirements
 The `generate_coverage_report` is a make target that exists for all repos that have been added to the devenv. This make target uses the `testenv_run` target internally to run the FT/CTs that produce the coverage data. Therefore is is required to initialize the testenv prior to running the coverage target, i.e.:
@@ -501,6 +502,89 @@ In above cases, vtysh or ops-switchd need to exit to get coverage numbers under 
 Suggested steps:
 1. The test-framework will force a vtysh exit at the end of the test script. This is in works.
 2. Make sure the daemon loading the plugins exits cleanly.
+
+#### Generate coverage report for Python-based code
+
+##### Requirements
+
+1. Code coverage for Python uses `testenv_run` target internally to run the FT/CTs that produce the coverage data. Therefore it is required to initialize the testenv prior to running the coverage target, i.e.:
+
+    ```
+    make testenv_init
+    ```
+2. The `coverage`  tool has to be integrated in OPS build system. The recipe file for coverage tool is located at [devtools](http://git.openswitch.net/cgit/openswitch/ops-build/tree/yocto/openswitch/meta-foss-openswitch/recipes-devtools/python).  The `coverage` tool must be packaged inside build. It can be done by adding `python-coverage` to *yocto/openswitch/meta-distro-openswitch/recipes-core/packagegroups/packagegroup-openswitch.bb*.
+
+    ```
+    RDEPENDS_packagegroup-ops-min = "\
+    python \
+    ...
+    python-pyroute2 \
+    python-coverage \
+    ...
+    "
+
+    ```
+3. Modify *tools/topology/tox.ini* to remove the `--random` flag. With random flag enabled, the testcases will be shuffled and hence, it will be hard to decide when to dump the coverage data file.
+4. Create a directory in the *src/daemon_name/coverage_report* to dump the coverage data file after execution of the testcase.
+
+##### Running the coverage report
+
+The coverage report generation requires the testcases to be modified in following way:
+
+ 1. In the first `test_` function, kill the daemon and restart it with `coverage run` prefix to execute coverage tool on a given daemon. See the model example of *test_restd_ct_bgp_neighbors.py*
+ ```
+def test_restd_bgp_neighbors_get_bgp_neighbors(setup, sanity_check,
+                                               topology, step):
+
+        sw1 = topology.get("sw1")
+        assert sw1 is not None
+
+        global dir
+        dir = "/ws/manesay/rest_0701/genericx86-64/src"
+        global daemon_name
+        daemon_name = "restd"
+        global dir_name
+        dir_name = "ops-restd"
+        global file_name
+        file_name = dir_name + "/restd.py"
+
+        sw1("systemctl stop " + daemon_name, shell="bash")
+        sw1("cd " + dir, shell="bash")
+
+ ```
+ 2. Provide the source path in the coverage command for which coverage report needs to be collected. The `--append` or `-a` flag is used to append the coverage data to `.coverage` data file during each testcase run.
+ ```
+         sw1("coverage run -a --source " + dir_name  + " " + file_name +  " &", shell="bash")
+ ```
+
+ 3. Wait till the daemon comes back up with coverage enabled.
+ ```
+         sleep(5)
+ ```
+ 4. Continue running the testcase.
+ 5. In order to dump the coverage report kill the daemon when all testcases ran i.e. in the last `test_` function.  Collect the coverage files.
+ ```
+        sw1 = topology.get("sw1")
+        assert sw1 is not None
+
+        sw1("cd " + dir, shell="bash")
+        sw1("ps -ef | grep " + daemon_name + " | grep -v grep | awk '{print $2}' | xargs kill -2", shell="bash")
+        sw1("cp .coverage " + dir_name + "/coverage_report/.coverage.", shell="bash")
+ ```
+ 6. This step can be optional for most of the daemons. For specific daemons like `restd`, delete_teardown gets called once all testcases are ran. So, we need to restart the daemon in normal mode using `systemctl start <daemon_name>`. Wait until daemon is ready and continue running the teardown part.
+
+ ```
+        sw1("systemctl start " + daemon_name, shell="bash")
+        sleep(5)
+ ```
+ 7. Start running testcases, i.e.
+ ```
+ make testenv_run component ops-restd
+ ```
+
+ 8. Look for file `.coverage`  in the same directory you created earlier.
+ 9. Then, run `coverage report` to generate the code coverage report.
+
 
 ## Build system infrastructure
 
