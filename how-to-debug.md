@@ -242,6 +242,9 @@ root@switch: coredumpctl gdb
 ```
 This command invokes the gnu debugger on the last coredump matching specified characteristics. Run "bt"(backtrace) on the gdb prompt to analyze the coredump.
 
+Please note that coredumpctl has a limitation to debug coredumps from the previous boot.
+For debugging coredumps from a previous boot, use the "show core-dump" command to list the available core dumps.  Also use the "copy core-dump" command to copy the coredumps out and perform off-target debugging.
+
 ### Coredumps on periodic images
 
 To analyze a coredump generated from a periodic image, leverage the debug symbols which are part of the periodic builds.
