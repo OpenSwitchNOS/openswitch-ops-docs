@@ -113,17 +113,18 @@ sudo docker -d
 ```
 sudo usermod -aG docker $USER
 ```
+Note: You will have to login again for this change to take effect.
 3. After building the image, execute the following command:
 ```
-sudo make export_docker_image openswitch
+make export_docker_image openswitch
 ```
 4. Enter the following command to run the simulated switch image in Docker:
 ```
-sudo docker run --privileged -v /tmp:/tmp -v /dev/log:/dev/log -v /sys/fs/cgroup:/sys/fs/cgroup -h ops --name ops openswitch /sbin/init &
+docker run --privileged -v /tmp:/tmp --name ops openswitch /sbin/init &
 ```
 5. Once the Docker switch is running, connect to it with the following command:
 ```
-sudo docker exec -ti ops bash
+docker exec -ti ops env TERM=$TERM su -
 ```
 Or connect using ssh with the switch IP given by Docker:
 ```

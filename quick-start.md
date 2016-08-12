@@ -53,15 +53,15 @@ $ vagrant up
 ## Connecting to the OpenSwitch instance
 After following the steps in the above *"Installing the OpenSwitch development environment"* section, an OpenSwitch image is built and Docker is configured to run that OpenSwitch image. Use the following steps to connect to OpenSwitch. The following steps are performed in the newly created Ubuntu VM.
 
-1. Run a shell on the Docker instance with `docker exec -ti ops bash`.
+1. Run a shell on the Docker instance with `docker exec -ti ops env TERM=$TERM su -`.
 2. Run `vtysh` to start the OpenSwitch CLI.
 3. The `vtysh` session times out if the session is idle for the session timeout period. The session timeout can be configured using the cli command `session-timeout <value>` in configure terminal mode (the default is 30 minutes).
 
 Example:
 
 ```
-vagrant@ops-host:~/ops-build$ docker exec -ti ops bash
-bash-4.3# vtysh
+vagrant@ops-host:~/ops-build$ docker exec -ti ops env TERM=$TERM su -
+root@switch# vtysh
 2015-09-01T23:31:47Z|00001|reconnect|INFO|unix:/var/run/openvswitch/db.sock: connecting...
 2015-09-01T23:31:47Z|00002|reconnect|INFO|unix:/var/run/openvswitch/db.sock: connected
 ```
